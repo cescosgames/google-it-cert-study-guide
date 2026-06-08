@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course 2 - Bits and Bytes of Networking</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-course="02">
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">IT Cert Study</a>
+    <ul class="nav-links">
+      <li><a href="01-technical-support-fundamentals.html">Course 1</a></li>
+      <li><a href="02-bits-and-bytes-networking.html" class="active">Course 2</a></li>
+      <li><a href="03-operating-systems.html">Course 3</a></li>
+      <li><a href="04-system-administration.html">Course 4</a></li>
+      <li><a href="05-it-security.html">Course 5</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+  <header class="course-header">
+    <span class="course-badge">Course 2</span>
+    <h1>Bits and Bytes of Networking</h1>
+    <p class="subtitle">TCP/IP &amp; OSI models · IP addressing &amp; subnetting · Ethernet · Transport layer · Application services · Troubleshooting</p>
+  </header>
+
+  <div class="section-list">
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 1 - TCP/IP & OSI Models
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s1">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>1 &nbsp;·&nbsp; TCP/IP &amp; OSI Models</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c02-s1" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <!-- Key Concepts -->
+          <div class="subsection">
+            <p class="subsection-title">Key Concepts</p>
+            <ul class="concept-list">
+              <li>The <strong>OSI model</strong> (Open Systems Interconnection) is a <em>conceptual</em> 7-layer framework for understanding how network communication works. It's a teaching tool - real protocols don't map perfectly to it.</li>
+              <li>The <strong>TCP/IP model</strong> (4 layers) is the <em>practical</em> implementation used on the internet today. It merges OSI layers 5-7 into one Application layer.</li>
+              <li><strong>Encapsulation</strong> - each layer wraps data with its own header (and sometimes trailer) as it travels down the stack toward the wire.</li>
+              <li><strong>Decapsulation</strong> - headers are stripped at each layer as data moves up the stack at the receiving end.</li>
+              <li>A <strong>PDU</strong> (Protocol Data Unit) is the name for data at each layer: <em>bit → frame → packet → segment → data</em>.</li>
+              <li>Mnemonic (top→bottom): <strong>"All People Seem To Need Data Processing"</strong> → Application, Presentation, Session, Transport, Network, Data Link, Physical.</li>
+            </ul>
+          </div>
+
+          <!-- OSI Table -->
+          <div class="subsection">
+            <p class="subsection-title">OSI Model - 7 Layers</p>
+            <table class="layer-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Layer</th>
+                  <th>PDU</th>
+                  <th>Key Protocols / Devices</th>
+                  <th>Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="layer-num">7</td>
+                  <td>Application</td>
+                  <td>Data</td>
+                  <td>HTTP, HTTPS, FTP, DNS, SMTP, SSH</td>
+                  <td>User-facing network services</td>
+                </tr>
+                <tr>
+                  <td class="layer-num">6</td>
+                  <td>Presentation</td>
+                  <td>Data</td>
+                  <td>TLS/SSL, JPEG, MP3, ASCII</td>
+                  <td>Encoding, encryption, compression</td>
+                </tr>
+                <tr>
+                  <td class="layer-num">5</td>
+                  <td>Session</td>
+                  <td>Data</td>
+                  <td>NetBIOS, RPC, SIP</td>
+                  <td>Establish, manage &amp; tear down sessions</td>
+                </tr>
+                <tr>
+                  <td class="layer-num">4</td>
+                  <td>Transport</td>
+                  <td>Segment / Datagram</td>
+                  <td>TCP, UDP - ports</td>
+                  <td>End-to-end delivery, flow &amp; error control</td>
+                </tr>
+                <tr>
+                  <td class="layer-num">3</td>
+                  <td>Network</td>
+                  <td>Packet</td>
+                  <td>IP, ICMP, ARP* - Routers</td>
+                  <td>Logical addressing &amp; routing</td>
+                </tr>
+                <tr>
+                  <td class="layer-num">2</td>
+                  <td>Data Link</td>
+                  <td>Frame</td>
+                  <td>Ethernet, Wi-Fi (802.11) - Switches</td>
+                  <td>MAC addressing, framing, error detection</td>
+                </tr>
+                <tr>
+                  <td class="layer-num">1</td>
+                  <td>Physical</td>
+                  <td>Bit</td>
+                  <td>Cables, hubs, repeaters, NICs</td>
+                  <td>Raw bit transmission over physical media</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- TCP/IP table -->
+          <div class="subsection">
+            <p class="subsection-title">TCP/IP Model - 4 Layers</p>
+            <table class="layer-table">
+              <thead>
+                <tr><th>TCP/IP Layer</th><th>Maps to OSI</th><th>Key Protocols</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Application</td><td>7, 6, 5</td><td>HTTP, HTTPS, DNS, DHCP, FTP, SMTP, SSH, Telnet</td></tr>
+                <tr><td>Transport</td><td>4</td><td>TCP, UDP</td></tr>
+                <tr><td>Internet</td><td>3</td><td>IP (v4/v6), ICMP, OSPF, BGP</td></tr>
+                <tr><td>Link (Network Access)</td><td>2, 1</td><td>Ethernet, Wi-Fi, ARP, PPP</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Encapsulation -->
+          <div class="subsection">
+            <p class="subsection-title">Encapsulation Flow</p>
+            <div class="math-block">
+              <span class="label">Application data</span>   <span class="val">→ HTTP payload</span><br>
+              <span class="label">+ TCP/UDP header</span>   <span class="val">= Segment</span><br>
+              <span class="label">+ IP header</span>        <span class="val">= Packet</span><br>
+              <span class="label">+ Ethernet hdr/trailer</span><span class="val">= Frame</span><br>
+              <span class="label">Transmitted as</span>     <span class="val">Bits (0s and 1s)</span>
+            </div>
+          </div>
+
+          <!-- Key Terms -->
+          <div class="subsection">
+            <p class="subsection-title">Key Terms</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">PDU</span><span class="term-val">Protocol Data Unit - the name for data at each OSI layer</span></div>
+              <div class="term-row"><span class="term-key">Encapsulation</span><span class="term-val">Wrapping data with headers as it moves <em>down</em> the stack toward the wire</span></div>
+              <div class="term-row"><span class="term-key">Decapsulation</span><span class="term-val">Stripping headers as data moves <em>up</em> the stack at the destination</span></div>
+              <div class="term-row"><span class="term-key">MTU</span><span class="term-val">Maximum Transmission Unit - largest frame payload allowed; 1500 bytes for standard Ethernet</span></div>
+              <div class="term-row"><span class="term-key">Payload</span><span class="term-val">The data portion of a PDU (everything after the headers)</span></div>
+              <div class="term-row"><span class="term-key">Protocol</span><span class="term-val">A set of rules that govern communication between devices</span></div>
+            </div>
+          </div>
+
+          <!-- Practice -->
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>At which OSI layer does a switch operate?</li>
+                <li>What is the PDU at the Network layer called?</li>
+                <li>Which TCP/IP layer combines OSI layers 5, 6, and 7?</li>
+                <li>What does the Transport layer add to data during encapsulation?</li>
+                <li>Which OSI layer handles encryption and data formatting (e.g., JPEG, TLS)?</li>
+                <li>Name two differences between the OSI model and the TCP/IP model.</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>Layer 2 - Data Link (switches use MAC addresses to forward frames)</li>
+                  <li>Packet</li>
+                  <li>The Application layer</li>
+                  <li>A TCP or UDP header (creating a segment or datagram), which adds source/destination port numbers and sequencing info</li>
+                  <li>Layer 6 - Presentation</li>
+                  <li>OSI has 7 layers; TCP/IP has 4. OSI is conceptual/academic; TCP/IP is the working model used on the real internet. OSI separates Session/Presentation/Application; TCP/IP merges them.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
+      </div><!-- /section-body -->
+    </div><!-- /topic-section -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 2 - Network Layer & IP Addressing
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s2">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>2 &nbsp;·&nbsp; Network Layer &amp; IP Addressing</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c02-s2" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">IPv4 Basics</p>
+            <ul class="concept-list">
+              <li><strong>32-bit</strong> address written as four octets in dotted-decimal notation (e.g., <code>192.168.1.100</code>).</li>
+              <li>Each octet ranges from <code>0–255</code>.</li>
+              <li>Two portions: <strong>network part</strong> (identifies the subnet) + <strong>host part</strong> (identifies the device).</li>
+              <li>The <strong>subnet mask</strong> determines where the network/host boundary falls. Written as dotted-decimal (e.g., <code>255.255.255.0</code>) or <strong>CIDR prefix</strong> (<code>/24</code> = 24 network bits).</li>
+              <li>The logical AND of an IP and its mask gives the <strong>network address</strong>.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Address Classes (classful - historical context)</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Class</th><th>First Octet Range</th><th>Default Mask</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>A</td><td>1 – 126</td><td>/8  (255.0.0.0)</td><td>Large networks; 126 networks × ~16M hosts</td></tr>
+                <tr><td>B</td><td>128 – 191</td><td>/16 (255.255.0.0)</td><td>Medium networks; 16,384 networks × 65,534 hosts</td></tr>
+                <tr><td>C</td><td>192 – 223</td><td>/24 (255.255.255.0)</td><td>Small networks; 2M networks × 254 hosts</td></tr>
+                <tr><td>D</td><td>224 – 239</td><td>-</td><td>Multicast only</td></tr>
+                <tr><td>E</td><td>240 – 255</td><td>-</td><td>Experimental / reserved</td></tr>
+              </tbody>
+            </table>
+            <div class="note">Today we use <strong>CIDR</strong> (Classless Inter-Domain Routing) - subnet masks aren't tied to class boundaries. This dramatically slowed IPv4 exhaustion.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Special / Private Ranges</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Range</th><th>CIDR</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>10.0.0.0 – 10.255.255.255</td><td>/8</td><td>Private (RFC 1918)</td></tr>
+                <tr><td>172.16.0.0 – 172.31.255.255</td><td>/12</td><td>Private (RFC 1918)</td></tr>
+                <tr><td>192.168.0.0 – 192.168.255.255</td><td>/16</td><td>Private (RFC 1918)</td></tr>
+                <tr><td>127.0.0.0 – 127.255.255.255</td><td>/8</td><td>Loopback - <code>127.0.0.1</code> = localhost</td></tr>
+                <tr><td>169.254.0.0 – 169.254.255.255</td><td>/16</td><td>APIPA - self-assigned when DHCP fails</td></tr>
+                <tr><td>0.0.0.0</td><td>-</td><td>Unspecified / default route</td></tr>
+                <tr><td>255.255.255.255</td><td>-</td><td>Limited broadcast</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Subnetting Math</p>
+            <div class="math-block">
+              <span class="label">Host bits</span>      <span class="val">= 32 – prefix length</span><br>
+              <span class="label">Total addresses</span> <span class="val">= 2 ^ (host bits)</span><br>
+              <span class="label">Usable hosts</span>    <span class="val">= 2 ^ (host bits) – 2</span><br>
+              <span class="label">Network address</span> <span class="val">= all host bits = 0  (first address)</span><br>
+              <span class="label">Broadcast address</span><span class="val">= all host bits = 1  (last address)</span><br>
+              <span class="label">First usable host</span><span class="val">= network address + 1</span><br>
+              <span class="label">Last usable host</span> <span class="val">= broadcast address – 1</span>
+            </div>
+
+            <div class="example-box">
+              <p class="ex-title">Worked Example - 192.168.1.0 /26</p>
+              <div class="math-block" style="margin-top:0.4rem;border:none;padding:0.4rem 0;background:transparent;">
+                <span class="label">Prefix</span>        <span class="val">/26  →  subnet mask 255.255.255.192</span><br>
+                <span class="label">Host bits</span>     <span class="val">32 – 26 = 6</span><br>
+                <span class="label">Total addresses</span><span class="val">2⁶ = 64</span><br>
+                <span class="label">Usable hosts</span>  <span class="val">64 – 2 = 62</span><br>
+                <span class="label">Network address</span><span class="val">192.168.1.0</span><br>
+                <span class="label">Broadcast</span>    <span class="val">192.168.1.63</span><br>
+                <span class="label">First host</span>   <span class="val">192.168.1.1</span><br>
+                <span class="label">Last host</span>    <span class="val">192.168.1.62</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Common CIDR Prefix Reference</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Prefix</th><th>Subnet Mask</th><th>Addresses</th><th>Usable Hosts</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>/8</td><td>255.0.0.0</td><td>16,777,216</td><td>16,777,214</td></tr>
+                <tr><td>/16</td><td>255.255.0.0</td><td>65,536</td><td>65,534</td></tr>
+                <tr><td>/24</td><td>255.255.255.0</td><td>256</td><td>254</td></tr>
+                <tr><td>/25</td><td>255.255.255.128</td><td>128</td><td>126</td></tr>
+                <tr><td>/26</td><td>255.255.255.192</td><td>64</td><td>62</td></tr>
+                <tr><td>/27</td><td>255.255.255.224</td><td>32</td><td>30</td></tr>
+                <tr><td>/28</td><td>255.255.255.240</td><td>16</td><td>14</td></tr>
+                <tr><td>/29</td><td>255.255.255.248</td><td>8</td><td>6</td></tr>
+                <tr><td>/30</td><td>255.255.255.252</td><td>4</td><td>2</td></tr>
+                <tr><td>/32</td><td>255.255.255.255</td><td>1</td><td>1 (host route)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">IPv6 Basics</p>
+            <ul class="concept-list">
+              <li><strong>128-bit</strong> address - written as 8 groups of 4 hex digits separated by colons.</li>
+              <li>Leading zeros within a group can be omitted; consecutive all-zero groups can be replaced with <code>::</code> (once per address).</li>
+              <li><code>::1</code> - loopback (equivalent to IPv4 <code>127.0.0.1</code>)</li>
+              <li><code>fe80::/10</code> - link-local (auto-configured, not routable)</li>
+              <li><code>2000::/3</code> - global unicast (public routable range)</li>
+              <li>No broadcast - replaced by multicast and anycast.</li>
+              <li>IPv6 uses <strong>NDP</strong> (Neighbor Discovery Protocol) instead of ARP.</li>
+            </ul>
+          </div>
+
+          <!-- IPv6 Compression Cheat Sheet -->
+          <div class="subsection">
+            <p class="subsection-title">IPv6 Address Compression - Rules</p>
+            <div class="term-grid">
+              <div class="term-row">
+                <span class="term-key">Rule 1</span>
+                <span class="term-val">Drop leading zeros within each group - <code>0db8</code> &rarr; <code>db8</code> &nbsp;&middot;&nbsp; <code>0001</code> &rarr; <code>1</code> &nbsp;&middot;&nbsp; <code>0000</code> &rarr; <code>0</code></span>
+              </div>
+              <div class="term-row">
+                <span class="term-key">Rule 2</span>
+                <span class="term-val">Replace the <em>longest</em> consecutive run of all-zero groups with <code>::</code> - only <strong>once</strong> per address</span>
+              </div>
+              <div class="term-row">
+                <span class="term-key">Tiebreaker</span>
+                <span class="term-val">When two runs are equal length, <code>::</code> goes to the <em>leftmost</em> run</span>
+              </div>
+            </div>
+
+            <p class="subsection-title" style="margin-top:1rem;">Worked Examples</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Full Address</th><th>Step 1 - strip leading zeros</th><th>Step 2 - apply ::</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>2001:0db8:0000:0000:0000:0000:0000:0001</code></td>
+                  <td><code>2001:db8:0:0:0:0:0:1</code></td>
+                  <td><code>2001:db8::1</code></td>
+                </tr>
+                <tr>
+                  <td><code>0000:0000:0000:0000:0000:0000:0000:0001</code></td>
+                  <td><code>0:0:0:0:0:0:0:1</code></td>
+                  <td><code>::1</code></td>
+                </tr>
+                <tr>
+                  <td><code>fe80:0000:0000:0000:0200:f8ff:fe21:67cf</code></td>
+                  <td><code>fe80:0:0:0:200:f8ff:fe21:67cf</code></td>
+                  <td><code>fe80::200:f8ff:fe21:67cf</code></td>
+                </tr>
+                <tr>
+                  <td><code>2001:0db8:0000:0000:0001:0000:0000:0001</code></td>
+                  <td><code>2001:db8:0:0:1:0:0:1</code></td>
+                  <td><code>2001:db8::1:0:0:1</code> &nbsp;<span style="color:var(--text-3);font-size:.78em">(tie at pos 2 &amp; 5 &rarr; leftmost wins)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- IPv6 Compression Practice Tool -->
+          <div class="subsection">
+            <p class="subsection-title">IPv6 Compression Practice</p>
+
+            <div id="ipv6-quiz-area" class="ipv6-quiz-area">
+              <div class="ipv6-quiz-bar">
+                <div class="ipv6-quiz-bar-track">
+                  <div id="ipv6-bar-fill" class="ipv6-quiz-bar-fill" style="width:0%"></div>
+                </div>
+                <span id="ipv6-bar-label" class="ipv6-quiz-bar-label">0 / 8</span>
+              </div>
+
+              <div id="ipv6-addr-display" class="ipv6-group-display"></div>
+
+              <div class="ipv6-legend">
+                <div class="ipv6-legend-item">
+                  <div class="ipv6-legend-dot" style="background:var(--warning)"></div>
+                  <span>Has leading zeros</span>
+                </div>
+                <div class="ipv6-legend-item">
+                  <div class="ipv6-legend-dot" style="background:var(--accent-light)"></div>
+                  <span>All-zero group</span>
+                </div>
+              </div>
+
+              <div class="ipv6-input-row">
+                <input id="ipv6-input" class="ipv6-input" type="text"
+                  placeholder="Type compressed address…"
+                  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                <button id="ipv6-submit-btn" class="ipv6-submit-btn" onclick="ipv6Submit()">Check</button>
+              </div>
+
+              <div id="ipv6-feedback" class="ipv6-feedback"></div>
+              <button id="ipv6-next-btn" class="ipv6-next-btn" onclick="ipv6Next()">Next &rarr;</button>
+            </div>
+
+            <div id="ipv6-score-box" class="ipv6-score-box">
+              <div id="ipv6-score-num" class="ipv6-score-num"></div>
+              <div id="ipv6-score-label" class="ipv6-score-label"></div>
+              <button class="ipv6-restart-btn" onclick="ipv6Start()">Try Again</button>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Routing Concepts</p>
+            <ul class="concept-list">
+              <li><strong>Default gateway</strong> - the router IP your device sends traffic to when the destination is outside the local subnet.</li>
+              <li><strong>Routing table</strong> - an ordered list of network prefixes and their next-hop addresses. Routers consult this for every packet.</li>
+              <li><strong>TTL</strong> (Time To Live) - decremented by each router. Packet is dropped at 0 to prevent routing loops. Starting value is typically 64 (Linux/Mac) or 128 (Windows).</li>
+              <li><strong>Static routes</strong> - manually configured; predictable but don't auto-adjust to failures.</li>
+              <li><strong>Dynamic routing</strong> - protocols like OSPF (interior), BGP (exterior), and EIGRP automatically discover routes and adapt to changes.</li>
+            </ul>
+          </div>
+
+          <!-- Practice -->
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What is the subnet mask for a /26 prefix?</li>
+                <li>How many usable hosts does a /28 network provide?</li>
+                <li>What is the network address for host 10.0.1.100 on a /27 network?</li>
+                <li>A host shows the address 169.254.1.50. What does this indicate?</li>
+                <li>You need to subnet a /24 into blocks of exactly 30 usable hosts. What prefix length do you use?</li>
+                <li>What is the broadcast address of 192.168.10.64/26?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>255.255.255.192</li>
+                  <li>14  (2⁴ – 2 = 14)</li>
+                  <li>/27 block size = 32. 100 ÷ 32 = 3 remainder 4 → block starts at 96. Network address: <strong>10.0.1.96</strong></li>
+                  <li>DHCP failed or no DHCP server was reachable. The host auto-assigned an APIPA address (169.254.0.0/16).</li>
+                  <li>/27  (2⁵ – 2 = 30 usable hosts)</li>
+                  <li>Block starts at .64, size = 64 addresses. Broadcast = .64 + 63 = <strong>192.168.10.127</strong></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /s2 -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 3 - Data Link Layer & Ethernet
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s3">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>3 &nbsp;·&nbsp; Data Link Layer &amp; Ethernet</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c02-s3" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">MAC Addresses</p>
+            <ul class="concept-list">
+              <li><strong>48-bit</strong> (6-byte) address burned into the NIC by the manufacturer. Written in hex - e.g., <code>AA:BB:CC:DD:EE:FF</code>.</li>
+              <li>First 3 bytes = <strong>OUI</strong> (Organizationally Unique Identifier) - identifies the manufacturer.</li>
+              <li>Last 3 bytes = device-unique identifier assigned by the manufacturer.</li>
+              <li><strong>Broadcast MAC</strong>: <code>FF:FF:FF:FF:FF:FF</code> - received by every device on the segment.</li>
+              <li>MACs operate only within a single network segment (they're not routed).</li>
+              <li>Can be <em>spoofed</em> in software - important for security.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Ethernet Frame Structure</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Field</th><th>Size</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Preamble</td><td>7 bytes</td><td>Alternating 1/0 bits for clock synchronization</td></tr>
+                <tr><td>SFD (Start Frame Delimiter)</td><td>1 byte</td><td>Marks end of preamble, start of frame</td></tr>
+                <tr><td>Destination MAC</td><td>6 bytes</td><td>Who should receive this frame</td></tr>
+                <tr><td>Source MAC</td><td>6 bytes</td><td>Who sent this frame</td></tr>
+                <tr><td>EtherType / Length</td><td>2 bytes</td><td><code>0x0800</code>=IPv4 · <code>0x0806</code>=ARP · <code>0x86DD</code>=IPv6</td></tr>
+                <tr><td>Payload (data)</td><td>46–1500 bytes</td><td>IP packet or other upper-layer data</td></tr>
+                <tr><td>FCS (Frame Check Sequence)</td><td>4 bytes</td><td>CRC checksum for error detection</td></tr>
+              </tbody>
+            </table>
+            <div class="note">The minimum Ethernet frame payload is <strong>46 bytes</strong>. If data is smaller, padding is added. Maximum payload = MTU = <strong>1500 bytes</strong>.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">ARP - Address Resolution Protocol</p>
+            <ul class="concept-list">
+              <li>Resolves IP addresses to MAC addresses on the local network (Layer 3 → Layer 2).</li>
+              <li><strong>ARP Request</strong>: broadcast to <code>FF:FF:FF:FF:FF:FF</code> asking "Who has 192.168.1.1?"</li>
+              <li><strong>ARP Reply</strong>: unicast response "I have 192.168.1.1 - my MAC is AA:BB:CC:DD:EE:FF"</li>
+              <li>Mappings are stored in the <strong>ARP cache</strong> (view with <code>arp -a</code>) to avoid repeated lookups.</li>
+              <li><strong>Gratuitous ARP</strong>: a device broadcasts its own IP→MAC mapping. Used in failover/HA and (maliciously) for ARP spoofing.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Switches vs Hubs</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Hub (Layer 1)</span><span class="term-val">Broadcasts all traffic to all ports. Every device shares one collision domain. No intelligence - just a repeater.</span></div>
+              <div class="term-row"><span class="term-key">Switch (Layer 2)</span><span class="term-val">Learns MAC addresses and builds a <strong>MAC address table</strong>. Forwards frames only to the relevant port. Each port = its own collision domain.</span></div>
+              <div class="term-row"><span class="term-key">Collision domain</span><span class="term-val">Segment where only one device can transmit at a time. Switches isolate collision domains per port.</span></div>
+              <div class="term-row"><span class="term-key">Broadcast domain</span><span class="term-val">All devices that receive a broadcast frame. A switch creates one broadcast domain (unless VLANs are used).</span></div>
+              <div class="term-row"><span class="term-key">CSMA/CD</span><span class="term-val">Carrier Sense Multiple Access / Collision Detection - half-duplex Ethernet mechanism to detect and handle collisions (hubs/legacy). Modern switches are full-duplex and don't use it.</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">VLANs</p>
+            <ul class="concept-list">
+              <li>Virtual LANs logically segment a switch into separate broadcast domains without needing separate physical hardware.</li>
+              <li><strong>IEEE 802.1Q</strong> - standard for VLAN tagging; inserts a 4-byte tag into the Ethernet frame.</li>
+              <li><strong>Access port</strong>: carries traffic for a single VLAN; used for end devices.</li>
+              <li><strong>Trunk port</strong>: carries traffic for multiple VLANs between switches or switch-to-router; tags identify the VLAN.</li>
+              <li><strong>Native VLAN</strong>: traffic on a trunk port that arrives untagged is assigned to the native VLAN (default VLAN 1).</li>
+            </ul>
+          </div>
+
+          <!-- Practice -->
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What protocol maps an IP address to a MAC address?</li>
+                <li>How many bytes is a MAC address, and how is it written?</li>
+                <li>What is the broadcast MAC address?</li>
+                <li>What is the maximum payload size of an Ethernet frame, and what is this called?</li>
+                <li>What does the OUI in a MAC address tell you?</li>
+                <li>How does a switch differ from a hub in terms of collision domains?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>ARP (Address Resolution Protocol)</li>
+                  <li>6 bytes (48 bits), written as 6 pairs of hex digits separated by colons or dashes (e.g., AA:BB:CC:DD:EE:FF)</li>
+                  <li>FF:FF:FF:FF:FF:FF</li>
+                  <li>1500 bytes - this is the MTU (Maximum Transmission Unit) for standard Ethernet</li>
+                  <li>The first 3 bytes (OUI) identify the device manufacturer (e.g., Intel, Cisco)</li>
+                  <li>Each port on a switch is its own collision domain; only one device can collide with itself. A hub has a single shared collision domain for all ports.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /s3 -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 4 - Transport Layer: TCP vs UDP
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s4">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>4 &nbsp;·&nbsp; Transport Layer - TCP vs UDP</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c02-s4" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">TCP vs UDP</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Feature</th><th>TCP</th><th>UDP</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Connection</td><td>Connection-oriented (handshake)</td><td>Connectionless (fire and forget)</td></tr>
+                <tr><td>Reliability</td><td>Guaranteed delivery, retransmits lost segments</td><td>No guarantee - best effort</td></tr>
+                <tr><td>Ordering</td><td>Sequence numbers ensure in-order delivery</td><td>No ordering</td></tr>
+                <tr><td>Flow control</td><td>Yes - sliding window</td><td>No</td></tr>
+                <tr><td>Speed</td><td>Slower (overhead)</td><td>Faster (minimal overhead)</td></tr>
+                <tr><td>Use cases</td><td>HTTP, HTTPS, SSH, FTP, email - reliability critical</td><td>DNS, DHCP, VoIP, streaming, gaming - speed critical</td></tr>
+                <tr><td>Header size</td><td>20 bytes minimum</td><td>8 bytes</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">TCP Three-Way Handshake</p>
+            <div class="math-block">
+              <span class="label">Step 1 - Client → Server</span><span class="val">SYN  (synchronize - "I want to connect")</span><br>
+              <span class="label">Step 2 - Server → Client</span><span class="val">SYN-ACK  (synchronize-acknowledge - "OK, ready")</span><br>
+              <span class="label">Step 3 - Client → Server</span><span class="val">ACK  (acknowledge - "Connection established")</span>
+            </div>
+            <div class="note">Connection teardown uses a <strong>four-way FIN exchange</strong>: FIN → ACK → FIN → ACK. Either side can initiate.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">TCP Flags</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">SYN</span><span class="term-val">Synchronize - initiates a connection</span></div>
+              <div class="term-row"><span class="term-key">ACK</span><span class="term-val">Acknowledge - confirms receipt of data</span></div>
+              <div class="term-row"><span class="term-key">FIN</span><span class="term-val">Finish - gracefully closes a connection</span></div>
+              <div class="term-row"><span class="term-key">RST</span><span class="term-val">Reset - abruptly terminates a connection</span></div>
+              <div class="term-row"><span class="term-key">PSH</span><span class="term-val">Push - send buffered data immediately to the application</span></div>
+              <div class="term-row"><span class="term-key">URG</span><span class="term-val">Urgent - data should be prioritized</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Port Numbers</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Well-known</span><span class="term-val">0 – 1,023 - reserved for common system services</span></div>
+              <div class="term-row"><span class="term-key">Registered</span><span class="term-val">1,024 – 49,151 - registered by applications (e.g., databases)</span></div>
+              <div class="term-row"><span class="term-key">Dynamic/ephemeral</span><span class="term-val">49,152 – 65,535 - assigned temporarily to client-side connections</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Common Port Numbers to Memorize</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Port(s)</th><th>Protocol</th><th>Transport</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>20 / 21</td><td>FTP</td><td><span class="tag tag-tcp">TCP</span></td><td>20 = data, 21 = control</td></tr>
+                <tr><td>22</td><td>SSH / SCP / SFTP</td><td><span class="tag tag-tcp">TCP</span></td><td>Secure remote shell &amp; file transfer</td></tr>
+                <tr><td>23</td><td>Telnet</td><td><span class="tag tag-tcp">TCP</span></td><td>Unencrypted - avoid; use SSH instead</td></tr>
+                <tr><td>25</td><td>SMTP</td><td><span class="tag tag-tcp">TCP</span></td><td>Sending email between mail servers</td></tr>
+                <tr><td>53</td><td>DNS</td><td><span class="tag tag-both">TCP+UDP</span></td><td>UDP for queries; TCP for zone transfers and large responses</td></tr>
+                <tr><td>67 / 68</td><td>DHCP</td><td><span class="tag tag-udp">UDP</span></td><td>67 = server, 68 = client</td></tr>
+                <tr><td>80</td><td>HTTP</td><td><span class="tag tag-tcp">TCP</span></td><td>Unencrypted web traffic</td></tr>
+                <tr><td>110</td><td>POP3</td><td><span class="tag tag-tcp">TCP</span></td><td>Receive email (downloads to client)</td></tr>
+                <tr><td>123</td><td>NTP</td><td><span class="tag tag-udp">UDP</span></td><td>Network Time Protocol</td></tr>
+                <tr><td>143</td><td>IMAP</td><td><span class="tag tag-tcp">TCP</span></td><td>Receive email (syncs with server)</td></tr>
+                <tr><td>161 / 162</td><td>SNMP</td><td><span class="tag tag-udp">UDP</span></td><td>161 = queries, 162 = traps</td></tr>
+                <tr><td>389</td><td>LDAP</td><td><span class="tag tag-tcp">TCP</span></td><td>Directory lookups (Active Directory)</td></tr>
+                <tr><td>443</td><td>HTTPS</td><td><span class="tag tag-tcp">TCP</span></td><td>HTTP over TLS</td></tr>
+                <tr><td>445</td><td>SMB</td><td><span class="tag tag-tcp">TCP</span></td><td>Windows file sharing</td></tr>
+                <tr><td>465 / 587</td><td>SMTPS / Submission</td><td><span class="tag tag-tcp">TCP</span></td><td>Secure/authenticated email sending</td></tr>
+                <tr><td>636</td><td>LDAPS</td><td><span class="tag tag-tcp">TCP</span></td><td>LDAP over TLS</td></tr>
+                <tr><td>993 / 995</td><td>IMAPS / POP3S</td><td><span class="tag tag-tcp">TCP</span></td><td>Secure email retrieval</td></tr>
+                <tr><td>1433</td><td>MS SQL Server</td><td><span class="tag tag-tcp">TCP</span></td><td></td></tr>
+                <tr><td>3306</td><td>MySQL</td><td><span class="tag tag-tcp">TCP</span></td><td></td></tr>
+                <tr><td>3389</td><td>RDP</td><td><span class="tag tag-tcp">TCP</span></td><td>Remote Desktop Protocol (Windows)</td></tr>
+                <tr><td>5432</td><td>PostgreSQL</td><td><span class="tag tag-tcp">TCP</span></td><td></td></tr>
+                <tr><td>5900</td><td>VNC</td><td><span class="tag tag-tcp">TCP</span></td><td>Remote desktop (cross-platform)</td></tr>
+                <tr><td>8080 / 8443</td><td>HTTP / HTTPS alt</td><td><span class="tag tag-tcp">TCP</span></td><td>Common non-privileged web service ports</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Practice -->
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>Walk through the TCP three-way handshake in order.</li>
+                <li>What port does HTTPS use, and what does it add over HTTP?</li>
+                <li>Which protocol would you use for live video streaming, and why?</li>
+                <li>What port does RDP use?</li>
+                <li>A firewall blocks all traffic to port 22. What functionality is lost?</li>
+                <li>What are the three port number ranges and their boundaries?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>Client sends SYN → Server replies SYN-ACK → Client sends ACK. Connection is now established.</li>
+                  <li>Port 443. HTTPS = HTTP wrapped in TLS, which provides encryption, authentication (server certificate), and data integrity.</li>
+                  <li>UDP - because it's faster (no handshake, no retransmission) and a dropped frame is less noticeable than jitter caused by waiting for retransmits.</li>
+                  <li>3389</li>
+                  <li>SSH access is lost, meaning secure remote shell, SCP file transfers, and SFTP would all be blocked.</li>
+                  <li>Well-known: 0–1023 | Registered: 1024–49151 | Dynamic/ephemeral: 49152–65535</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /s4 -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 5 - Application Layer Services
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s5">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>5 &nbsp;·&nbsp; Application Layer Services - DNS, DHCP, NAT, HTTP</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c02-s5" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <!-- DNS -->
+          <div class="subsection">
+            <p class="subsection-title">DNS - Domain Name System</p>
+            <ul class="concept-list">
+              <li>Translates human-readable hostnames (<code>example.com</code>) into IP addresses. Often called "the phonebook of the internet."</li>
+              <li>Hierarchical structure: <strong>root</strong> (<code>.</code>) → <strong>TLD</strong> (<code>.com</code>) → <strong>authoritative nameserver</strong> → record.</li>
+              <li>DNS queries use <strong>UDP port 53</strong> (most common); TCP port 53 for large responses and zone transfers.</li>
+              <li><strong>TTL</strong> (Time To Live): how long a record is cached before re-querying.</li>
+            </ul>
+
+            <p class="subsection-title" style="margin-top:1rem;">DNS Record Types</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Type</th><th>Maps / Returns</th><th>Example</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>A</td><td>Hostname → IPv4 address</td><td><code>example.com → 93.184.216.34</code></td></tr>
+                <tr><td>AAAA</td><td>Hostname → IPv6 address</td><td><code>example.com → 2606:2800:220:1:248:1893:25c8:1946</code></td></tr>
+                <tr><td>CNAME</td><td>Alias → canonical name</td><td><code>www.example.com → example.com</code></td></tr>
+                <tr><td>MX</td><td>Domain → mail server(s)</td><td><code>example.com → mail.example.com (priority 10)</code></td></tr>
+                <tr><td>PTR</td><td>IP → hostname (reverse lookup)</td><td><code>34.216.184.93.in-addr.arpa → example.com</code></td></tr>
+                <tr><td>NS</td><td>Domain → authoritative nameserver(s)</td><td><code>example.com → ns1.example.com</code></td></tr>
+                <tr><td>SOA</td><td>Zone metadata - serial, refresh, retry, expire</td><td>Each zone has exactly one</td></tr>
+                <tr><td>TXT</td><td>Free-form text</td><td>SPF, DKIM, domain verification</td></tr>
+              </tbody>
+            </table>
+
+            <p class="subsection-title" style="margin-top:1rem;">DNS Resolution Process</p>
+            <div class="math-block">
+              <span class="label">1. Check local cache</span><span class="val">Browser / OS cache</span><br>
+              <span class="label">2. Check /etc/hosts</span><span class="val">Local override file</span><br>
+              <span class="label">3. Query recursive resolver</span><span class="val">ISP DNS or 8.8.8.8 (Google)</span><br>
+              <span class="label">4. Resolver → root</span><span class="val">Root returns TLD nameserver address</span><br>
+              <span class="label">5. Resolver → TLD</span><span class="val">TLD returns authoritative NS address</span><br>
+              <span class="label">6. Resolver → authoritative NS</span><span class="val">Returns the actual A/AAAA record</span><br>
+              <span class="label">7. Resolver caches + replies</span><span class="val">Client gets the IP, answer cached per TTL</span>
+            </div>
+          </div>
+
+          <!-- DHCP -->
+          <div class="subsection">
+            <p class="subsection-title">DHCP - Dynamic Host Configuration Protocol</p>
+            <ul class="concept-list">
+              <li>Automatically assigns IP configuration to devices on a network.</li>
+              <li>Assigns: <strong>IP address</strong>, <strong>subnet mask</strong>, <strong>default gateway</strong>, <strong>DNS servers</strong>, and a <strong>lease time</strong>.</li>
+              <li>Uses UDP: client listens on port <strong>68</strong>, server on port <strong>67</strong>.</li>
+              <li>Initial discovery uses broadcasts (source: <code>0.0.0.0</code>, dest: <code>255.255.255.255</code>).</li>
+            </ul>
+            <p class="subsection-title" style="margin-top:1rem;">DORA Process</p>
+            <div class="math-block">
+              <span class="label">D - Discover</span>  <span class="val">Client broadcasts "Anyone have an IP for me?"</span><br>
+              <span class="label">O - Offer</span>     <span class="val">Server replies with an available IP lease offer</span><br>
+              <span class="label">R - Request</span>   <span class="val">Client broadcasts "I'll take 192.168.1.50 from Server X"</span><br>
+              <span class="label">A - Acknowledge</span><span class="val">Server confirms "It's yours until [lease time]"</span>
+            </div>
+            <ul class="concept-list" style="margin-top:0.75rem;">
+              <li><strong>Lease renewal</strong>: client tries to renew at 50% of lease time (T1), then again at 87.5% (T2).</li>
+              <li><strong>DHCP reservation</strong>: server assigns a fixed IP based on the client's MAC address.</li>
+              <li><strong>DHCP relay agent</strong>: forwards DHCP broadcasts across router boundaries so one server can serve multiple subnets.</li>
+            </ul>
+          </div>
+
+          <!-- NAT -->
+          <div class="subsection">
+            <p class="subsection-title">NAT - Network Address Translation</p>
+            <ul class="concept-list">
+              <li>Translates private IP addresses to a public IP (and back) as packets cross the router. Extends IPv4 address space.</li>
+              <li><strong>Static NAT</strong>: one-to-one mapping - one private IP always maps to one specific public IP.</li>
+              <li><strong>Dynamic NAT</strong>: many-to-many - private IPs share a pool of public IPs.</li>
+              <li><strong>PAT</strong> (Port Address Translation) / NAT overload / <em>masquerade</em>: many-to-one - all private devices share a <em>single</em> public IP, differentiated by port numbers. This is what home routers do.</li>
+            </ul>
+            <table class="ref-table" style="margin-top:0.75rem;">
+              <thead>
+                <tr><th>Inside local</th><th>Inside global</th><th>Explanation</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>192.168.1.10:50001</td><td>203.0.113.5:10001</td><td>Private IP:port → public IP:port (PAT)</td></tr>
+                <tr><td>192.168.1.11:50002</td><td>203.0.113.5:10002</td><td>Different port used on the same public IP</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- HTTP -->
+          <div class="subsection">
+            <p class="subsection-title">HTTP / HTTPS</p>
+            <ul class="concept-list">
+              <li><strong>HTTP methods</strong>: GET (retrieve), POST (submit), PUT (replace), PATCH (partial update), DELETE, HEAD (headers only), OPTIONS (capabilities).</li>
+              <li><strong>HTTPS</strong> = HTTP + TLS - adds encryption, server authentication via certificates, and data integrity (port 443).</li>
+            </ul>
+
+            <p class="subsection-title" style="margin-top:1rem;">HTTP Status Codes</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Range</th><th>Category</th><th>Common Codes</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1xx</td><td>Informational</td><td>100 Continue, 101 Switching Protocols</td></tr>
+                <tr><td>2xx</td><td>Success</td><td>200 OK · 201 Created · 204 No Content</td></tr>
+                <tr><td>3xx</td><td>Redirection</td><td>301 Moved Permanently · 302 Found · 304 Not Modified</td></tr>
+                <tr><td>4xx</td><td>Client Error</td><td>400 Bad Request · 401 Unauthorized · 403 Forbidden · 404 Not Found · 429 Too Many Requests</td></tr>
+                <tr><td>5xx</td><td>Server Error</td><td>500 Internal Server Error · 502 Bad Gateway · 503 Service Unavailable · 504 Gateway Timeout</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Practice -->
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What DNS record type maps a hostname to an IPv4 address?</li>
+                <li>Spell out and explain each step of the DHCP DORA process.</li>
+                <li>An HTTP response returns status 403. What does this mean, and what's the difference from 401?</li>
+                <li>What type of NAT is used in a typical home router? How does it allow multiple devices to share one IP?</li>
+                <li>You try to access a site by IP and it works, but using the domain name it fails. What is the likely problem?</li>
+                <li>What is the DNS TTL and why does it matter for troubleshooting?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>A record</li>
+                  <li>Discover (client broadcasts looking for a DHCP server) → Offer (server offers an IP lease) → Request (client formally requests that specific offer) → Acknowledge (server confirms the lease)</li>
+                  <li>403 = Forbidden (you are authenticated but not permitted to access the resource). 401 = Unauthorized (authentication is required and was not provided or failed - misleading name).</li>
+                  <li>PAT (Port Address Translation) / NAT overload. The router translates each private IP:port pair to the public IP with a unique port number, tracking each session in the NAT table.</li>
+                  <li>DNS resolution is failing. The IP-based request bypasses DNS entirely. Check the DNS configuration or try <code>nslookup</code> / <code>dig</code> on the domain.</li>
+                  <li>TTL is how long a DNS record is cached. A low TTL means changes propagate quickly but cause more DNS queries. A high TTL reduces queries but means stale entries linger longer after a change - important when troubleshooting after a DNS update.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /s5 -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 6 - Connectivity, VPNs & Troubleshooting
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s6">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>6 &nbsp;·&nbsp; Connectivity, VPNs &amp; Troubleshooting Tools</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c02-s6" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <!-- Troubleshooting methodology -->
+          <div class="subsection">
+            <p class="subsection-title">Systematic Connectivity Troubleshooting</p>
+            <div class="math-block">
+              <span class="label">Step 1</span><span class="val">Physical - check cable, NIC link light, Wi-Fi signal</span><br>
+              <span class="label">Step 2</span><span class="val">IP config - <code>ipconfig</code> / <code>ip addr</code> - verify IP/mask/GW/DNS</span><br>
+              <span class="label">Step 3</span><span class="val">Loopback - <code>ping 127.0.0.1</code> - tests TCP/IP stack itself</span><br>
+              <span class="label">Step 4</span><span class="val">Default gateway - <code>ping 192.168.1.1</code> - tests local LAN</span><br>
+              <span class="label">Step 5</span><span class="val">External IP - <code>ping 8.8.8.8</code> - tests routing &amp; internet</span><br>
+              <span class="label">Step 6</span><span class="val">DNS - <code>ping google.com</code> or <code>nslookup google.com</code> - tests name resolution</span><br>
+              <span class="label">Step 7</span><span class="val">Path - <code>traceroute</code> / <code>tracert</code> - identify where packets stop</span>
+            </div>
+          </div>
+
+          <!-- Windows commands -->
+          <div class="subsection">
+            <p class="subsection-title">Windows Troubleshooting Commands</p>
+            <pre class="cmd-block"><span class="k">ipconfig</span>                 <span class="c"># Show IP configuration (all adapters)</span>
+<span class="k">ipconfig</span> <span class="f">/all</span>            <span class="c"># Detailed - includes MAC, DHCP server, lease times</span>
+<span class="k">ipconfig</span> <span class="f">/release</span>        <span class="c"># Release DHCP lease</span>
+<span class="k">ipconfig</span> <span class="f">/renew</span>          <span class="c"># Request new DHCP lease</span>
+<span class="k">ipconfig</span> <span class="f">/flushdns</span>       <span class="c"># Clear the local DNS cache</span>
+
+<span class="k">ping</span> <span class="v">8.8.8.8</span>             <span class="c"># Test ICMP connectivity</span>
+<span class="k">ping</span> <span class="f">-t</span> <span class="v">8.8.8.8</span>         <span class="c"># Continuous ping (Ctrl+C to stop)</span>
+<span class="k">ping</span> <span class="f">-n 10</span> <span class="v">8.8.8.8</span>     <span class="c"># Send exactly 10 packets</span>
+
+<span class="k">tracert</span> <span class="v">google.com</span>       <span class="c"># Trace route hop-by-hop</span>
+<span class="k">pathping</span> <span class="v">google.com</span>      <span class="c"># Combined ping + tracert with statistics</span>
+
+<span class="k">nslookup</span> <span class="v">google.com</span>     <span class="c"># DNS lookup</span>
+<span class="k">nslookup</span> <span class="f">-type=MX</span> <span class="v">gmail.com</span>  <span class="c"># Query specific record type</span>
+
+<span class="k">arp</span> <span class="f">-a</span>                   <span class="c"># Show ARP table (IP ↔ MAC mappings)</span>
+<span class="k">route</span> <span class="v">print</span>             <span class="c"># Show routing table</span>
+<span class="k">netstat</span> <span class="f">-an</span>             <span class="c"># Show all connections and listening ports</span>
+<span class="k">netstat</span> <span class="f">-b</span>              <span class="c"># Show which executable owns each connection</span></pre>
+          </div>
+
+          <!-- Linux/Mac commands -->
+          <div class="subsection">
+            <p class="subsection-title">Linux / macOS Commands</p>
+            <pre class="cmd-block"><span class="k">ip</span> <span class="v">addr</span>                  <span class="c"># Show IP addresses (modern Linux)</span>
+<span class="k">ip</span> <span class="v">route</span>                 <span class="c"># Show routing table</span>
+<span class="k">ifconfig</span>                 <span class="c"># Show IP config (legacy, still common on macOS)</span>
+
+<span class="k">ping</span> <span class="f">-c 4</span> <span class="v">8.8.8.8</span>       <span class="c"># Send 4 ICMP echo requests</span>
+<span class="k">traceroute</span> <span class="v">google.com</span>   <span class="c"># Trace route (Linux/macOS)</span>
+
+<span class="k">dig</span> <span class="v">google.com</span>          <span class="c"># Detailed DNS lookup</span>
+<span class="k">dig</span> <span class="f">MX</span> <span class="v">gmail.com</span>        <span class="c"># Query MX records</span>
+<span class="k">dig</span> <span class="f">+short</span> <span class="v">google.com</span>  <span class="c"># Just the answer</span>
+<span class="k">nslookup</span> <span class="v">google.com</span>     <span class="c"># Simpler DNS lookup</span>
+
+<span class="k">ss</span> <span class="f">-tulpn</span>               <span class="c"># Show listening ports and processes (modern)</span>
+<span class="k">netstat</span> <span class="f">-tulpn</span>          <span class="c"># Same, legacy command</span>
+
+<span class="k">arp</span> <span class="f">-n</span>                   <span class="c"># Show ARP table</span>
+<span class="k">curl</span> <span class="f">-I</span> <span class="v">https://example.com</span>  <span class="c"># Show HTTP response headers only</span>
+<span class="k">tcpdump</span> <span class="f">-i</span> <span class="v">eth0</span> <span class="f">-n</span>     <span class="c"># Capture packets on interface eth0</span></pre>
+          </div>
+
+          <!-- VPNs -->
+          <div class="subsection">
+            <p class="subsection-title">VPNs - Virtual Private Networks</p>
+            <ul class="concept-list">
+              <li><strong>Purpose</strong>: create an encrypted tunnel over an untrusted network (the internet), allowing secure communication as if on a private network.</li>
+              <li><strong>Site-to-site VPN</strong>: connects two entire networks (e.g., HQ ↔ branch office). Always-on tunnel between routers/firewalls.</li>
+              <li><strong>Remote access VPN</strong>: individual device connects to a corporate network. The user's device gets a virtual IP on the remote subnet.</li>
+              <li><strong>Split tunneling</strong>: only traffic destined for the remote network goes through the VPN; other traffic goes direct. Reduces VPN load but reduces security.</li>
+            </ul>
+
+            <p class="subsection-title" style="margin-top:1rem;">VPN Protocols</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">IPsec</span><span class="term-val">Layer 3. Two modes: <strong>Tunnel</strong> (encrypts entire packet, used for site-to-site) vs <strong>Transport</strong> (encrypts payload only). Often combined with IKEv2.</span></div>
+              <div class="term-row"><span class="term-key">SSL/TLS VPN</span><span class="term-val">Runs over TCP/443. Works through firewalls that block non-HTTP. Common for remote access (e.g., OpenVPN, Cisco AnyConnect).</span></div>
+              <div class="term-row"><span class="term-key">WireGuard</span><span class="term-val">Modern, minimal codebase, fast. Uses UDP. Increasingly replacing OpenVPN in new deployments.</span></div>
+              <div class="term-row"><span class="term-key">L2TP/IPsec</span><span class="term-val">L2TP provides the tunnel (Layer 2), IPsec provides encryption. Built into most OSes.</span></div>
+              <div class="term-row"><span class="term-key">PPTP</span><span class="term-val">Old, <strong>insecure</strong> - should not be used. Only included for historical/exam context.</span></div>
+            </div>
+          </div>
+
+          <!-- Proxies & Firewalls -->
+          <div class="subsection">
+            <p class="subsection-title">Proxy Servers</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Forward proxy</span><span class="term-val">Sits between clients and the internet. Can filter, cache, and log outbound requests. Clients know about it.</span></div>
+              <div class="term-row"><span class="term-key">Reverse proxy</span><span class="term-val">Sits in front of servers (e.g., Nginx, HAProxy). Handles load balancing, SSL termination, and caching. Clients don't know the backend servers.</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Firewalls</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Stateless</span><span class="term-val">Filters based on static rules (src/dst IP, port, protocol). Each packet is evaluated independently - no awareness of connection state.</span></div>
+              <div class="term-row"><span class="term-key">Stateful</span><span class="term-val">Tracks the state of active connections (connection table). Allows return traffic for established sessions automatically. More secure.</span></div>
+              <div class="term-row"><span class="term-key">NGFW</span><span class="term-val">Next-Generation Firewall - adds deep packet inspection, application awareness, IDS/IPS, and user identity into a stateful firewall.</span></div>
+            </div>
+          </div>
+
+          <!-- Wireless troubleshooting -->
+          <div class="subsection">
+            <p class="subsection-title">Wireless Troubleshooting Notes</p>
+            <ul class="concept-list">
+              <li><strong>2.4 GHz non-overlapping channels</strong>: 1, 6, 11 (US). Use these to avoid co-channel interference.</li>
+              <li><strong>5 GHz</strong>: more channels, less interference, shorter range.</li>
+              <li><strong>RSSI</strong> (Received Signal Strength Indicator): measure of signal strength. More negative = weaker (e.g., -70 dBm is weaker than -50 dBm).</li>
+              <li>Authentication failures: wrong passphrase, expired certificate (WPA2-Enterprise), or mismatch in security standard.</li>
+              <li>Check <strong>DHCP exhaustion</strong> if new devices can't get an IP - the pool may be full.</li>
+            </ul>
+          </div>
+
+          <!-- Practice -->
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What command shows the ARP cache on Windows? On Linux?</li>
+                <li>You can ping 8.8.8.8 successfully but cannot load google.com in a browser. What is most likely wrong and what command would you run next?</li>
+                <li>What does <code>ipconfig /flushdns</code> do and when would you use it?</li>
+                <li>What is the difference between a site-to-site VPN and a remote access VPN?</li>
+                <li>A stateless firewall rule permits TCP traffic from any source to port 80. Why might a <em>stateful</em> firewall be preferable here?</li>
+                <li>What are the non-overlapping channels on the 2.4 GHz band (US), and why does this matter?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>Windows: <code>arp -a</code>. Linux: <code>arp -n</code> or <code>ip neigh</code></li>
+                  <li>DNS resolution is failing - the device can reach the internet but can't translate domain names to IPs. Run <code>nslookup google.com</code> or <code>dig google.com</code> to verify.</li>
+                  <li>It clears the local DNS resolver cache. Useful when DNS records have changed (e.g., server migration) but the old cached entry is still being used.</li>
+                  <li>Site-to-site connects two full networks permanently (e.g., two offices), handled by router/firewall appliances. Remote access VPN connects a single user's device to a network, typically initiated on-demand by the user.</li>
+                  <li>A stateful firewall automatically permits the TCP reply traffic (RST, ACK, established sessions) for connections it initiated, and blocks unsolicited inbound packets. A stateless firewall would need explicit rules for return traffic, creating security gaps.</li>
+                  <li>Channels 1, 6, and 11 are the only three non-overlapping 20 MHz channels in the US 2.4 GHz band. Using the same or adjacent channels as a neighbor causes co-channel or adjacent-channel interference, reducing throughput.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /s6 -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 7 - What Actually Matters
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s7">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>7 &nbsp;·&nbsp; What Actually Matters - Key Takeaways</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c02-s7" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">The mental model - OSI layers for troubleshooting</p>
+            <p style="font-size:.875rem;color:var(--text-1);margin-bottom:.7rem;line-height:1.6;">Use the 4-layer TCP/IP model bottom-up. Every real-world problem maps to one of these layers - it stops you from chasing DNS when the cable is unplugged.</p>
+            <div class="math-block">
+              <span class="label">1 &nbsp;Physical</span>      <span class="val">Is the cable / signal good?</span><br>
+              <span class="label">2 &nbsp;Data Link</span>     <span class="val">Is the MAC address / switch doing its job?</span><br>
+              <span class="label">3 &nbsp;Network</span>       <span class="val">Is IP routing correct?</span><br>
+              <span class="label">4 &nbsp;Transport</span>     <span class="val">Is the right port open? Is the connection establishing?</span><br>
+              <span class="label">5 &nbsp;Application</span>   <span class="val">Is the service itself responding?</span>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">IP addressing &amp; subnetting - needs to be automatic</p>
+            <ul class="concept-list">
+              <li>CIDR notation, what the prefix length means, how to derive the network address, broadcast address, and usable host range from any prefix.</li>
+              <li>Memorize the private RFC 1918 ranges cold: <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code>.</li>
+              <li>Understanding <em>why</em> subnetting exists - traffic segmentation, security boundaries, broadcast domain control - matters more long-term than binary math speed. But the math still needs to be solid.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">TCP vs UDP - know when each is appropriate</p>
+            <div class="term-grid">
+              <div class="term-row">
+                <span class="term-key">TCP</span>
+                <span class="term-val">Connection-oriented. Three-way handshake (SYN → SYN-ACK → ACK), guaranteed delivery, ordered, flow-controlled. Used where integrity matters - HTTP, SSH, FTP.</span>
+              </div>
+              <div class="term-row">
+                <span class="term-key">UDP</span>
+                <span class="term-val">Fire-and-forget. No handshake, low overhead. Used where speed matters more than perfection - DNS queries, streaming, VoIP, gaming.</span>
+              </div>
+            </div>
+            <div class="note" style="margin-top:.65rem;">Knowing which protocol is involved tells you what kind of problem to look for.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">DNS - the system everything depends on</p>
+            <ul class="concept-list">
+              <li><strong>Resolution chain</strong>: recursive resolver → root → TLD → authoritative.</li>
+              <li><strong>Record types in practical priority order</strong>: A (IPv4), AAAA (IPv6), CNAME (alias), MX (mail routing), PTR (reverse lookup), NS (delegation).</li>
+              <li><strong>TTL as an operational lever</strong> - lower it before migrations so changes propagate quickly.</li>
+              <li><strong>The real skill</strong>: isolating "is this DNS or connectivity?" quickly with <code>nslookup</code> or <code>dig</code>.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">DHCP - understand the lease lifecycle</p>
+            <ul class="concept-list">
+              <li><strong>DORA</strong>: Discover → Offer → Request → Acknowledge. Discover and Request are broadcasts; Offer and Acknowledge come from the server.</li>
+              <li>Lease renewal behavior: client tries at 50% of lease time (T1), then at 87.5% (T2).</li>
+              <li><strong>Reservations</strong> (MAC-to-IP binding) give devices a stable address without full static config.</li>
+              <li><strong>IP helper addresses</strong> forward DHCP broadcasts across subnets so one server can serve multiple VLANs.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">NAT - the bridge between private and public</p>
+            <ul class="concept-list">
+              <li><strong>PAT</strong> (the common form) maps many internal hosts to one public IP via port tracking.</li>
+              <li>The NAT table is what makes return traffic work - if the entry times out or the device reboots, return traffic has nowhere to go.</li>
+              <li>Inbound connections to NATted hosts require explicit <strong>port forwarding</strong> rules.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Routing fundamentals</p>
+            <ul class="concept-list">
+              <li><strong>Static routes</strong>: manually configured, predictable, fragile at scale.</li>
+              <li><strong>Dynamic routing protocols</strong> (OSPF interior, BGP exterior): know the names and use cases even before you configure them.</li>
+              <li>The <strong>default gateway</strong> is the "if I don't know where else to send it" rule.</li>
+              <li><strong>TTL</strong> is both a routing safety mechanism (drops loops) and the engine behind <code>traceroute</code>.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Troubleshooting tools - daily instruments</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">ping</span><span class="term-val">Layer 3 reachability, round-trip time</span></div>
+              <div class="term-row"><span class="term-key">traceroute / tracert</span><span class="term-val">Path mapping - find where packets stop</span></div>
+              <div class="term-row"><span class="term-key">nslookup / dig</span><span class="term-val">DNS verification independent of the browser</span></div>
+              <div class="term-row"><span class="term-key">netstat / ss</span><span class="term-val">What's listening, what's connected</span></div>
+              <div class="term-row"><span class="term-key">ipconfig / ip addr</span><span class="term-val">Local config sanity check</span></div>
+            </div>
+            <div class="math-block" style="margin-top:.7rem;">
+              <span class="label">Ping the gateway</span>               <span class="val">Fails → local problem</span><br>
+              <span class="label">Gateway OK, destination fails</span>   <span class="val">Somewhere in the path</span><br>
+              <span class="label">IP works, hostname fails</span>         <span class="val">DNS</span>
+            </div>
+            <div class="note" style="margin-top:.6rem;">That sequence gets you to the answer faster than reaching for any individual tool first.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">IPv6 - know it well enough to work with it</p>
+            <ul class="concept-list">
+              <li>128-bit addresses, colon-hex notation. Two compression rules: drop leading zeros per group; replace the longest consecutive all-zero run with <code>::</code> once (leftmost on ties).</li>
+              <li><strong>Address types that matter</strong>: global unicast (<code>2000::/3</code>, publicly routable), link-local (<code>fe80::/10</code>, auto-configured, non-routable, always present on every interface), loopback (<code>::1</code>).</li>
+              <li>No broadcast - replaced by multicast. No NAT needed at scale.</li>
+              <li><strong>Dual-stack</strong> is the real-world transition reality - most production networks run both IPv4 and IPv6 simultaneously.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">The bigger picture</p>
+            <div class="note">
+              Networks are layered systems and <strong>every problem has a layer</strong>. Verify each layer before assuming the problem is higher up. That instinct - checking bottom-up systematically before jumping to conclusions - is worth more than memorizing any individual fact on this list.
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
+      </div><!-- /section-body -->
+    </div><!-- /s7 -->
+
+  </div><!-- /section-list -->
+
+</main>
+
+<footer class="site-footer">
+  Google IT Support Professional Certificate · Course 2 - Bits and Bytes of Networking
+</footer>
+
+<script>
+  /* ── Progress persistence ─────────────────────────── */
+  function saveProgress(cb) {
+    const saved = JSON.parse(localStorage.getItem('itcert_progress') || '{}');
+    saved[cb.dataset.section] = cb.checked;
+    localStorage.setItem('itcert_progress', JSON.stringify(saved));
+    cb.closest('.topic-section').classList.toggle('complete', cb.checked);
+  }
+
+  function loadProgress() {
+    const saved = JSON.parse(localStorage.getItem('itcert_progress') || '{}');
+    document.querySelectorAll('.complete-cb').forEach(cb => {
+      if (saved[cb.dataset.section]) {
+        cb.checked = true;
+        cb.closest('.topic-section').classList.add('complete');
+      }
+    });
+  }
+
+  /* ── Accordion ───────────────────────────────────── */
+  function toggleSection(header) {
+    const section = header.closest('.topic-section');
+    const body    = section.querySelector('.section-body');
+    const isOpen  = section.classList.contains('open');
+
+    if (isOpen) {
+      section.classList.remove('open');
+      body.style.maxHeight = '0';
+    } else {
+      section.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  }
+
+  /* Recalculate section height after inner toggles open */
+  function refreshHeight(el) {
+    const body = el.closest('.section-body');
+    if (body && body.style.maxHeight && body.style.maxHeight !== '0px') {
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  }
+
+  /* ── Practice toggle ─────────────────────────────── */
+  function togglePractice(btn) {
+    const body = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    body.classList.toggle('open');
+    refreshHeight(btn);
+  }
+
+  /* ── Answers toggle ──────────────────────────────── */
+  function toggleAnswers(btn) {
+    const body = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    body.classList.toggle('open');
+    refreshHeight(btn);
+  }
+
+  document.addEventListener('DOMContentLoaded', loadProgress);
+
+/* ── IPv6 Compression Quiz ───────────────────────────── */
+(function () {
+  var POOL = [
+    '0000:0000:0000:0000:0000:0000:0000:0001',
+    '0000:0000:0000:0000:0000:0000:0000:0000',
+    '2001:0db8:0000:0000:0000:0000:0000:0001',
+    'fe80:0000:0000:0000:0200:f8ff:fe21:67cf',
+    '2001:0db8:0000:0000:0001:0000:0000:0001',
+    '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
+    'ff02:0000:0000:0000:0000:0000:0000:0001',
+    '0000:0000:0000:0000:0000:ffff:c0a8:0001',
+    '2001:0db8:0000:0000:0000:ff00:0042:8329',
+    '2607:f8b0:4004:0c17:0000:0000:0000:200e',
+    '2001:0db8:0001:0002:0003:0004:0005:0006',
+    '1234:5678:0000:0000:9abc:0000:0000:def0',
+  ];
+
+  var ROUND = 8;
+  var queue = [], idx = 0, score = 0, answered = false;
+
+  function compress(full) {
+    var groups = full.split(':');
+    var s = groups.map(function (g) { return g.replace(/^0+/, '') || '0'; });
+    var bestStart = -1, bestLen = 0, i = 0;
+    while (i < 8) {
+      if (s[i] === '0') {
+        var j = i;
+        while (j < 8 && s[j] === '0') j++;
+        var len = j - i;
+        if (len > bestLen) { bestLen = len; bestStart = i; }
+        i = j;
+      } else { i++; }
+    }
+    if (bestLen < 2) return s.join(':');
+    return s.slice(0, bestStart).join(':') + '::' + s.slice(bestStart + bestLen).join(':');
+  }
+
+  function stripLeading(full) {
+    return full.split(':').map(function (g) { return g.replace(/^0+/, '') || '0'; }).join(':');
+  }
+
+  function renderAddr(full) {
+    return full.split(':').map(function (g, i) {
+      var allZ = /^0+$/.test(g);
+      var leadZ = !allZ && /^0/.test(g);
+      var cls = allZ ? ' az' : (leadZ ? ' lz' : '');
+      var sep = i < 7 ? '<span class="ipv6-sep">:</span>' : '';
+      return '<span class="ipv6-group' + cls + '">' + g + '</span>' + sep;
+    }).join('');
+  }
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  window.ipv6Start = function () {
+    queue = shuffle(POOL).slice(0, ROUND);
+    idx = 0; score = 0; answered = false;
+    document.getElementById('ipv6-score-box').classList.remove('visible');
+    document.getElementById('ipv6-quiz-area').classList.remove('hidden');
+    renderQ();
+  };
+
+  function renderQ() {
+    answered = false;
+    document.getElementById('ipv6-addr-display').innerHTML = renderAddr(queue[idx]);
+    var inp = document.getElementById('ipv6-input');
+    inp.value = ''; inp.disabled = false;
+    document.getElementById('ipv6-submit-btn').disabled = false;
+    var fb = document.getElementById('ipv6-feedback');
+    fb.className = 'ipv6-feedback'; fb.innerHTML = '';
+    document.getElementById('ipv6-next-btn').classList.remove('visible');
+    updateBar();
+    inp.focus();
+  }
+
+  function updateBar() {
+    var pct = Math.round((idx / ROUND) * 100);
+    document.getElementById('ipv6-bar-fill').style.width = pct + '%';
+    document.getElementById('ipv6-bar-label').textContent = idx + ' / ' + ROUND;
+  }
+
+  window.ipv6Submit = function () {
+    if (answered) return;
+    var userAns = document.getElementById('ipv6-input').value.trim().toLowerCase();
+    if (!userAns) return;
+    var full    = queue[idx];
+    var correct = compress(full).toLowerCase();
+    answered = true;
+    document.getElementById('ipv6-input').disabled = true;
+    document.getElementById('ipv6-submit-btn').disabled = true;
+    var fb = document.getElementById('ipv6-feedback');
+    if (userAns === correct) {
+      score++;
+      fb.className = 'ipv6-feedback correct';
+      fb.innerHTML = 'Correct! <span class="correct-ans">' + correct + '</span>';
+    } else {
+      var step1 = stripLeading(full);
+      fb.className = 'ipv6-feedback wrong';
+      fb.innerHTML =
+        'Correct answer: <span class="correct-ans">' + correct + '</span>' +
+        '<div class="fb-step"><strong>Step 1</strong> - strip leading zeros: <code>' + step1 + '</code></div>' +
+        '<div class="fb-step"><strong>Step 2</strong> - apply <code>::</code>: <code>' + correct + '</code></div>';
+    }
+    var nxt = document.getElementById('ipv6-next-btn');
+    nxt.textContent = (idx + 1 < ROUND) ? 'Next →' : 'See Results';
+    nxt.classList.add('visible');
+    refreshHeight(fb);
+  };
+
+  window.ipv6Next = function () {
+    idx++;
+    if (idx >= ROUND) { showScore(); } else { renderQ(); }
+  };
+
+  function showScore() {
+    document.getElementById('ipv6-quiz-area').classList.add('hidden');
+    var box = document.getElementById('ipv6-score-box');
+    box.classList.add('visible');
+    document.getElementById('ipv6-score-num').textContent = score + ' / ' + ROUND;
+    var msgs = ['Keep at it - the rules will click soon.', 'Decent - keep practicing.', 'Good work - review the misses.', 'Perfect round!'];
+    var tier = score === ROUND ? 3 : score >= 6 ? 2 : score >= 4 ? 1 : 0;
+    document.getElementById('ipv6-score-label').textContent = msgs[tier];
+    document.getElementById('ipv6-bar-fill').style.width = '100%';
+    document.getElementById('ipv6-bar-label').textContent = ROUND + ' / ' + ROUND;
+    refreshHeight(box);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var inp = document.getElementById('ipv6-input');
+    if (!inp) return;
+    inp.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+      if (!answered) { ipv6Submit(); } else { ipv6Next(); }
+    });
+    ipv6Start();
+  });
+}());
+</script>
+
+</body>
+</html>

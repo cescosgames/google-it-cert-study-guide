@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course 5 - IT Security</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-course="05">
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">IT Cert Study</a>
+    <ul class="nav-links">
+      <li><a href="01-technical-support-fundamentals.html">Course 1</a></li>
+      <li><a href="02-bits-and-bytes-networking.html">Course 2</a></li>
+      <li><a href="03-operating-systems.html">Course 3</a></li>
+      <li><a href="04-system-administration.html">Course 4</a></li>
+      <li><a href="05-it-security.html" class="active">Course 5</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+  <header class="course-header">
+    <span class="course-badge">Course 5</span>
+    <h1>IT Security: Defense Against the Digital Dark Arts</h1>
+    <p class="subtitle">Threats &amp; attacks · Cryptography · AAA framework · Network security · Policies &amp; compliance</p>
+  </header>
+
+  <div class="section-list">
+
+    <div class="topic-section" id="s1">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>1 &nbsp;·&nbsp; Security Threats &amp; Attacks</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c05-s1" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="stub-box">
+            <p class="stub-icon">📝</p>
+            <p>Placeholder - fill in while studying.<br>Topics: malware types (virus, worm, trojan, ransomware, spyware, rootkit), social engineering (phishing, spear phishing, vishing, pretexting), SQL injection, XSS, MITM, DoS/DDoS, password attacks (brute force, rainbow table, dictionary), insider threats.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-section" id="s2">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>2 &nbsp;·&nbsp; Cryptography &amp; Encryption</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c05-s2" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="stub-box">
+            <p class="stub-icon">📝</p>
+            <p>Placeholder - fill in while studying.<br>Topics: symmetric (AES, DES, 3DES) vs asymmetric (RSA, ECC) encryption, key exchange, PKI, digital certificates (X.509), CA hierarchy, hashing (MD5, SHA-1, SHA-256), digital signatures, TLS/SSL handshake, HTTPS.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-section" id="s3">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>3 &nbsp;·&nbsp; AAA - Authentication, Authorization &amp; Accounting</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c05-s3" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="stub-box">
+            <p class="stub-icon">📝</p>
+            <p>Placeholder - fill in while studying.<br>Topics: authentication factors (something you know / have / are), MFA, RADIUS, TACACS+, Kerberos, LDAP/AD authentication, OAuth, SAML, RBAC vs DAC vs MAC, least privilege, Zero Trust, audit logging.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-section" id="s4">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>4 &nbsp;·&nbsp; Securing Networks</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c05-s4" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="stub-box">
+            <p class="stub-icon">📝</p>
+            <p>Placeholder - fill in while studying.<br>Topics: firewalls (stateful vs stateless vs NGFW), IDS vs IPS, DMZ, network segmentation, WPA2 vs WPA3, 802.1X (EAP), VPN (reviewed in Course 2), port security, NAC, honeypots, network monitoring (SIEM).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-section" id="s5">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>5 &nbsp;·&nbsp; Security Policies &amp; Compliance</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c05-s5" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="stub-box">
+            <p class="stub-icon">📝</p>
+            <p>Placeholder - fill in while studying.<br>Topics: security policies (AUP, password policy, data classification), compliance frameworks (HIPAA, PCI-DSS, SOC 2, ISO 27001, NIST), vulnerability management, patch cadence, incident response lifecycle (PICERL), risk assessment, physical security.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /section-list -->
+
+</main>
+
+<footer class="site-footer">
+  Google IT Support Professional Certificate · Course 5 - IT Security
+</footer>
+
+<script>
+  function saveProgress(cb) {
+    const saved = JSON.parse(localStorage.getItem('itcert_progress') || '{}');
+    saved[cb.dataset.section] = cb.checked;
+    localStorage.setItem('itcert_progress', JSON.stringify(saved));
+    cb.closest('.topic-section').classList.toggle('complete', cb.checked);
+  }
+
+  function loadProgress() {
+    const saved = JSON.parse(localStorage.getItem('itcert_progress') || '{}');
+    document.querySelectorAll('.complete-cb').forEach(cb => {
+      if (saved[cb.dataset.section]) {
+        cb.checked = true;
+        cb.closest('.topic-section').classList.add('complete');
+      }
+    });
+  }
+
+  function toggleSection(header) {
+    const section = header.closest('.topic-section');
+    const body    = section.querySelector('.section-body');
+    const isOpen  = section.classList.contains('open');
+    if (isOpen) {
+      section.classList.remove('open');
+      body.style.maxHeight = '0';
+    } else {
+      section.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  }
+
+  function togglePractice(btn) {
+    const body = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    body.classList.toggle('open');
+    const sb = btn.closest('.section-body');
+    if (sb && sb.style.maxHeight !== '0px') sb.style.maxHeight = sb.scrollHeight + 'px';
+  }
+
+  function toggleAnswers(btn) {
+    const body = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    body.classList.toggle('open');
+    const sb = btn.closest('.section-body');
+    if (sb && sb.style.maxHeight !== '0px') sb.style.maxHeight = sb.scrollHeight + 'px';
+  }
+
+  document.addEventListener('DOMContentLoaded', loadProgress);
+</script>
+
+</body>
+</html>

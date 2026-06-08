@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course 1 - Technical Support Fundamentals</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-course="01">
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">IT Cert Study</a>
+    <ul class="nav-links">
+      <li><a href="01-technical-support-fundamentals.html" class="active">Course 1</a></li>
+      <li><a href="02-bits-and-bytes-networking.html">Course 2</a></li>
+      <li><a href="03-operating-systems.html">Course 3</a></li>
+      <li><a href="04-system-administration.html">Course 4</a></li>
+      <li><a href="05-it-security.html">Course 5</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+  <header class="course-header">
+    <span class="course-badge">Course 1</span>
+    <h1>Technical Support Fundamentals</h1>
+    <p class="subtitle">Computer hardware · Software &amp; OS · Networking basics · Troubleshooting · Customer service</p>
+  </header>
+
+  <div class="section-list">
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 1 - Computer Hardware & Architecture
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s1">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>1 &nbsp;·&nbsp; Computer Hardware &amp; Architecture</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c01-s1" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">Core Components</p>
+            <ul class="concept-list">
+              <li><strong>CPU (Central Processing Unit)</strong> - the "brain." Fetches, decodes, and executes instructions. Key specs: core count, clock speed (GHz), cache size (L1/L2/L3). More cores = better multitasking; higher GHz = faster per-core execution.</li>
+              <li><strong>RAM (Random Access Memory)</strong> - volatile, high-speed temporary storage. Programs run here. When RAM is full, the OS spills to slower virtual memory (page file / swap). Current standard: DDR4 or DDR5.</li>
+              <li><strong>Storage (HDD / SSD)</strong> - non-volatile, permanent storage. SSDs use flash chips (faster, more durable, more expensive per GB). HDDs use spinning magnetic platters (slower, cheaper per GB, more fragile).</li>
+              <li><strong>Motherboard</strong> - the backbone connecting all components. Contains the chipset, CPU socket, RAM slots, PCIe slots, SATA ports, and I/O headers. The form factor (ATX, Micro-ATX, Mini-ITX) determines case compatibility.</li>
+              <li><strong>PSU (Power Supply Unit)</strong> - converts wall AC power to regulated DC voltages (+12V, +5V, +3.3V). Wattage must exceed total system draw. 80 Plus rating indicates efficiency (Bronze → Gold → Platinum → Titanium).</li>
+              <li><strong>GPU (Graphics Processing Unit)</strong> - renders visuals. Integrated GPUs share system RAM; discrete GPUs have dedicated VRAM and a PCIe slot. Essential for displays even on headless servers.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Storage Types Compared</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Type</th><th>Interface</th><th>Typical Speed</th><th>Use Case</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>HDD (3.5")</td><td>SATA</td><td>80–160 MB/s</td><td>Bulk storage, NAS</td></tr>
+                <tr><td>HDD (2.5")</td><td>SATA</td><td>80–120 MB/s</td><td>Laptops</td></tr>
+                <tr><td>SSD (2.5")</td><td>SATA</td><td>~550 MB/s</td><td>OS drive upgrade from HDD</td></tr>
+                <tr><td>SSD (M.2 SATA)</td><td>SATA via M.2</td><td>~550 MB/s</td><td>Compact SATA SSD</td></tr>
+                <tr><td>SSD (M.2 NVMe)</td><td>PCIe / NVMe</td><td>3,000–7,000 MB/s</td><td>High-performance OS / workloads</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Ports &amp; Connectors</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Connector</th><th>Max Speed / Notes</th><th>Common Use</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>USB 2.0</td><td>480 Mbps</td><td>Keyboards, mice, low-speed devices</td></tr>
+                <tr><td>USB 3.0 / 3.1 Gen 1</td><td>5 Gbps</td><td>Flash drives, external HDDs</td></tr>
+                <tr><td>USB 3.1 Gen 2</td><td>10 Gbps</td><td>External SSDs</td></tr>
+                <tr><td>USB 3.2 Gen 2×2</td><td>20 Gbps</td><td>High-speed storage</td></tr>
+                <tr><td>USB4 / Thunderbolt 3/4</td><td>40 Gbps</td><td>Docks, eGPUs, 4K displays</td></tr>
+                <tr><td>USB-C</td><td>Shape - not a speed standard</td><td>Can carry USB, Thunderbolt, DP, power</td></tr>
+                <tr><td>HDMI</td><td>Up to 48 Gbps (2.1)</td><td>Consumer displays, TVs, projectors</td></tr>
+                <tr><td>DisplayPort</td><td>Up to 77 Gbps (2.1)</td><td>PC monitors, daisy-chaining</td></tr>
+                <tr><td>VGA</td><td>Analog only</td><td>Legacy - no longer recommended</td></tr>
+                <tr><td>DVI</td><td>Analog + digital</td><td>Legacy monitors</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Binary &amp; Number Systems</p>
+            <ul class="concept-list">
+              <li><strong>Binary (base 2)</strong> - computers use 0s and 1s because transistors have two states (on/off). A <em>bit</em> is one binary digit. A <em>byte</em> = 8 bits.</li>
+              <li><strong>Hexadecimal (base 16)</strong> - digits 0–9 then A–F. One hex digit = 4 bits (a nibble); two hex digits = 1 byte. Used heavily in memory addresses, MAC addresses, and color codes.</li>
+            </ul>
+            <div class="math-block">
+              <span class="label">1 byte</span>     <span class="val">= 8 bits</span><br>
+              <span class="label">1 KB (kibibyte)</span><span class="val">= 1,024 bytes  (2¹⁰)</span><br>
+              <span class="label">1 MB</span>        <span class="val">= 1,024 KB</span><br>
+              <span class="label">1 GB</span>        <span class="val">= 1,024 MB</span><br>
+              <span class="label">1 TB</span>        <span class="val">= 1,024 GB</span><br>
+              <span class="label">Hex digit range</span><span class="val">0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F</span><br>
+              <span class="label">Binary → Hex</span><span class="val">1111 = F  |  1010 = A  |  0000 = 0</span>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Key Terms</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Bit</span><span class="term-val">Smallest unit of data - a single 0 or 1</span></div>
+              <div class="term-row"><span class="term-key">Byte</span><span class="term-val">8 bits; the basic unit for measuring file/storage size</span></div>
+              <div class="term-row"><span class="term-key">Clock speed</span><span class="term-val">How many instruction cycles a CPU executes per second (GHz = billions)</span></div>
+              <div class="term-row"><span class="term-key">Cache</span><span class="term-val">Ultra-fast SRAM on or near the CPU (L1 fastest/smallest → L3 larger/slower). Stores recently used data to avoid RAM round-trips.</span></div>
+              <div class="term-row"><span class="term-key">BIOS / UEFI</span><span class="term-val">Firmware on the motherboard. Initializes hardware (POST) and hands off to the OS bootloader. UEFI is the modern replacement for BIOS - supports drives &gt;2TB and Secure Boot.</span></div>
+              <div class="term-row"><span class="term-key">POST</span><span class="term-val">Power-On Self Test - hardware diagnostic run at boot before the OS loads. Beep codes signal failures.</span></div>
+              <div class="term-row"><span class="term-key">NIC</span><span class="term-val">Network Interface Card - hardware that connects a device to a network (wired or wireless)</span></div>
+              <div class="term-row"><span class="term-key">PCIe</span><span class="term-val">PCI Express - high-speed expansion slot for GPUs, NVMe SSDs, and NICs</span></div>
+              <div class="term-row"><span class="term-key">ESD</span><span class="term-val">Electrostatic Discharge - static electricity that can silently damage components. Use anti-static wrist straps and mats; always ground yourself before touching internals.</span></div>
+            </div>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What is the difference between RAM and storage? Why does a program need RAM to run?</li>
+                <li>A user's computer is very slow but has only 8 GB RAM and 16 GB of active programs open. What is likely happening?</li>
+                <li>How many bits are in 3 bytes? Convert the binary number <code>1001</code> to decimal.</li>
+                <li>A technician opens a desktop and doesn't use an anti-static wrist strap. What risk does this create?</li>
+                <li>What is the purpose of the POST, and what might beep codes indicate?</li>
+                <li>Which storage interface is fastest: SATA SSD, M.2 NVMe, or HDD?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>RAM is volatile (lost at power-off) and extremely fast - the CPU reads/writes it directly while a program runs. Storage is non-volatile and slower - it holds the program permanently when it's not running. Programs must be loaded into RAM to execute.</li>
+                  <li>The OS is using virtual memory (page file/swap) on disk because RAM is exhausted. Disk is far slower than RAM, causing heavy slowdowns - commonly called "thrashing."</li>
+                  <li>3 bytes = 24 bits. Binary <code>1001</code> = 8+0+0+1 = <strong>9</strong> in decimal.</li>
+                  <li>ESD (Electrostatic Discharge) - the static built up in the technician's body can discharge into sensitive components, potentially damaging or destroying the CPU, RAM, GPU, or motherboard without any visible sign.</li>
+                  <li>POST (Power-On Self Test) verifies that critical hardware (CPU, RAM, GPU, storage) is present and functioning before the OS loads. Beep codes indicate which component failed - the pattern varies by BIOS/UEFI vendor.</li>
+                  <li>M.2 NVMe is fastest (3,000–7,000 MB/s), followed by SATA SSD (~550 MB/s), then HDD (80–160 MB/s).</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /s1 -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 2 - Software & Operating Systems
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s2">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>2 &nbsp;·&nbsp; Software &amp; Operating Systems</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c01-s2" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">Types of Software</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">System software</span><span class="term-val">Manages hardware and provides a platform for other software - OS, firmware, device drivers</span></div>
+              <div class="term-row"><span class="term-key">Application software</span><span class="term-val">User-facing programs that accomplish specific tasks - browsers, word processors, games</span></div>
+              <div class="term-row"><span class="term-key">Utility software</span><span class="term-val">Maintenance and management tools - antivirus, disk cleanup, backup software</span></div>
+              <div class="term-row"><span class="term-key">Device driver</span><span class="term-val">Translates OS commands into hardware-specific instructions. A missing or outdated driver is a common source of hardware malfunctions.</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">What an OS Does</p>
+            <ul class="concept-list">
+              <li><strong>Process management</strong> - starts, schedules, and terminates programs. Decides which process gets CPU time (scheduling algorithms).</li>
+              <li><strong>Memory management</strong> - allocates RAM to processes and reclaims it when they exit. Handles virtual memory when RAM is full.</li>
+              <li><strong>File system management</strong> - organizes data on storage into files and directories, controls access permissions.</li>
+              <li><strong>Device management</strong> - communicates with hardware via drivers; abstracts complexity so applications don't need to know hardware specifics.</li>
+              <li><strong>User interface</strong> - either a CLI (Command Line Interface) or GUI (Graphical User Interface), or both.</li>
+              <li><strong>Security &amp; access control</strong> - enforces user accounts, permissions, and authentication.</li>
+            </ul>
+            <div class="note"><strong>Kernel</strong> - the core of the OS that runs in privileged mode and directly manages hardware. Applications talk to the kernel through <strong>system calls</strong>. The kernel is the boundary between software and hardware.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Major Operating Systems</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>OS</th><th>Kernel / Base</th><th>Default Filesystem</th><th>Common Use</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Windows 10/11</td><td>NT kernel</td><td>NTFS</td><td>Enterprise desktop, gaming, general-purpose</td></tr>
+                <tr><td>macOS</td><td>XNU (Unix/Darwin)</td><td>APFS</td><td>Creative professionals, Apple ecosystem</td></tr>
+                <tr><td>Linux (Ubuntu)</td><td>Linux kernel</td><td>ext4</td><td>Servers, developers, open-source workstations</td></tr>
+                <tr><td>Linux (CentOS/RHEL)</td><td>Linux kernel</td><td>XFS / ext4</td><td>Enterprise servers</td></tr>
+                <tr><td>Chrome OS</td><td>Linux kernel</td><td>ext4</td><td>Cloud-centric, education, lightweight laptops</td></tr>
+                <tr><td>Android</td><td>Linux kernel</td><td>ext4 / F2FS</td><td>Mobile devices</td></tr>
+                <tr><td>iOS / iPadOS</td><td>XNU (Unix)</td><td>APFS</td><td>Apple mobile devices</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Software Licensing</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Proprietary</span><span class="term-val">Source code is private; users pay for a license to use the software (e.g., Microsoft Office, Adobe Photoshop)</span></div>
+              <div class="term-row"><span class="term-key">Freeware</span><span class="term-val">Free to use at no cost, but source code is not available (e.g., older versions of Skype)</span></div>
+              <div class="term-row"><span class="term-key">Open source</span><span class="term-val">Source code is publicly available. Anyone can inspect, modify, and distribute it (subject to license terms)</span></div>
+              <div class="term-row"><span class="term-key">GPL</span><span class="term-val">GNU General Public License - open source, but derivative works must also be GPL ("copyleft")</span></div>
+              <div class="term-row"><span class="term-key">MIT / Apache</span><span class="term-val">Permissive licenses - open source, can be included in proprietary products with attribution</span></div>
+              <div class="term-row"><span class="term-key">Shareware</span><span class="term-val">Try before you buy - limited features or trial period, requires payment for full use</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Virtual Machines &amp; Hypervisors</p>
+            <ul class="concept-list">
+              <li>A <strong>virtual machine (VM)</strong> is a software emulation of a physical computer, running its own OS inside another OS.</li>
+              <li>A <strong>hypervisor</strong> creates and manages VMs, abstracting physical hardware into virtual resources.</li>
+              <li><strong>Type 1 (bare-metal)</strong>: runs directly on hardware, no host OS. Higher performance. Examples: VMware ESXi, Microsoft Hyper-V, KVM.</li>
+              <li><strong>Type 2 (hosted)</strong>: runs on top of an existing OS. Easier to set up. Examples: VirtualBox, VMware Workstation.</li>
+              <li><strong>Snapshot</strong>: a point-in-time copy of a VM's state - useful for testing or rolling back changes.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Software Versioning</p>
+            <ul class="concept-list">
+              <li><strong>Semantic versioning</strong>: <code>MAJOR.MINOR.PATCH</code> (e.g., <code>3.11.2</code>). MAJOR = breaking change; MINOR = new feature; PATCH = bug fix.</li>
+              <li><strong>LTS (Long-Term Support)</strong>: a version with extended security updates - preferred for production servers (e.g., Ubuntu 22.04 LTS supported until 2027).</li>
+              <li>Keeping software updated patches security vulnerabilities - critical for IT support.</li>
+            </ul>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What is a kernel, and how do applications interact with it?</li>
+                <li>A printer was just connected to a Windows PC but isn't working. What type of software is most likely missing?</li>
+                <li>What is the difference between a Type 1 and Type 2 hypervisor? Give an example of each.</li>
+                <li>A company wants to use Linux on their servers but needs commercial support. Which distribution is a common choice?</li>
+                <li>What does GPL require of derivative software, and how does this differ from the MIT license?</li>
+                <li>Interpret the version number <code>2.0.0</code> → <code>2.1.0</code> → <code>2.1.3</code>. What happened at each step?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>The kernel is the privileged core of the OS that directly manages hardware resources. Applications communicate with it through <strong>system calls</strong> - requests to perform operations like reading a file or sending network data.</li>
+                  <li>A device driver - the software that translates OS-level commands into instructions the specific printer hardware understands.</li>
+                  <li>Type 1 runs directly on bare metal hardware (e.g., VMware ESXi, Hyper-V) - higher performance. Type 2 runs on top of an existing OS (e.g., VirtualBox, VMware Workstation) - easier to set up on a personal machine.</li>
+                  <li>Red Hat Enterprise Linux (RHEL) or its community rebuild Rocky Linux / AlmaLinux. Canonical also offers commercial Ubuntu support.</li>
+                  <li>GPL requires that any software derived from GPL code must also be released under GPL (copyleft). MIT is permissive - you can incorporate MIT-licensed code into a proprietary product without releasing your source code.</li>
+                  <li>2.0.0 = initial major release (breaking changes from 1.x). 2.1.0 = new feature added (backwards-compatible). 2.1.3 = three bug fixes applied to the 2.1 feature set.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /s2 -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 3 - Networking Basics
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s3">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>3 &nbsp;·&nbsp; Networking Basics</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c01-s3" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="note" style="margin-top:0.75rem;">This section covers introductory concepts. Deep dives into TCP/IP, subnetting, DNS, DHCP, and troubleshooting tools are in <a href="02-bits-and-bytes-networking.html">Course 2</a>.</div>
+
+          <div class="subsection">
+            <p class="subsection-title">Network Types by Scale</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">PAN</span><span class="term-val">Personal Area Network - devices within ~10 m (Bluetooth headset to phone)</span></div>
+              <div class="term-row"><span class="term-key">LAN</span><span class="term-val">Local Area Network - single building or campus (home, office). Typically Ethernet or Wi-Fi.</span></div>
+              <div class="term-row"><span class="term-key">MAN</span><span class="term-val">Metropolitan Area Network - city-wide; e.g., university campuses, city government</span></div>
+              <div class="term-row"><span class="term-key">WAN</span><span class="term-val">Wide Area Network - large geographic areas. The internet is the largest WAN.</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Network Hardware</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">NIC</span><span class="term-val">Network Interface Card - the hardware that physically connects a device to a network (wired or wireless). Has a unique MAC address burned in at manufacture.</span></div>
+              <div class="term-row"><span class="term-key">Hub</span><span class="term-val">Layer 1 - broadcasts every packet to all ports. Creates one large collision domain. Mostly obsolete.</span></div>
+              <div class="term-row"><span class="term-key">Switch</span><span class="term-val">Layer 2 - forwards frames only to the correct port using a MAC address table. Creates separate collision domains per port.</span></div>
+              <div class="term-row"><span class="term-key">Router</span><span class="term-val">Layer 3 - connects different networks (e.g., LAN to internet). Forwards packets based on IP addresses and a routing table.</span></div>
+              <div class="term-row"><span class="term-key">Modem</span><span class="term-val">Modulates/demodulates signals to/from the ISP's network (cable, DSL, fiber). In homes the modem and router are often one device.</span></div>
+              <div class="term-row"><span class="term-key">WAP</span><span class="term-val">Wireless Access Point - bridges wireless clients onto a wired LAN. Home routers have a built-in WAP.</span></div>
+              <div class="term-row"><span class="term-key">Firewall</span><span class="term-val">Inspects and filters traffic based on rules. Can be hardware (appliance) or software (Windows Defender Firewall, iptables).</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Physical Media</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Medium</th><th>Standard / Type</th><th>Max Speed</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Cat 5e</td><td>Twisted pair (UTP)</td><td>1 Gbps / 100 m</td><td>Minimum for gigabit - still common</td></tr>
+                <tr><td>Cat 6</td><td>Twisted pair (UTP)</td><td>10 Gbps / 55 m</td><td>Most new installations</td></tr>
+                <tr><td>Cat 6a</td><td>Twisted pair (STP)</td><td>10 Gbps / 100 m</td><td>Full 10G at longer runs</td></tr>
+                <tr><td>Fiber (multimode)</td><td>Glass/plastic core</td><td>100 Gbps+</td><td>Short–medium runs inside buildings; cheaper lasers</td></tr>
+                <tr><td>Fiber (single-mode)</td><td>Glass core (narrow)</td><td>100 Gbps+</td><td>Long-distance; ISP backbone, campus links</td></tr>
+                <tr><td>Wi-Fi 5 (802.11ac)</td><td>5 GHz</td><td>~3.5 Gbps theoretical</td><td>Ubiquitous current standard</td></tr>
+                <tr><td>Wi-Fi 6 (802.11ax)</td><td>2.4 &amp; 5 GHz</td><td>~9.6 Gbps theoretical</td><td>Better in dense environments (OFDMA)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Network Topologies</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Star</span><span class="term-val">All devices connect to a central switch/hub. Most common in modern LANs. Single device failure doesn't take down the network; central device failure affects all.</span></div>
+              <div class="term-row"><span class="term-key">Bus</span><span class="term-val">All devices share one cable (backbone). Simple but a single break takes down the whole segment. Legacy (early Ethernet coax).</span></div>
+              <div class="term-row"><span class="term-key">Ring</span><span class="term-val">Each device connects to the next in a loop. Token Ring (legacy). A break can take down the ring unless dual-ring (FDDI).</span></div>
+              <div class="term-row"><span class="term-key">Mesh</span><span class="term-val">Every device connects to every other device. Highly redundant. Full mesh is expensive; partial mesh is used in WANs and core networks.</span></div>
+              <div class="term-row"><span class="term-key">Hybrid</span><span class="term-val">Combination of topologies - e.g., star topology inside each floor connected via a partial mesh between floors.</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">IP Addresses - Overview</p>
+            <ul class="concept-list">
+              <li>Every device on a network needs an <strong>IP address</strong> to communicate. Like a postal address - unique identifier for routing.</li>
+              <li><strong>IPv4</strong>: 32-bit, written as four 0–255 numbers separated by dots. ~4.3 billion possible addresses (mostly exhausted).</li>
+              <li><strong>IPv6</strong>: 128-bit, written in hexadecimal with colons. Virtually unlimited addresses.</li>
+              <li><strong>Private IPs</strong> (e.g., <code>192.168.x.x</code>) are used inside a network; a router uses NAT to share one public IP for internet access.</li>
+              <li><strong>DHCP</strong> automatically assigns IP addresses to devices joining the network so you don't configure them manually.</li>
+              <li><strong>DNS</strong> translates domain names (<code>google.com</code>) to IP addresses so you don't need to memorize numbers.</li>
+            </ul>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What is the functional difference between a hub and a switch?</li>
+                <li>A user in a home office has a single device from their ISP that handles both the internet connection and local Wi-Fi. What is this device called?</li>
+                <li>Which cable category supports 10 Gbps over 100 meters?</li>
+                <li>Why is a star topology preferred over a bus topology in modern LANs?</li>
+                <li>A device on a LAN has the IP address <code>192.168.1.50</code>. Is this a public or private address?</li>
+                <li>What does a router do that a switch cannot?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>A hub broadcasts every frame to all ports (layer 1, one collision domain). A switch learns MAC addresses and forwards frames only to the correct port (layer 2, separate collision domains per port), making it far more efficient.</li>
+                  <li>A modem/router combo (sometimes called a gateway or residential gateway). The modem converts the ISP signal; the router manages the LAN and provides Wi-Fi via a built-in WAP.</li>
+                  <li>Cat 6a (Cat 6 supports 10G only up to 55 m; Cat 6a extends it to the full 100 m)</li>
+                  <li>In a star topology, only the device with the failed link goes down. In a bus topology, a single break in the shared cable takes the entire segment offline.</li>
+                  <li>Private - <code>192.168.0.0/16</code> is one of the RFC 1918 private ranges, not routable on the public internet.</li>
+                  <li>A router operates at Layer 3 and forwards traffic between different networks using IP addresses. A switch operates at Layer 2 and can only move traffic within a single network using MAC addresses.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /s3 -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 4 - Troubleshooting Best Practices
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s4">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>4 &nbsp;·&nbsp; Troubleshooting Best Practices</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c01-s4" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">The Troubleshooting Methodology (7 Steps)</p>
+            <div class="math-block">
+              <span class="label">Step 1 - Identify</span>     <span class="val">Gather info. What is the problem? What changed? Who is affected?</span><br>
+              <span class="label">Step 2 - Theory</span>       <span class="val">Establish a probable cause. Question the obvious first (is it plugged in?).</span><br>
+              <span class="label">Step 3 - Test theory</span>  <span class="val">Confirm or eliminate the theory. If wrong, go back to step 2.</span><br>
+              <span class="label">Step 4 - Plan</span>         <span class="val">Establish an action plan. Consider side effects before implementing.</span><br>
+              <span class="label">Step 5 - Implement</span>    <span class="val">Apply the fix. Escalate if beyond your authority or skill set.</span><br>
+              <span class="label">Step 6 - Verify</span>       <span class="val">Confirm the issue is resolved and no new problems were introduced.</span><br>
+              <span class="label">Step 7 - Document</span>     <span class="val">Record the problem, root cause, and solution in the ticketing system.</span>
+            </div>
+            <div class="note"><strong>Don't skip step 7.</strong> Documentation creates the knowledge base that speeds up future incidents and is required for SLA compliance.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Asking the Right Questions</p>
+            <ul class="concept-list">
+              <li><strong>"What changed recently?"</strong> - software update, new hardware, configuration change. Most outages have a recent change as the root cause.</li>
+              <li><strong>"When did it start / how often does it happen?"</strong> - intermittent vs consistent failures point to different causes (heat, memory, network congestion vs hard failure).</li>
+              <li><strong>"Does it happen to anyone else?"</strong> - determines if it's user-specific, device-specific, or infrastructure-wide.</li>
+              <li><strong>"What have you already tried?"</strong> - avoids repeating steps and signals what to rule out.</li>
+              <li><strong>"Can you reproduce it?"</strong> - reproducible bugs are far easier to diagnose.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Troubleshooting Approaches</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Bottom-up</span><span class="term-val">Start at Layer 1 (physical) and work up. Best for network issues - check cable → IP → DNS → application.</span></div>
+              <div class="term-row"><span class="term-key">Top-down</span><span class="term-val">Start at the application layer and work down. Good when users report a specific app failing but the network seems OK.</span></div>
+              <div class="term-row"><span class="term-key">Divide and conquer</span><span class="term-val">Start in the middle of the stack and eliminate halves. Efficient for complex multi-layer problems.</span></div>
+              <div class="term-row"><span class="term-key">Swap and compare</span><span class="term-val">Replace a suspected component with a known-good one to confirm the fault. Common for hardware troubleshooting.</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Support Tiers</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Tier</th><th>Name</th><th>Handles</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Tier 0</td><td>Self-service</td><td>FAQs, knowledge base, automated tools - user resolves without contacting IT</td></tr>
+                <tr><td>Tier 1</td><td>Help desk / front line</td><td>Password resets, basic connectivity, standard procedures - scripted responses</td></tr>
+                <tr><td>Tier 2</td><td>Technical support</td><td>In-depth troubleshooting, configuration, OS issues - deeper technical knowledge</td></tr>
+                <tr><td>Tier 3</td><td>Expert / engineering</td><td>Complex bugs, vendor escalations, infrastructure changes - subject matter experts</td></tr>
+                <tr><td>Tier 4</td><td>Vendor support</td><td>Issues requiring the original manufacturer or vendor (hardware warranty, software bugs)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Safety &amp; Environmental Considerations</p>
+            <ul class="concept-list">
+              <li><strong>ESD prevention</strong>: anti-static wrist strap (grounded), anti-static mat, anti-static bags for components, avoid carpeted areas when working on hardware.</li>
+              <li><strong>Electrical safety</strong>: always power off and unplug before opening a PSU or working near high-voltage components. Capacitors inside PSUs can hold charge even when unplugged.</li>
+              <li><strong>Thermal management</strong>: overheating causes performance throttling and component failure. Ensure proper airflow; clean dust filters periodically.</li>
+              <li><strong>Cable management</strong>: poor cable management restricts airflow and makes troubleshooting harder - not just aesthetic.</li>
+            </ul>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>A user says "my email doesn't work." What are your first three questions?</li>
+                <li>You apply a fix in step 5 but the problem returns the next day. Which step did you likely skip, and what should you do?</li>
+                <li>A user's machine is randomly shutting off. Would you approach this top-down or bottom-up? Why?</li>
+                <li>At what tier would a password reset typically be handled?</li>
+                <li>You need to open a desktop to reseat RAM. What should you do before touching any components?</li>
+                <li>Why is documentation (step 7) important even for simple issues you've solved before?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>1) "When did it stop working / what changed?" 2) "Can you still access the internet or other apps?" 3) "Is anyone else in the office having the same problem?" (distinguishes user-specific vs infrastructure issue)</li>
+                  <li>You likely found a symptom, not the root cause (step 2 theory was incomplete). Reopen the ticket, revisit step 2 with new information, and find the underlying cause before implementing again.</li>
+                  <li>Bottom-up - random shutdowns are often a hardware or environmental issue (overheating, PSU underload, RAM failure). Starting at the physical layer to check temps, PSU wattage, and hardware stability is more direct than starting at the OS.</li>
+                  <li>Tier 1 (Help Desk) - password resets are a standard scripted procedure.</li>
+                  <li>Power off the machine, unplug it from the wall, and attach an anti-static wrist strap grounded to the case before touching any components.</li>
+                  <li>Documentation builds the knowledge base. Next time someone (you or a colleague) encounters the same issue, a documented resolution saves time. It also creates an audit trail for compliance and SLA reporting, and reveals patterns (recurring issues → problem management).</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /s4 -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 5 - Customer Service & Documentation
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s5">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>5 &nbsp;·&nbsp; Customer Service &amp; Documentation</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c01-s5" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">Core Customer Service Skills</p>
+            <ul class="concept-list">
+              <li><strong>Active listening</strong> - let the user fully describe the problem before speaking. Don't interrupt or complete their sentences. Paraphrase back to confirm understanding.</li>
+              <li><strong>Empathy</strong> - acknowledge the user's frustration: "I understand this is disruptive, let's get it sorted." People want to feel heard before they want to be fixed.</li>
+              <li><strong>Positive language</strong> - reframe negatives. Instead of "I don't know," say "Let me find out." Instead of "That's not possible," say "Here's what we can do."</li>
+              <li><strong>Avoid jargon</strong> - explain technical issues in terms the user understands. Talking down or over a user's head both erode trust.</li>
+              <li><strong>Set expectations</strong> - give a realistic timeline. If you don't know, say when you'll follow up. Silence breeds frustration.</li>
+              <li><strong>Follow through</strong> - do what you said you'd do, when you said you'd do it. If you can't, proactively communicate before the deadline passes.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Ticketing System Lifecycle</p>
+            <div class="math-block">
+              <span class="label">1. Submission</span>   <span class="val">User reports issue via portal, email, phone, or chat</span><br>
+              <span class="label">2. Triage</span>       <span class="val">Ticket assigned a priority (P1–P4) and routed to appropriate tier</span><br>
+              <span class="label">3. Diagnosis</span>    <span class="val">Technician investigates, updates ticket with findings</span><br>
+              <span class="label">4. Resolution</span>   <span class="val">Fix applied; resolution steps logged in the ticket</span><br>
+              <span class="label">5. Closure</span>      <span class="val">User confirms issue is resolved; ticket closed</span><br>
+              <span class="label">6. Follow-up</span>    <span class="val">Optional satisfaction survey; review for recurring patterns</span>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">SLA - Service Level Agreement</p>
+            <ul class="concept-list">
+              <li>A formal contract specifying the expected level of service - including response times, resolution times, and uptime guarantees.</li>
+              <li><strong>Response time</strong>: how quickly the IT team acknowledges the ticket.</li>
+              <li><strong>Resolution time</strong>: how quickly the issue is fully resolved.</li>
+              <li>SLAs are tied to <strong>priority levels</strong> - critical outages have much tighter SLAs than low-priority requests.</li>
+              <li>Breaching an SLA may have financial penalties or reputational consequences - flag at-risk tickets early.</li>
+            </ul>
+            <table class="ref-table" style="margin-top:0.75rem;">
+              <thead>
+                <tr><th>Priority</th><th>Typical Meaning</th><th>Example Response Target</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>P1 - Critical</td><td>Complete outage affecting all users / revenue</td><td>15 min response · 4 hr resolution</td></tr>
+                <tr><td>P2 - High</td><td>Major function unavailable, many users affected</td><td>1 hr response · 8 hr resolution</td></tr>
+                <tr><td>P3 - Medium</td><td>Partial degradation, workaround exists</td><td>4 hr response · 24 hr resolution</td></tr>
+                <tr><td>P4 - Low</td><td>Minor issue, cosmetic, single user</td><td>Next business day</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">ITIL Concepts - Incident vs Problem vs Change</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Incident</span><span class="term-val">An unplanned interruption or degradation of service. Goal is fast restoration - not necessarily finding root cause. E.g., "server is down, reboot it."</span></div>
+              <div class="term-row"><span class="term-key">Problem</span><span class="term-val">The underlying cause of one or more incidents. Requires root cause analysis. E.g., "the server keeps crashing - investigate the hardware."</span></div>
+              <div class="term-row"><span class="term-key">Change</span><span class="term-val">A planned modification to the IT environment. Goes through a change advisory board (CAB) for approval to minimize risk. E.g., "upgrade the server's OS Saturday night."</span></div>
+              <div class="term-row"><span class="term-key">Known error</span><span class="term-val">A problem with an identified root cause and documented workaround, even if not yet permanently fixed</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Documentation Best Practices</p>
+            <ul class="concept-list">
+              <li><strong>Write for a stranger</strong> - your documentation should allow someone who has never seen the system to follow it without asking questions.</li>
+              <li><strong>Runbooks / SOPs</strong>: step-by-step procedures for common tasks (server restart, new user onboarding, backup restore). Reduces human error and training time.</li>
+              <li><strong>Knowledge base articles</strong>: solutions to known issues written in plain language - searchable by users for self-service (Tier 0).</li>
+              <li><strong>Network diagrams</strong>: always keep updated. Tools: draw.io, Lucidchart, Visio.</li>
+              <li><strong>Change logs</strong>: record every infrastructure change with date, who made it, what changed, and why. Invaluable for incident investigation.</li>
+            </ul>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>A user is frustrated and says "nothing ever works around here." How do you respond?</li>
+                <li>What is the difference between an incident and a problem in ITIL terms?</li>
+                <li>A recurring P2 ticket appears every Monday morning for the same server. What ITIL process should be initiated?</li>
+                <li>Why is it important to update a ticket with your findings even if you haven't resolved it yet?</li>
+                <li>What is a runbook and when would you use one?</li>
+                <li>A Tier 1 tech is 30 minutes away from breaching the SLA response time on a P1 ticket. What should they do?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>Acknowledge the frustration first: "I hear you, and I'm sorry this has been a frustrating experience. Let me focus on getting this specific issue fixed right now, and I'll make sure you're updated every step of the way." Avoid being defensive; stay calm and professional.</li>
+                  <li>An incident is an unplanned service disruption requiring fast restoration (e.g., restart a crashed service). A problem is the root cause investigation of why incidents occur - it takes longer but prevents recurrence.</li>
+                  <li>Problem management - open a Problem record to investigate the root cause of the recurring incident, rather than just patching it each week.</li>
+                  <li>It creates a shared audit trail so that if someone else picks up the ticket, they don't repeat work. It also timestamps your progress for SLA compliance and provides data for post-incident review.</li>
+                  <li>A runbook is a documented step-by-step procedure for a routine task (e.g., "how to restart the mail server"). It's used to ensure consistent execution, reduce errors, and allow less experienced staff to handle critical tasks safely.</li>
+                  <li>Escalate immediately - notify their supervisor or the on-call Tier 2/3 engineer. Never let a P1 SLA breach silently; proactive communication allows management to reassign resources before the breach occurs.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /s5 -->
+
+  </div><!-- /section-list -->
+
+</main>
+
+<footer class="site-footer">
+  Google IT Support Professional Certificate · Course 1 - Technical Support Fundamentals
+</footer>
+
+<script>
+  function saveProgress(cb) {
+    const saved = JSON.parse(localStorage.getItem('itcert_progress') || '{}');
+    saved[cb.dataset.section] = cb.checked;
+    localStorage.setItem('itcert_progress', JSON.stringify(saved));
+    cb.closest('.topic-section').classList.toggle('complete', cb.checked);
+  }
+
+  function loadProgress() {
+    const saved = JSON.parse(localStorage.getItem('itcert_progress') || '{}');
+    document.querySelectorAll('.complete-cb').forEach(cb => {
+      if (saved[cb.dataset.section]) {
+        cb.checked = true;
+        cb.closest('.topic-section').classList.add('complete');
+      }
+    });
+  }
+
+  function toggleSection(header) {
+    const section = header.closest('.topic-section');
+    const body    = section.querySelector('.section-body');
+    const isOpen  = section.classList.contains('open');
+    if (isOpen) {
+      section.classList.remove('open');
+      body.style.maxHeight = '0';
+    } else {
+      section.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  }
+
+  function refreshHeight(el) {
+    const body = el.closest('.section-body');
+    if (body && body.style.maxHeight && body.style.maxHeight !== '0px') {
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  }
+
+  function togglePractice(btn) {
+    const body = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    body.classList.toggle('open');
+    refreshHeight(btn);
+  }
+
+  function toggleAnswers(btn) {
+    const body = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    body.classList.toggle('open');
+    refreshHeight(btn);
+  }
+
+  document.addEventListener('DOMContentLoaded', loadProgress);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course 3 - Operating Systems</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-course="03">
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">IT Cert Study</a>
+    <ul class="nav-links">
+      <li><a href="01-technical-support-fundamentals.html">Course 1</a></li>
+      <li><a href="02-bits-and-bytes-networking.html">Course 2</a></li>
+      <li><a href="03-operating-systems.html" class="active">Course 3</a></li>
+      <li><a href="04-system-administration.html">Course 4</a></li>
+      <li><a href="05-it-security.html">Course 5</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+  <header class="course-header">
+    <span class="course-badge">Course 3</span>
+    <h1>Operating Systems</h1>
+    <p class="subtitle">OS navigation · Users &amp; permissions · Package management · Filesystems · Processes &amp; services</p>
+  </header>
+
+  <div class="section-list">
+
+    <div class="topic-section" id="s1">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>1 &nbsp;·&nbsp; OS Navigation &amp; The File System</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c03-s1" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="stub-box">
+            <p class="stub-icon">📝</p>
+            <p>Placeholder - fill in while studying.<br>Topics: Windows vs Linux directory structure, absolute vs relative paths, <code>cd / ls / dir / pwd / mkdir / rm / cp / mv</code>, file extensions, hidden files, CLI basics.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-section" id="s2">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>2 &nbsp;·&nbsp; Users, Groups &amp; Permissions</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c03-s2" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="stub-box">
+            <p class="stub-icon">📝</p>
+            <p>Placeholder - fill in while studying.<br>Topics: user accounts vs admin/root, Linux <code>chmod</code> / <code>chown</code> / permission octets (rwx), Windows ACLs, <code>sudo</code> / UAC, <code>/etc/passwd</code>, <code>useradd</code>, standard vs elevated accounts.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-section" id="s3">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>3 &nbsp;·&nbsp; Package Management &amp; Software</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c03-s3" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="stub-box">
+            <p class="stub-icon">📝</p>
+            <p>Placeholder - fill in while studying.<br>Topics: <code>apt</code> / <code>yum</code> / <code>dnf</code> on Linux, Windows Package Manager (<code>winget</code>), <code>.msi</code> / <code>.exe</code> installers, app stores, software repos, dependency management.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-section" id="s4">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>4 &nbsp;·&nbsp; Filesystems &amp; Disk Management</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c03-s4" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="stub-box">
+            <p class="stub-icon">📝</p>
+            <p>Placeholder - fill in while studying.<br>Topics: NTFS vs FAT32 vs exFAT vs ext4, partitioning (MBR vs GPT), formatting, mounting, <code>df</code> / <code>du</code>, disk quotas, RAID levels (0/1/5/10), virtual memory / swap.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-section" id="s5">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>5 &nbsp;·&nbsp; Processes, Services &amp; Logs</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c03-s5" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="stub-box">
+            <p class="stub-icon">📝</p>
+            <p>Placeholder - fill in while studying.<br>Topics: <code>ps</code> / Task Manager / <code>top</code> / <code>htop</code>, process states, <code>kill</code> / signals, systemd (<code>systemctl</code>), Windows Services, Event Viewer, <code>journalctl</code>, log locations (<code>/var/log/</code>).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /section-list -->
+
+</main>
+
+<footer class="site-footer">
+  Google IT Support Professional Certificate · Course 3 - Operating Systems
+</footer>
+
+<script>
+  function saveProgress(cb) {
+    const saved = JSON.parse(localStorage.getItem('itcert_progress') || '{}');
+    saved[cb.dataset.section] = cb.checked;
+    localStorage.setItem('itcert_progress', JSON.stringify(saved));
+    cb.closest('.topic-section').classList.toggle('complete', cb.checked);
+  }
+
+  function loadProgress() {
+    const saved = JSON.parse(localStorage.getItem('itcert_progress') || '{}');
+    document.querySelectorAll('.complete-cb').forEach(cb => {
+      if (saved[cb.dataset.section]) {
+        cb.checked = true;
+        cb.closest('.topic-section').classList.add('complete');
+      }
+    });
+  }
+
+  function toggleSection(header) {
+    const section = header.closest('.topic-section');
+    const body    = section.querySelector('.section-body');
+    const isOpen  = section.classList.contains('open');
+    if (isOpen) {
+      section.classList.remove('open');
+      body.style.maxHeight = '0';
+    } else {
+      section.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  }
+
+  function togglePractice(btn) {
+    const body = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    body.classList.toggle('open');
+    const sb = btn.closest('.section-body');
+    if (sb && sb.style.maxHeight !== '0px') sb.style.maxHeight = sb.scrollHeight + 'px';
+  }
+
+  function toggleAnswers(btn) {
+    const body = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    body.classList.toggle('open');
+    const sb = btn.closest('.section-body');
+    if (sb && sb.style.maxHeight !== '0px') sb.style.maxHeight = sb.scrollHeight + 'px';
+  }
+
+  document.addEventListener('DOMContentLoaded', loadProgress);
+</script>
+
+</body>
+</html>
