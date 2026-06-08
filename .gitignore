@@ -9,4 +9,4 @@
 .env.local
 
 # Claude
-.CLAUDE.md
+CLAUDE.md
