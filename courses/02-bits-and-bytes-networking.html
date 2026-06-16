@@ -175,6 +175,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s1')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>At which OSI layer does a switch operate?</li>
@@ -437,6 +438,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s2')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>What is the subnet mask for a /26 prefix?</li>
@@ -554,6 +556,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s3')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>What protocol maps an IP address to a MAC address?</li>
@@ -690,6 +693,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s4')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>Walk through the TCP three-way handshake in order.</li>
@@ -848,6 +852,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s5')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>What DNS record type maps a hostname to an IPv4 address?</li>
@@ -1013,6 +1018,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s6')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>What command shows the ARP cache on Windows? On Linux?</li>
@@ -1226,7 +1232,7 @@
 
   /* ── Practice toggle ─────────────────────────────── */
   function togglePractice(btn) {
-    const body = btn.nextElementSibling;
+    const body = btn.closest('.practice-section').querySelector('.practice-body');
     btn.classList.toggle('open');
     body.classList.toggle('open');
     refreshHeight(btn);
@@ -1241,6 +1247,191 @@
   }
 
   document.addEventListener('DOMContentLoaded', loadProgress);
+
+  /* ── Quiz Me ─────────────────────────────────────── */
+  (function () {
+    const LABELS = {
+      s1: 'Section 1 · OSI & TCP/IP',
+      s2: 'Section 2 · IP Addressing',
+      s3: 'Section 3 · Data Link',
+      s4: 'Section 4 · TCP vs UDP',
+      s5: 'Section 5 · App Services',
+      s6: 'Section 6 · Troubleshooting',
+    };
+
+    const BANK = {
+      s1: [
+        { q: 'At which OSI layer does a switch operate?',
+          a: 'Layer 2 — Data Link. Switches use MAC addresses to forward frames.' },
+        { q: 'What is the PDU at the Network layer called?',
+          a: 'Packet' },
+        { q: 'Which TCP/IP layer combines OSI layers 5, 6, and 7?',
+          a: 'The Application layer' },
+        { q: 'What does the Transport layer add to data during encapsulation?',
+          a: 'A TCP or UDP header (creating a segment or datagram), adding source/destination port numbers and sequencing info.' },
+        { q: 'Which OSI layer handles encryption and data formatting (e.g., JPEG, TLS)?',
+          a: 'Layer 6 — Presentation' },
+        { q: 'Name two differences between the OSI model and the TCP/IP model.',
+          a: 'OSI has 7 layers; TCP/IP has 4. OSI is conceptual/academic; TCP/IP is the working model on the real internet. OSI separates Session/Presentation/Application; TCP/IP merges them.' },
+      ],
+      s2: [
+        { q: 'What is the subnet mask for a /26 prefix?',
+          a: '255.255.255.192' },
+        { q: 'How many usable hosts does a /28 network provide?',
+          a: '14  (2⁴ – 2 = 14)' },
+        { q: 'What is the network address for host 10.0.1.100 on a /27 network?',
+          a: '/27 block size = 32. 100 ÷ 32 = 3 remainder 4 → block starts at 96. Network address: 10.0.1.96' },
+        { q: 'A host shows address 169.254.1.50. What does this indicate?',
+          a: 'DHCP failed or no DHCP server was reachable. The host auto-assigned an APIPA address (169.254.0.0/16).' },
+        { q: 'You need exactly 30 usable hosts per subnet. What prefix length do you use?',
+          a: '/27  (2⁵ – 2 = 30 usable hosts)' },
+        { q: 'What is the broadcast address of 192.168.10.64/26?',
+          a: 'Block starts at .64, size = 64 addresses. Broadcast = 192.168.10.127' },
+      ],
+      s3: [
+        { q: 'What protocol maps an IP address to a MAC address on the local network?',
+          a: 'ARP (Address Resolution Protocol)' },
+        { q: 'How many bytes is a MAC address, and how is it written?',
+          a: '6 bytes (48 bits), written as 6 pairs of hex digits separated by colons or dashes (e.g., AA:BB:CC:DD:EE:FF).' },
+        { q: 'What is the broadcast MAC address?',
+          a: 'FF:FF:FF:FF:FF:FF' },
+        { q: 'What is the maximum payload size of an Ethernet frame and what is it called?',
+          a: '1500 bytes — this is the MTU (Maximum Transmission Unit) for standard Ethernet.' },
+        { q: 'What does the OUI in a MAC address tell you?',
+          a: 'The first 3 bytes (OUI = Organizationally Unique Identifier) identify the device manufacturer (e.g., Intel, Cisco).' },
+        { q: 'How does a switch differ from a hub in terms of collision domains?',
+          a: 'Each port on a switch is its own collision domain. A hub has one shared collision domain for all ports.' },
+      ],
+      s4: [
+        { q: 'Walk through the TCP three-way handshake in order.',
+          a: 'Client sends SYN → Server replies SYN-ACK → Client sends ACK. Connection is now established.' },
+        { q: 'What port does HTTPS use, and what does it add over HTTP?',
+          a: 'Port 443. HTTPS = HTTP over TLS, adding encryption, server authentication via certificates, and data integrity.' },
+        { q: 'Which protocol would you use for live video streaming, and why?',
+          a: 'UDP — faster (no handshake or retransmission overhead) and a dropped frame is less noticeable than jitter from waiting for retransmits.' },
+        { q: 'What port does RDP use?',
+          a: '3389' },
+        { q: 'A firewall blocks all traffic to port 22. What functionality is lost?',
+          a: 'SSH access — secure remote shell, SCP file transfers, and SFTP would all be blocked.' },
+        { q: 'What are the three port number ranges and their boundaries?',
+          a: 'Well-known: 0–1023 | Registered: 1024–49151 | Dynamic/ephemeral: 49152–65535' },
+      ],
+      s5: [
+        { q: 'What DNS record type maps a hostname to an IPv4 address?',
+          a: 'A record' },
+        { q: 'Spell out and explain each step of the DHCP DORA process.',
+          a: 'Discover (client broadcasts looking for DHCP server) → Offer (server offers an IP lease) → Request (client formally requests that offer) → Acknowledge (server confirms the lease).' },
+        { q: 'An HTTP response returns 403. What does this mean, and how is it different from 401?',
+          a: '403 = Forbidden (authenticated but not permitted to access the resource). 401 = Unauthorized (authentication required but not provided or failed).' },
+        { q: 'What type of NAT does a typical home router use? How does it share one IP among many devices?',
+          a: 'PAT (Port Address Translation) / NAT overload. Maps each private IP:port pair to the public IP with a unique port, tracking sessions in the NAT table.' },
+        { q: 'You can access a site by IP but not by domain name. What is the likely problem?',
+          a: 'DNS resolution is failing. The IP-based request bypasses DNS. Run nslookup or dig on the domain to verify.' },
+        { q: 'What is DNS TTL and why does it matter for troubleshooting?',
+          a: 'TTL is how long a DNS record is cached before re-querying. A high TTL means stale entries linger after a change — important when troubleshooting after a DNS migration.' },
+      ],
+      s6: [
+        { q: 'What command shows the ARP cache on Windows? On Linux?',
+          a: 'Windows: arp -a  |  Linux: arp -n  (or ip neigh)' },
+        { q: 'You can ping 8.8.8.8 but can\'t load google.com in a browser. What is most likely wrong?',
+          a: 'DNS resolution is failing. The device can reach the internet but can\'t translate domain names to IPs. Run nslookup google.com or dig google.com.' },
+        { q: 'What does ipconfig /flushdns do and when would you use it?',
+          a: 'Clears the local DNS resolver cache. Useful when DNS records have changed (e.g., server migration) but the old cached entry is still being returned.' },
+        { q: 'What is the difference between a site-to-site VPN and a remote access VPN?',
+          a: 'Site-to-site connects two full networks permanently (e.g., two offices), handled by router/firewall appliances. Remote access VPN connects a single user\'s device to a network on-demand.' },
+        { q: 'Why might a stateful firewall be preferable to a stateless one for allowing web traffic?',
+          a: 'A stateful firewall tracks connection state and automatically allows return traffic for established sessions. A stateless firewall needs explicit rules for return traffic, creating potential security gaps.' },
+        { q: 'What are the non-overlapping 2.4 GHz channels (US) and why does it matter?',
+          a: 'Channels 1, 6, and 11. Using the same or adjacent channels as a neighbor causes co-channel or adjacent-channel interference, reducing throughput.' },
+      ],
+    };
+
+    let _state = { sectionId: null, cards: [], index: 0, score: 0 };
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    window.openQuiz = function (sectionId) {
+      const all = BANK[sectionId] || [];
+      const cards = shuffle(all).slice(0, Math.min(8, all.length));
+      _state = { sectionId, cards, index: 0, score: 0 };
+      document.getElementById('quiz-card-face').style.display = '';
+      document.getElementById('quiz-score-screen').classList.remove('visible');
+      renderCard();
+      document.getElementById('quiz-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closeQuiz = function () {
+      document.getElementById('quiz-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    window.handleOverlayClick = function (e) {
+      if (e.target === document.getElementById('quiz-overlay')) closeQuiz();
+    };
+
+    function renderCard() {
+      const { cards, index } = _state;
+      const total = cards.length;
+      document.getElementById('quiz-section-label').textContent = LABELS[_state.sectionId] || 'Quiz Me';
+      document.getElementById('quiz-counter').textContent = (index + 1) + ' / ' + total;
+      document.getElementById('quiz-progress-fill').style.width = Math.round((index / total) * 100) + '%';
+      document.getElementById('quiz-question-text').textContent = cards[index].q;
+      const ans = document.getElementById('quiz-answer-area');
+      ans.textContent = '';
+      ans.classList.remove('visible');
+      document.getElementById('quiz-reveal-btn').style.display = '';
+      document.getElementById('quiz-grade-row').classList.remove('visible');
+    }
+
+    window.revealAnswer = function () {
+      const card = _state.cards[_state.index];
+      const ans = document.getElementById('quiz-answer-area');
+      ans.textContent = card.a;
+      ans.classList.add('visible');
+      document.getElementById('quiz-reveal-btn').style.display = 'none';
+      document.getElementById('quiz-grade-row').classList.add('visible');
+    };
+
+    window.gradeCard = function (correct) {
+      if (correct) _state.score++;
+      _state.index++;
+      if (_state.index >= _state.cards.length) {
+        showScore();
+      } else {
+        renderCard();
+      }
+    };
+
+    function showScore() {
+      const { score, cards } = _state;
+      const total = cards.length;
+      document.getElementById('quiz-card-face').style.display = 'none';
+      document.getElementById('quiz-score-num').textContent = score;
+      document.getElementById('quiz-score-denom').textContent = '/ ' + total;
+      const pct = score / total;
+      document.getElementById('quiz-score-msg').textContent =
+        pct === 1 ? 'Perfect! Nailed it.' :
+        pct >= 0.75 ? 'Great work!' :
+        pct >= 0.5 ? 'Getting there — review the misses.' :
+        'Keep at it — you\'ve got this.';
+      document.getElementById('quiz-progress-fill').style.width = '100%';
+      document.getElementById('quiz-score-screen').classList.add('visible');
+    }
+
+    window.retryQuiz = function () { openQuiz(_state.sectionId); };
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeQuiz();
+    });
+  })();
 
 /* ── IPv6 Compression Quiz ───────────────────────────── */
 (function () {
@@ -1386,6 +1577,40 @@
   });
 }());
 </script>
+
+<!-- ══ QUIZ MODAL ══════════════════════════════════════ -->
+<div class="quiz-overlay" id="quiz-overlay" onclick="handleOverlayClick(event)">
+  <div class="quiz-modal">
+    <button class="quiz-close-btn" onclick="closeQuiz()" aria-label="Close quiz">✕</button>
+    <div id="quiz-card-face">
+      <div class="quiz-header">
+        <span class="quiz-label" id="quiz-section-label">Quiz Me</span>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+        </div>
+        <span class="quiz-counter" id="quiz-counter">1 / 6</span>
+      </div>
+      <p class="quiz-question-text" id="quiz-question-text"></p>
+      <div class="quiz-answer-area" id="quiz-answer-area"></div>
+      <div class="quiz-actions">
+        <button class="quiz-reveal-btn" id="quiz-reveal-btn" onclick="revealAnswer()">Reveal Answer</button>
+        <div class="quiz-grade-row" id="quiz-grade-row">
+          <button class="quiz-got-it-btn" onclick="gradeCard(true)">Got it</button>
+          <button class="quiz-missed-btn" onclick="gradeCard(false)">Missed it</button>
+        </div>
+      </div>
+    </div>
+    <div class="quiz-score-screen" id="quiz-score-screen">
+      <div class="quiz-score-nums">
+        <span class="quiz-score-num" id="quiz-score-num">0</span>
+        <span class="quiz-score-denom" id="quiz-score-denom">/ 6</span>
+      </div>
+      <p class="quiz-score-msg" id="quiz-score-msg"></p>
+      <p class="quiz-score-label">correct</p>
+      <button class="quiz-retry-btn" onclick="retryQuiz()">Try Again</button>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

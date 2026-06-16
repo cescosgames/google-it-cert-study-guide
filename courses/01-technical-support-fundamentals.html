@@ -134,6 +134,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s1')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>What is the difference between RAM and storage? Why does a program need RAM to run?</li>
@@ -259,6 +260,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s2')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>What is a kernel, and how do applications interact with it?</li>
@@ -377,6 +379,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s3')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>What is the functional difference between a hub and a switch?</li>
@@ -490,6 +493,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s4')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>A user says "my email doesn't work." What are your first three questions?</li>
@@ -609,6 +613,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s5')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>A user is frustrated and says "nothing ever works around here." How do you respond?</li>
@@ -637,6 +642,84 @@
         </div>
       </div>
     </div><!-- /s5 -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 6 - What Actually Matters
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s6">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>6 &nbsp;·&nbsp; What Actually Matters — Key Takeaways</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c01-s6" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">Hardware — the mental model</p>
+            <p style="font-size:.875rem;color:var(--text-1);margin-bottom:.7rem;line-height:1.6;">Every hardware question ultimately comes down to: <em>is the right component present, is it powered, and is it communicating?</em> Run through components in the POST order — CPU → RAM → storage → display.</p>
+            <ul class="concept-list">
+              <li><strong>RAM vs storage</strong> is the single most-tested distinction. RAM = volatile, fast, where programs run. Storage = permanent, slow, where programs live. Slowness with high RAM usage → thrashing (virtual memory). Slowness with low RAM → check CPU, thermals, or disk speed.</li>
+              <li><strong>Boot sequence:</strong> power on → PSU delivers voltage → motherboard firmware (UEFI/BIOS) runs POST → hands off to OS bootloader → OS loads into RAM. Know where failures can happen at each step.</li>
+              <li><strong>Storage speed hierarchy</strong> comes up constantly as an upgrade recommendation: NVMe ≫ SATA SSD ≫ HDD. Default to NVMe for OS drives.</li>
+              <li><strong>ESD</strong> is on the exam and in real life — always ground yourself before touching internal components.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Software &amp; OS — the kernel is the center</p>
+            <ul class="concept-list">
+              <li>The <strong>kernel</strong> is the privileged layer between hardware and every running program. All software communicates with it via <strong>system calls</strong>. This mental model explains why OS crashes affect everything while app crashes usually don't.</li>
+              <li><strong>Drivers are the most common hardware fix</strong>. Device not working after connecting? Update or reinstall the driver first. Kernel modules on Linux work the same way — loadable, removable without rebooting.</li>
+              <li><strong>Licensing categories matter in enterprise</strong>: proprietary (pay for a license), open source (GPL = copyleft, MIT/Apache = permissive), freeware (free but closed). The GPL "viral" clause is a real compliance concern for organizations shipping products.</li>
+              <li><strong>Hypervisors</strong>: Type 1 (bare metal, e.g., ESXi, Hyper-V) for production servers. Type 2 (hosted, e.g., VirtualBox) for desktops and testing. Snapshots are your safety net before risky changes.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Troubleshooting — the methodology is the point</p>
+            <p style="font-size:.875rem;color:var(--text-1);margin-bottom:.7rem;line-height:1.6;">The 7-step methodology isn't just exam content — it's the actual difference between technicians who fix things once and those who fix the same thing every week.</p>
+            <div class="math-block">
+              <span class="label">Identify</span>      <span class="val">Understand the problem before touching anything</span><br>
+              <span class="label">Theory</span>        <span class="val">Form a hypothesis — question the obvious first</span><br>
+              <span class="label">Test theory</span>   <span class="val">Confirm or eliminate — if wrong, go back</span><br>
+              <span class="label">Plan</span>          <span class="val">Consider side effects before acting</span><br>
+              <span class="label">Implement</span>     <span class="val">Apply the fix; escalate if needed</span><br>
+              <span class="label">Verify</span>        <span class="val">Confirm the fix AND check for new problems</span><br>
+              <span class="label">Document</span>      <span class="val">Write it down — this is the step most people skip</span>
+            </div>
+            <div class="note" style="margin-top:.65rem;">
+              <strong>Approach selection:</strong> bottom-up (physical → application) for hardware and network issues; top-down (application → physical) when a specific app is failing and the network seems fine; divide and conquer for complex multi-layer problems.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Customer service &amp; ITIL — soft skills are real skills</p>
+            <ul class="concept-list">
+              <li><strong>Empathy before fixes.</strong> A user who feels heard is a user who cooperates. Acknowledge frustration, set expectations, follow through. People remember how they were treated long after they forget what was broken.</li>
+              <li><strong>Incident vs Problem vs Change</strong> is the core ITIL distinction. Incident = restore service fast (reboot the server). Problem = find out why it keeps crashing. Change = plan and approve the OS upgrade. Confusing these leads to treating symptoms forever.</li>
+              <li><strong>SLAs define your accountability.</strong> P1 outages have minutes, not hours. Know your priority levels and escalate before the clock runs out — proactive communication beats a missed SLA every time.</li>
+              <li><strong>Documentation is institutional memory.</strong> A well-written ticket means the next person (including future you) doesn't start from zero. Runbooks and knowledge base articles scale your expertise beyond yourself.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">The bigger picture</p>
+            <div class="note">
+              Technical Support Fundamentals is the foundation everything else builds on. The hardware concepts reappear when you configure servers. The OS knowledge is the basis of Courses 3 and 4. The troubleshooting methodology applies to every problem you will ever face — network outage, security incident, failed deployment. And the customer service skills matter in every interaction, at every tier, for your entire career.
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
+      </div><!-- /section-body -->
+    </div><!-- /s6 -->
 
   </div><!-- /section-list -->
 
@@ -685,7 +768,7 @@
   }
 
   function togglePractice(btn) {
-    const body = btn.nextElementSibling;
+    const body = btn.closest('.practice-section').querySelector('.practice-body');
     btn.classList.toggle('open');
     body.classList.toggle('open');
     refreshHeight(btn);
@@ -699,7 +782,211 @@
   }
 
   document.addEventListener('DOMContentLoaded', loadProgress);
+
+  /* ── Quiz Me ─────────────────────────────────────── */
+  (function () {
+    const LABELS = {
+      s1: 'Section 1 · Hardware',
+      s2: 'Section 2 · Software & OS',
+      s3: 'Section 3 · Networking',
+      s4: 'Section 4 · Troubleshooting',
+      s5: 'Section 5 · Customer Service',
+    };
+
+    const BANK = {
+      s1: [
+        { q: 'What is the difference between RAM and storage? Why does a program need RAM to run?',
+          a: 'RAM is volatile and extremely fast — the CPU reads/writes it directly while a program runs. Storage is non-volatile and slower — programs live there permanently. Programs must be loaded into RAM to execute.' },
+        { q: 'A user\'s computer is very slow and has 8 GB RAM with 16 GB of programs open. What is likely happening?',
+          a: 'The OS is using virtual memory (page file/swap) on disk because RAM is exhausted. Disk is far slower than RAM, causing heavy slowdowns — commonly called "thrashing."' },
+        { q: 'How many bits are in 3 bytes? What is binary 1001 in decimal?',
+          a: '3 bytes = 24 bits. Binary 1001 = 8+0+0+1 = 9.' },
+        { q: 'A technician opens a desktop without an anti-static wrist strap. What risk does this create?',
+          a: 'ESD (Electrostatic Discharge) — static built up in the body can discharge into sensitive components, silently damaging or destroying the CPU, RAM, GPU, or motherboard.' },
+        { q: 'What is the purpose of POST and what might beep codes indicate?',
+          a: 'POST (Power-On Self Test) verifies critical hardware (CPU, RAM, GPU, storage) before the OS loads. Beep codes signal which component failed — pattern varies by BIOS/UEFI vendor.' },
+        { q: 'Which storage interface is fastest: SATA SSD, M.2 NVMe, or HDD?',
+          a: 'M.2 NVMe is fastest (3,000–7,000 MB/s), then SATA SSD (~550 MB/s), then HDD (80–160 MB/s).' },
+      ],
+      s2: [
+        { q: 'What is a kernel, and how do applications interact with it?',
+          a: 'The kernel is the privileged core of the OS that directly manages hardware. Applications communicate with it through system calls — requests to read a file, send network data, etc.' },
+        { q: 'A printer was just connected to a Windows PC but isn\'t working. What type of software is most likely missing?',
+          a: 'A device driver — the software that translates OS-level commands into hardware-specific instructions the printer understands.' },
+        { q: 'What is the difference between a Type 1 and Type 2 hypervisor? Give an example of each.',
+          a: 'Type 1 runs directly on bare-metal hardware (e.g., VMware ESXi, Hyper-V) — higher performance. Type 2 runs on top of an existing OS (e.g., VirtualBox, VMware Workstation) — easier to set up.' },
+        { q: 'What does GPL require of derivative software, and how does this differ from the MIT license?',
+          a: 'GPL requires any derivative code to also be released under GPL (copyleft). MIT is permissive — you can incorporate MIT-licensed code into proprietary products without releasing your source.' },
+        { q: 'What do the three parts of semantic versioning represent? (e.g., 2.1.3)',
+          a: 'MAJOR = breaking change; MINOR = new feature (backwards-compatible); PATCH = bug fix.' },
+        { q: 'What is the difference between open source and freeware?',
+          a: 'Open source: source code is publicly available and can be inspected, modified, and distributed. Freeware: free to use at no cost, but source code is not available.' },
+      ],
+      s3: [
+        { q: 'What is the functional difference between a hub and a switch?',
+          a: 'A hub broadcasts every frame to all ports (one collision domain, no intelligence). A switch learns MAC addresses and forwards frames only to the correct port (separate collision domain per port).' },
+        { q: 'A home user has one device from their ISP that handles both internet and local Wi-Fi. What is it called?',
+          a: 'A modem/router combo (gateway or residential gateway). The modem converts the ISP signal; the router manages the LAN and provides Wi-Fi via a built-in WAP.' },
+        { q: 'Which cable category supports 10 Gbps over 100 meters?',
+          a: 'Cat 6a. (Cat 6 only supports 10G up to 55m; Cat 6a extends to the full 100m.)' },
+        { q: 'Why is a star topology preferred over a bus topology in modern LANs?',
+          a: 'In a star topology, only the device with the failed link goes down. In a bus topology, a single break in the shared cable takes the entire segment offline.' },
+        { q: 'A device has IP 192.168.1.50. Is this public or private?',
+          a: 'Private — 192.168.0.0/16 is a RFC 1918 private range, not routable on the public internet.' },
+        { q: 'What does a router do that a switch cannot?',
+          a: 'A router operates at Layer 3 and forwards traffic between different networks using IP addresses. A switch operates at Layer 2 and can only move traffic within a single network using MAC addresses.' },
+      ],
+      s4: [
+        { q: 'A user says "my email doesn\'t work." What are your first three questions?',
+          a: '1) "When did it stop / what changed?" 2) "Can you access the internet or other apps?" 3) "Is anyone else having the same problem?" (Determines if it\'s user-specific or infrastructure-wide.)' },
+        { q: 'You apply a fix but the problem returns the next day. Which troubleshooting step did you likely skip?',
+          a: 'You found a symptom, not the root cause (step 2 was incomplete). Reopen the ticket, revisit step 2 with new info, find the underlying cause, and implement a real fix.' },
+        { q: 'A machine is randomly shutting off. Would you approach this top-down or bottom-up? Why?',
+          a: 'Bottom-up — random shutdowns are often hardware/environmental (overheating, PSU underload, RAM failure). Start at the physical layer before jumping to software.' },
+        { q: 'At what tier would a password reset typically be handled?',
+          a: 'Tier 1 (Help Desk) — password resets are a standard scripted procedure.' },
+        { q: 'You need to open a desktop to reseat RAM. What should you do first?',
+          a: 'Power off the machine, unplug it from the wall, and attach an anti-static wrist strap grounded to the case before touching any components.' },
+        { q: 'What are the 7 steps of the troubleshooting methodology?',
+          a: '1) Identify the problem, 2) Establish a theory, 3) Test the theory, 4) Plan the action, 5) Implement, 6) Verify the fix, 7) Document.' },
+      ],
+      s5: [
+        { q: 'A user says "nothing ever works around here." How do you respond?',
+          a: 'Acknowledge the frustration first: "I hear you, and I\'m sorry this has been frustrating. Let me focus on getting this fixed right now." Stay calm and professional — avoid being defensive.' },
+        { q: 'What is the difference between an incident and a problem in ITIL terms?',
+          a: 'Incident = unplanned disruption requiring fast restoration (e.g., restart a crashed service). Problem = root cause investigation of why incidents occur — takes longer but prevents recurrence.' },
+        { q: 'A recurring P2 ticket appears every Monday for the same server. What ITIL process should be initiated?',
+          a: 'Problem management — open a Problem record to investigate the root cause rather than just patching it each week.' },
+        { q: 'Why is it important to update a ticket with your findings even if you haven\'t resolved it yet?',
+          a: 'It creates a shared audit trail so others don\'t repeat work, timestamps your progress for SLA compliance, and provides data for post-incident review.' },
+        { q: 'What is a runbook and when would you use one?',
+          a: 'A runbook is a documented step-by-step procedure for a routine task (e.g., restart the mail server). Used to ensure consistent execution, reduce errors, and allow less experienced staff to handle critical tasks safely.' },
+        { q: 'A Tier 1 tech is 30 minutes from breaching a P1 SLA. What should they do?',
+          a: 'Escalate immediately — notify supervisor or on-call Tier 2/3 engineer. Never let a P1 SLA breach silently; proactive communication allows management to reassign resources before the breach.' },
+      ],
+    };
+
+    let _state = { sectionId: null, cards: [], index: 0, score: 0 };
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    window.openQuiz = function (sectionId) {
+      const all = BANK[sectionId] || [];
+      const cards = shuffle(all).slice(0, Math.min(8, all.length));
+      _state = { sectionId, cards, index: 0, score: 0 };
+      document.getElementById('quiz-card-face').style.display = '';
+      document.getElementById('quiz-score-screen').classList.remove('visible');
+      renderCard();
+      document.getElementById('quiz-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closeQuiz = function () {
+      document.getElementById('quiz-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    window.handleOverlayClick = function (e) {
+      if (e.target === document.getElementById('quiz-overlay')) closeQuiz();
+    };
+
+    function renderCard() {
+      const { cards, index } = _state;
+      const total = cards.length;
+      document.getElementById('quiz-section-label').textContent = LABELS[_state.sectionId] || 'Quiz Me';
+      document.getElementById('quiz-counter').textContent = (index + 1) + ' / ' + total;
+      document.getElementById('quiz-progress-fill').style.width = Math.round((index / total) * 100) + '%';
+      document.getElementById('quiz-question-text').textContent = cards[index].q;
+      const ans = document.getElementById('quiz-answer-area');
+      ans.textContent = '';
+      ans.classList.remove('visible');
+      document.getElementById('quiz-reveal-btn').style.display = '';
+      document.getElementById('quiz-grade-row').classList.remove('visible');
+    }
+
+    window.revealAnswer = function () {
+      const card = _state.cards[_state.index];
+      const ans = document.getElementById('quiz-answer-area');
+      ans.textContent = card.a;
+      ans.classList.add('visible');
+      document.getElementById('quiz-reveal-btn').style.display = 'none';
+      document.getElementById('quiz-grade-row').classList.add('visible');
+    };
+
+    window.gradeCard = function (correct) {
+      if (correct) _state.score++;
+      _state.index++;
+      if (_state.index >= _state.cards.length) {
+        showScore();
+      } else {
+        renderCard();
+      }
+    };
+
+    function showScore() {
+      const { score, cards } = _state;
+      const total = cards.length;
+      document.getElementById('quiz-card-face').style.display = 'none';
+      document.getElementById('quiz-score-num').textContent = score;
+      document.getElementById('quiz-score-denom').textContent = '/ ' + total;
+      const pct = score / total;
+      document.getElementById('quiz-score-msg').textContent =
+        pct === 1 ? 'Perfect! Nailed it.' :
+        pct >= 0.75 ? 'Great work!' :
+        pct >= 0.5 ? 'Getting there — review the misses.' :
+        'Keep at it — you\'ve got this.';
+      document.getElementById('quiz-progress-fill').style.width = '100%';
+      document.getElementById('quiz-score-screen').classList.add('visible');
+    }
+
+    window.retryQuiz = function () { openQuiz(_state.sectionId); };
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeQuiz();
+    });
+  })();
 </script>
+
+<!-- ══ QUIZ MODAL ══════════════════════════════════════ -->
+<div class="quiz-overlay" id="quiz-overlay" onclick="handleOverlayClick(event)">
+  <div class="quiz-modal">
+    <button class="quiz-close-btn" onclick="closeQuiz()" aria-label="Close quiz">✕</button>
+    <div id="quiz-card-face">
+      <div class="quiz-header">
+        <span class="quiz-label" id="quiz-section-label">Quiz Me</span>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+        </div>
+        <span class="quiz-counter" id="quiz-counter">1 / 6</span>
+      </div>
+      <p class="quiz-question-text" id="quiz-question-text"></p>
+      <div class="quiz-answer-area" id="quiz-answer-area"></div>
+      <div class="quiz-actions">
+        <button class="quiz-reveal-btn" id="quiz-reveal-btn" onclick="revealAnswer()">Reveal Answer</button>
+        <div class="quiz-grade-row" id="quiz-grade-row">
+          <button class="quiz-got-it-btn" onclick="gradeCard(true)">Got it</button>
+          <button class="quiz-missed-btn" onclick="gradeCard(false)">Missed it</button>
+        </div>
+      </div>
+    </div>
+    <div class="quiz-score-screen" id="quiz-score-screen">
+      <div class="quiz-score-nums">
+        <span class="quiz-score-num" id="quiz-score-num">0</span>
+        <span class="quiz-score-denom" id="quiz-score-denom">/ 6</span>
+      </div>
+      <p class="quiz-score-msg" id="quiz-score-msg"></p>
+      <p class="quiz-score-label">correct</p>
+      <button class="quiz-retry-btn" onclick="retryQuiz()">Try Again</button>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

@@ -26,11 +26,14 @@
   <header class="course-header">
     <span class="course-badge">Course 3</span>
     <h1>Operating Systems</h1>
-    <p class="subtitle">OS navigation · Users &amp; permissions · Package management · Filesystems · Processes &amp; services</p>
+    <p class="subtitle">OS navigation · Users &amp; permissions · Package management · Filesystems · Processes &amp; services · OS in practice</p>
   </header>
 
   <div class="section-list">
 
+    <!-- ══════════════════════════════════════════════
+         SECTION 1 - OS Navigation & The File System
+    ══════════════════════════════════════════════ -->
     <div class="topic-section" id="s1">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-title-row">
@@ -44,14 +47,121 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: Windows vs Linux directory structure, absolute vs relative paths, <code>cd / ls / dir / pwd / mkdir / rm / cp / mv</code>, file extensions, hidden files, CLI basics.</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
+          <div class="subsection">
+            <p class="subsection-title">Directory Structure</p>
+            <ul class="concept-list">
+              <li><strong>Windows</strong> uses drive letters (<code>C:</code>, <code>D:</code>, <code>X:</code>) to represent file systems. Each has its own root directory. Subdirectories are separated by <strong>backslashes</strong> (<code>\</code>).</li>
+              <li><strong>Linux</strong> has a single root <code>/</code>. Everything — including mounted drives — lives under it. Paths use <strong>forward slashes</strong> (<code>/</code>).</li>
+              <li><strong>Hidden files</strong> exist on both OSes. In Linux, any file starting with a dot (<code>.bashrc</code>) is hidden. In Windows, files have a hidden attribute.</li>
+              <li><strong>Size vs Size on Disk</strong> — "size" is the actual data within the file; "size on disk" is the physical space occupied (always a multiple of the cluster size, so it can be larger).</li>
+              <li><strong>Absolute paths</strong> start from the root (<code>C:\Users\</code> or <code>/home/user/</code>). <strong>Relative paths</strong> are relative to the current directory (<code>../Desktop</code>).</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">PowerShell Commands (Windows)</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Command</th><th>What it does</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>ls &lt;directory&gt;</code></td><td>List contents of a directory</td></tr>
+                <tr><td><code>ls -Force &lt;directory&gt;</code></td><td>Show all files including hidden</td></tr>
+                <tr><td><code>pwd</code></td><td>Print working directory (current location)</td></tr>
+                <tr><td><code>cd ..</code></td><td>Go up one directory level</td></tr>
+                <tr><td><code>cd ~</code></td><td>Go to home directory</td></tr>
+                <tr><td><code>cd ..\Desktop</code></td><td>Navigate to Desktop relative to parent</td></tr>
+                <tr><td><code>mkdir</code></td><td>Create a new directory</td></tr>
+                <tr><td><code>mv</code></td><td>Move or rename a file/folder</td></tr>
+                <tr><td><code>rm</code></td><td>Remove a file; <code>-Force</code> removes protected files</td></tr>
+                <tr><td><code>history</code></td><td>Show command history</td></tr>
+                <tr><td><code>Get-Help &lt;command&gt;</code></td><td>How to use a command</td></tr>
+                <tr><td><code>Get-Help &lt;command&gt; -Full</code></td><td>Full help with all parameters</td></tr>
+                <tr><td><code>Get-Alias</code></td><td>Show command aliases (e.g., ls → Get-ChildItem)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Bash Commands (Linux)</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Command</th><th>What it does</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>ls /</code></td><td>List root directory</td></tr>
+                <tr><td><code>ls -a</code></td><td>Show all files including hidden (dot files)</td></tr>
+                <tr><td><code>ls -l</code></td><td>Long listing format (permissions, owner, size, date)</td></tr>
+                <tr><td><code>ls -la</code></td><td>Long listing including hidden files</td></tr>
+                <tr><td><code>pwd</code></td><td>Print working directory</td></tr>
+                <tr><td><code>cd ..</code></td><td>Go up one directory</td></tr>
+                <tr><td><code>cd ~</code></td><td>Go to home directory</td></tr>
+                <tr><td><code>mkdir &lt;name&gt;</code></td><td>Create a directory</td></tr>
+                <tr><td><code>mv &lt;src&gt; &lt;dst&gt;</code></td><td>Move or rename file/folder</td></tr>
+                <tr><td><code>rm &lt;file&gt;</code></td><td>Remove a file; <code>rm -r</code> removes a directory recursively</td></tr>
+                <tr><td><code>cp &lt;src&gt; &lt;dst&gt;</code></td><td>Copy a file</td></tr>
+                <tr><td><code>man &lt;command&gt;</code></td><td>Open the manual for a command</td></tr>
+                <tr><td><code>&lt;command&gt; --help</code></td><td>Quick flag reference for a command</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">File &amp; Text Manipulation</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Tool</th><th>OS</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>cat &lt;file&gt;</code></td><td>Linux</td><td>Print file contents to the terminal</td></tr>
+                <tr><td><code>head &lt;file&gt;</code></td><td>Linux</td><td>Show the first 10 lines</td></tr>
+                <tr><td><code>tail &lt;file&gt;</code></td><td>Linux</td><td>Show the last 10 lines; <code>tail -f</code> follows live</td></tr>
+                <tr><td><code>grep &lt;pattern&gt; &lt;file&gt;</code></td><td>Linux</td><td>Search text with a pattern</td></tr>
+                <tr><td><code>echo</code></td><td>Both</td><td>Output text to terminal (Linux) / Write-Output (PS)</td></tr>
+                <tr><td><code>sls</code> (Select-String)</td><td>Windows</td><td>PowerShell equivalent of grep</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s1')">◈ Quiz Me</button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What character separates directories in a Windows path? What about Linux?</li>
+                <li>Which Linux command shows hidden files in a directory listing?</li>
+                <li>What is the difference between "size" and "size on disk" for a file?</li>
+                <li>Which PowerShell flag forces <code>ls</code> to show hidden files?</li>
+                <li>What is the Linux command to read a file's manual page?</li>
+                <li>How do absolute and relative paths differ?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>Windows uses backslash (<code>\</code>); Linux uses forward slash (<code>/</code>).</li>
+                  <li><code>ls -a</code> — hidden files start with a dot (<code>.</code>) in Linux.</li>
+                  <li>Size = actual data in the file. Size on disk = physical space used (always a multiple of the cluster/block size, so it's often larger).</li>
+                  <li><code>ls -Force &lt;directory&gt;</code></li>
+                  <li><code>man &lt;command&gt;</code></li>
+                  <li>Absolute paths start from the root (e.g., <code>/home/user/docs</code> or <code>C:\Users\</code>). Relative paths are relative to the current directory (e.g., <code>../Desktop</code>).</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
+      </div><!-- /section-body -->
+    </div><!-- /topic-section -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 2 - Users, Groups & Permissions
+    ══════════════════════════════════════════════ -->
     <div class="topic-section" id="s2">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-title-row">
@@ -65,14 +175,110 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: user accounts vs admin/root, Linux <code>chmod</code> / <code>chown</code> / permission octets (rwx), Windows ACLs, <code>sudo</code> / UAC, <code>/etc/passwd</code>, <code>useradd</code>, standard vs elevated accounts.</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
+          <div class="subsection">
+            <p class="subsection-title">Key Concepts</p>
+            <ul class="concept-list">
+              <li><strong>Standard users</strong> can do day-to-day tasks. <strong>Admin users</strong> can install software, change system settings, and manage other accounts.</li>
+              <li>In Windows, an admin can manage multiple accounts from a <strong>domain</strong> — a centralized directory (Active Directory) for organizations.</li>
+              <li>In Linux, <strong>root</strong> is the superuser account with full system control. You use <code>sudo</code> to run a single command with root privileges without logging in as root directly.</li>
+              <li><strong>UAC (User Account Control)</strong> on Windows prompts for confirmation when elevated privileges are needed — the Windows equivalent of <code>sudo</code>.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Windows User Management (PowerShell)</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Command</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>Get-LocalUser</code></td><td>List all local user accounts</td></tr>
+                <tr><td><code>Get-LocalGroup</code></td><td>List all local groups</td></tr>
+                <tr><td><code>Get-LocalGroupMember</code></td><td>Show members of a group</td></tr>
+                <tr><td><code>net user &lt;username&gt; 'password'</code></td><td>Change a user's password</td></tr>
+                <tr><td><code>net user &lt;username&gt; *</code></td><td>Change password interactively (hidden input)</td></tr>
+                <tr><td><code>net user</code></td><td>Show all users; <code>net</code> can do a lot of user management</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Linux User Management</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Command / File</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>sudo &lt;command&gt;</code></td><td>Run a command as root (superuser do)</td></tr>
+                <tr><td><code>adduser &lt;username&gt;</code></td><td>Create a new user</td></tr>
+                <tr><td><code>passwd &lt;username&gt;</code></td><td>Set or change a password</td></tr>
+                <tr><td><code>visudo</code></td><td>Safely edit the sudoers file</td></tr>
+                <tr><td><code>/etc/passwd</code></td><td>File listing all users and their default shells/home dirs</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">File Permissions</p>
+            <ul class="concept-list">
+              <li>Linux uses <strong>rwx</strong> permission bits for Owner, Group, and Others. Each set can be expressed as an octet: <code>r=4, w=2, x=1</code>. So <code>chmod 755</code> = rwxr-xr-x.</li>
+              <li><code>chmod</code> changes permission bits; <code>chown</code> changes ownership; <code>chgrp</code> changes group ownership.</li>
+              <li>Windows uses <strong>ACLs (Access Control Lists)</strong> — specifically <strong>DACLs (Discretionary ACLs)</strong> — to assign granular permissions (read, write, modify, full control) to users and groups.</li>
+              <li><code>icacls</code> is the Windows CLI tool to view and modify file/folder permissions (equivalent to <code>chmod</code>/<code>chown</code> on Linux).</li>
+            </ul>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Octet</th><th>Binary</th><th>Permissions</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>7</td><td>111</td><td>rwx (read, write, execute)</td></tr>
+                <tr><td>6</td><td>110</td><td>rw- (read, write)</td></tr>
+                <tr><td>5</td><td>101</td><td>r-x (read, execute)</td></tr>
+                <tr><td>4</td><td>100</td><td>r-- (read only)</td></tr>
+                <tr><td>0</td><td>000</td><td>--- (no permissions)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s2')">◈ Quiz Me</button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What Linux command lets a standard user run a single command with root privileges?</li>
+                <li>What does <code>chmod 644</code> mean? Who can do what?</li>
+                <li>What file in Linux lists all user accounts on the system?</li>
+                <li>What is the difference between an ACL and a DACL?</li>
+                <li>Which PowerShell command lists all local groups on a Windows machine?</li>
+                <li>In Linux, what numeric value represents "read + write + execute" for a permission octet?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li><code>sudo</code></li>
+                  <li>Owner: rw- (6 = read+write); Group: r-- (4 = read only); Others: r-- (4 = read only). Owner can read/write; everyone else can only read.</li>
+                  <li><code>/etc/passwd</code></li>
+                  <li>An ACL (Access Control List) is the general concept of a list of permissions on an object. A DACL (Discretionary ACL) is the specific Windows implementation that lets the owner control who has access — "discretionary" because the owner decides.</li>
+                  <li><code>Get-LocalGroup</code></li>
+                  <li>7 (r=4 + w=2 + x=1 = 7)</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
+      </div><!-- /section-body -->
+    </div><!-- /topic-section -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 3 - Package Management & Software
+    ══════════════════════════════════════════════ -->
     <div class="topic-section" id="s3">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-title-row">
@@ -86,14 +292,95 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: <code>apt</code> / <code>yum</code> / <code>dnf</code> on Linux, Windows Package Manager (<code>winget</code>), <code>.msi</code> / <code>.exe</code> installers, app stores, software repos, dependency management.</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
+          <div class="subsection">
+            <p class="subsection-title">Windows Software Installation</p>
+            <ul class="concept-list">
+              <li><strong>MSI files</strong> are Windows Installer packages — a standardized format that handles installation, repair, and removal. You can inspect them to see what they do and troubleshoot failures.</li>
+              <li><strong>.exe installers</strong> are standalone executables — they may bundle their own installer logic and don't follow the MSI standard.</li>
+              <li><strong>Appx packages</strong> are used by the Microsoft Store to distribute <strong>Universal Windows Platform (UWP)</strong> apps.</li>
+              <li><strong>DLLs (Dynamic Link Libraries)</strong> are shared code libraries that multiple programs can use simultaneously. The <strong>.NET framework</strong> provides a common runtime for many Windows apps.</li>
+              <li>Enterprise tools: <strong>SCCM</strong> (System Center Configuration Manager) and <strong>Chocolatey</strong> let admins deploy and manage software across many machines at once.</li>
+              <li>When a new device is connected, Windows first <strong>queries the hardware ID</strong> to find the right driver.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Linux Package Management</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Command</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>sudo apt update</code></td><td>Refresh the list of available packages from repos</td></tr>
+                <tr><td><code>sudo apt install &lt;pkg&gt;</code></td><td>Install a package and its dependencies</td></tr>
+                <tr><td><code>sudo apt remove &lt;pkg&gt;</code></td><td>Remove a package</td></tr>
+                <tr><td><code>sudo apt full-upgrade</code></td><td>Upgrade all packages including the kernel</td></tr>
+                <tr><td><code>dpkg -i &lt;file.deb&gt;</code></td><td>Install a .deb package directly (no dependency resolution)</td></tr>
+                <tr><td><code>dpkg -l</code></td><td>List all installed packages</td></tr>
+              </tbody>
+            </table>
+            <div class="note">
+              <strong>apt vs dpkg:</strong> <code>apt</code> is the high-level tool — it resolves dependencies and fetches packages from repos. <code>dpkg</code> is the low-level tool that actually installs/removes <code>.deb</code> files but doesn't handle dependencies automatically.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Drivers &amp; Kernel Modules (Linux)</p>
+            <ul class="concept-list">
+              <li>Hard drives appear as block device files: <code>/dev/sda</code>, <code>/dev/sdb</code>, <code>/dev/sdc</code>, etc. (a, b, c… for each drive).</li>
+              <li><strong>Kernel modules</strong> are pieces of code that can be loaded/unloaded into the kernel at runtime without rebooting — used for drivers and other kernel extensions.</li>
+              <li><code>uname -r</code> tells you the current kernel version.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Things to Know (Common Gotchas)</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Appx packages</span><span class="term-val">What Windows Store uses for UWP apps — not MSI or .exe</span></div>
+              <div class="term-row"><span class="term-key">New device connected</span><span class="term-val">Windows first queries the hardware ID before searching for drivers</span></div>
+              <div class="term-row"><span class="term-key">apt full-upgrade</span><span class="term-val">Upgrades the whole system including the kernel (not just apt upgrade)</span></div>
+            </div>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s3')">◈ Quiz Me</button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What is the difference between <code>apt</code> and <code>dpkg</code>?</li>
+                <li>What file format does the Microsoft Store use to distribute UWP apps?</li>
+                <li>What does Windows do first when a new device is connected?</li>
+                <li>What command shows you the current Linux kernel version?</li>
+                <li>Which Linux command would you use to upgrade the entire kernel, not just installed packages?</li>
+                <li>What is a DLL and why is it useful?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li><code>apt</code> is high-level: it fetches packages from repos and resolves dependencies. <code>dpkg</code> is low-level: it installs/removes .deb files directly but won't automatically pull in missing dependencies.</li>
+                  <li>Appx packages</li>
+                  <li>Windows queries the hardware ID of the device to look up the appropriate driver.</li>
+                  <li><code>uname -r</code></li>
+                  <li><code>sudo apt full-upgrade</code></li>
+                  <li>A DLL (Dynamic Link Library) is a shared code library that multiple programs can use at the same time. It avoids code duplication — instead of each app bundling the same code, they all share one copy loaded in memory.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
+      </div><!-- /section-body -->
+    </div><!-- /topic-section -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 4 - Filesystems & Disk Management
+    ══════════════════════════════════════════════ -->
     <div class="topic-section" id="s4">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-title-row">
@@ -107,14 +394,161 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: NTFS vs FAT32 vs exFAT vs ext4, partitioning (MBR vs GPT), formatting, mounting, <code>df</code> / <code>du</code>, disk quotas, RAID levels (0/1/5/10), virtual memory / swap.</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
+          <div class="subsection">
+            <p class="subsection-title">Filesystem Types</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Filesystem</th><th>OS</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>NTFS</strong></td><td>Windows</td><td>Default for Windows. Supports large files, journaling, permissions, encryption. Can be read (not easily written) on Linux.</td></tr>
+                <tr><td><strong>EXT4</strong></td><td>Linux</td><td>Default for Linux. Readable only on Linux natively.</td></tr>
+                <tr><td><strong>FAT32</strong></td><td>Cross-platform</td><td>Readable and writable on all OSes. 4 GB max file size limit.</td></tr>
+                <tr><td><strong>exFAT</strong></td><td>Cross-platform</td><td>Like FAT32 but without the 4 GB file size limit. Common for USB drives.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Partitions &amp; Partition Tables</p>
+            <ul class="concept-list">
+              <li>A <strong>partition</strong> is a logically separated piece of a disk. A <strong>formatted filesystem</strong> on a partition is called a <strong>volume</strong>.</li>
+              <li>The <strong>partition table</strong> tells the OS how the disk is divided.</li>
+              <li><strong>MBR (Master Boot Record)</strong> — older standard. Max disk size: <strong>2 TB</strong>. Max 4 primary partitions.</li>
+              <li><strong>GPT (GUID Partition Table)</strong> — modern standard. Supports disks <strong>larger than 2 TB</strong> and virtually unlimited partitions. Required by <strong>UEFI</strong> (the modern BIOS replacement).</li>
+              <li>UEFI is the default firmware today and uses GPT.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Windows Disk Tools</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Tool / Command</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Disk Management (GUI)</td><td>Visual tool to create, format, and resize partitions</td></tr>
+                <tr><td><code>diskpart</code></td><td>CLI disk manager — interactive</td></tr>
+                <tr><td><code>list disk</code></td><td>(in diskpart) Show all disks</td></tr>
+                <tr><td><code>select disk X</code></td><td>(in diskpart) Select a disk to work on</td></tr>
+                <tr><td><code>clean</code></td><td>(in diskpart) Wipe all partitions from selected disk</td></tr>
+                <tr><td><code>create partition primary</code></td><td>(in diskpart) Create a new partition</td></tr>
+                <tr><td><code>format FS=NTFS label=name quick</code></td><td>(in diskpart) Format the partition as NTFS</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Linux Disk Tools</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Command</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>lsblk</code></td><td>View all block devices and their filesystems</td></tr>
+                <tr><td><code>parted -l</code></td><td>List all disks and partition info</td></tr>
+                <tr><td><code>sudo parted /dev/sdb</code></td><td>Open interactive parted tool on a disk</td></tr>
+                <tr><td><code>mkfs -t ext4 /dev/sdb1</code></td><td>Format a partition (make filesystem)</td></tr>
+                <tr><td><code>fdisk /dev/sda</code></td><td>Interactive partition editor (older tool)</td></tr>
+                <tr><td><code>mount /dev/sdb1 /mnt/data</code></td><td>Mount a partition to a directory</td></tr>
+                <tr><td><code>umount /mnt/data</code></td><td>Unmount a partition</td></tr>
+                <tr><td><code>/etc/fstab</code></td><td>Config file for auto-mounting filesystems at boot (uses UUIDs)</td></tr>
+                <tr><td><code>df -h</code></td><td>Show disk free space across the whole machine (human readable)</td></tr>
+                <tr><td><code>du -h</code></td><td>Show disk usage for a directory (human readable)</td></tr>
+              </tbody>
+            </table>
+            <div class="note">
+              Always use <strong>UUIDs</strong> (not device names like <code>/dev/sdb</code>) in <code>/etc/fstab</code> — device names can change between boots, UUIDs never do.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Virtual Memory &amp; Swap</p>
+            <ul class="concept-list">
+              <li><strong>Virtual memory</strong> uses disk space to extend RAM when physical memory is full. The OS moves less-used pages to disk and back as needed.</li>
+              <li>Windows calls this the <strong>paging file</strong> (pagefile.sys). You can configure its size in System Properties.</li>
+              <li>Linux uses <strong>swap space</strong> — a dedicated partition (or file) on the hard drive.</li>
+            </ul>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Command</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>mkswap /dev/sdb2</code></td><td>Format a partition as swap space</td></tr>
+                <tr><td><code>swapon /dev/sdb2</code></td><td>Enable the swap partition</td></tr>
+                <tr><td><code>free -h</code></td><td>Show RAM and swap usage</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Filesystem Features</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">MFT (Windows)</span><span class="term-val">Master File Table — stores records for every file: name, timestamps, permissions, location, etc. Each record has a file record number.</span></div>
+              <div class="term-row"><span class="term-key">Inode (Linux)</span><span class="term-val">The Linux equivalent of an MFT record — metadata about a file stored in an inode table. The filename points to an inode, not the data directly.</span></div>
+              <div class="term-row"><span class="term-key">Symbolic (soft) link</span><span class="term-val">Points to another file's <em>path/name</em>. If the target is moved/deleted, the link breaks. Like Windows shortcuts.</span></div>
+              <div class="term-row"><span class="term-key">Hard link</span><span class="term-val">Points directly to the inode (Linux) or MFT record (Windows). Survives if the original filename is deleted.</span></div>
+              <div class="term-row"><span class="term-key">Journaling</span><span class="term-val">NTFS and ext4 log pending changes to a journal before committing them — enables recovery after a crash without full disk scan.</span></div>
+              <div class="term-row"><span class="term-key">Data buffer</span><span class="term-val">A region of RAM used to temporarily hold data during writes. This is why you must properly unmount — to flush the buffer and avoid data corruption.</span></div>
+              <div class="term-row"><span class="term-key">Defragmentation</span><span class="term-val">Reorganizes fragmented files into contiguous blocks on spinning disks. Less benefit for SSDs — SSDs use TRIM to reclaim unused blocks instead.</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Disk Health &amp; Repair</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Tool</th><th>OS</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>chkdsk /F &lt;drive&gt;</code></td><td>Windows</td><td>Check disk for errors and fix them (<code>/F</code> flag)</td></tr>
+                <tr><td><code>fsutil repair query &lt;drive&gt;</code></td><td>Windows</td><td>Query self-healing status of NTFS volume</td></tr>
+                <tr><td><code>fsck</code></td><td>Linux</td><td>Manual filesystem check — <strong>must be run on unmounted filesystem</strong> or risk damage</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s4')">◈ Quiz Me</button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>Which filesystem is readable and writable on all operating systems (Windows, Mac, Linux)?</li>
+                <li>What are the key differences between MBR and GPT partition tables?</li>
+                <li>What is the difference between a symbolic link and a hard link?</li>
+                <li>Why should you always properly unmount a drive before removing it?</li>
+                <li>What is the Linux equivalent of Windows' MFT?</li>
+                <li>Which Linux command shows free disk space across the whole machine in a human-readable format?</li>
+                <li>What is the purpose of <code>/etc/fstab</code> and why should it use UUIDs instead of device names?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>FAT32 (and exFAT for files larger than 4 GB).</li>
+                  <li>MBR: max 2 TB disk size, max 4 primary partitions, older BIOS. GPT: supports 2 TB+, virtually unlimited partitions, required by UEFI (modern firmware).</li>
+                  <li>A symbolic (soft) link points to a file's path/name — it breaks if the target is moved or deleted. A hard link points directly to the inode/data — it remains valid even if the original filename is deleted.</li>
+                  <li>Because the OS uses a data buffer (RAM) to stage writes. Proper unmounting flushes the buffer to disk. Yanking the drive before flushing can corrupt the filesystem.</li>
+                  <li>Inodes (stored in an inode table).</li>
+                  <li><code>df -h</code></li>
+                  <li><code>/etc/fstab</code> defines which filesystems to mount automatically at boot and where. UUIDs are used instead of device names (like <code>/dev/sdb</code>) because device names can change between reboots (e.g., if you add another drive), while UUIDs always uniquely identify the same partition.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
+      </div><!-- /section-body -->
+    </div><!-- /topic-section -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 5 - Processes, Services & Logs
+    ══════════════════════════════════════════════ -->
     <div class="topic-section" id="s5">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-title-row">
@@ -128,13 +562,379 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: <code>ps</code> / Task Manager / <code>top</code> / <code>htop</code>, process states, <code>kill</code> / signals, systemd (<code>systemctl</code>), Windows Services, Event Viewer, <code>journalctl</code>, log locations (<code>/var/log/</code>).</p>
+
+          <div class="subsection">
+            <p class="subsection-title">Programs vs Processes</p>
+            <ul class="concept-list">
+              <li>A <strong>program</strong> is a set of instructions stored on disk. A <strong>process</strong> is a program that is currently loaded and running in memory.</li>
+              <li>Every process gets a unique <strong>PID (Process ID)</strong> so the OS can track and manage it.</li>
+              <li><strong>Daemon / background processes</strong> run without a user interface and stay running in the background (e.g., a web server, a print spooler).</li>
+              <li>On Windows boot, <code>smss.exe</code> (Session Manager) starts first, then <code>csrss.exe</code> (Client Server Runtime) which handles the GUI and command line.</li>
+              <li>On Linux, the kernel creates the <strong>init process</strong> (PID 1) at startup, which then starts all other processes. Linux processes follow a parent-child relationship; most terminate automatically when done.</li>
+              <li>Windows processes can operate independently of their parent process.</li>
+            </ul>
           </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Viewing &amp; Managing Processes</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Command / Tool</th><th>OS</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Task Manager (<code>taskmgr.exe</code>)</td><td>Windows</td><td>GUI process viewer; find PIDs to use with taskkill</td></tr>
+                <tr><td><code>tasklist</code></td><td>Windows</td><td>CLI: list all running processes</td></tr>
+                <tr><td><code>Get-Process</code></td><td>Windows (PS)</td><td>PowerShell: list all processes</td></tr>
+                <tr><td><code>taskkill /pid &lt;PID&gt;</code></td><td>Windows</td><td>Terminate a process by PID</td></tr>
+                <tr><td>Process Explorer (<code>procexp.exe</code>)</td><td>Windows</td><td>Advanced Sysinternals tool; shows process tree; becomes parent when restarting processes</td></tr>
+                <tr><td><code>ps</code></td><td>Linux</td><td>Snapshot of current processes (PID, TTY, STAT, TIME)</td></tr>
+                <tr><td><code>ps -ef</code></td><td>Linux</td><td>Full details of all processes including hidden/background</td></tr>
+                <tr><td><code>ps -ef | grep &lt;name&gt;</code></td><td>Linux</td><td>Find a process by name</td></tr>
+                <tr><td><code>ls -l /proc</code></td><td>Linux</td><td>See the process directory (each PID has a folder)</td></tr>
+                <tr><td><code>kill &lt;PID&gt;</code></td><td>Linux</td><td>Send SIGTERM to a process (asks it to clean up and exit)</td></tr>
+              </tbody>
+            </table>
+            <div class="note">
+              <strong>ps STAT codes:</strong> <code>R</code> = running, <code>S</code> = interruptible sleep (waiting), <code>T</code> = stopped.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Process Signals (Linux)</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Signal</th><th>Command</th><th>Effect</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>SIGINT</td><td><kbd>Ctrl + C</kbd></td><td>Interrupt — politely ask the process to stop (most popular)</td></tr>
+                <tr><td>SIGTERM</td><td><code>kill &lt;PID&gt;</code></td><td>Terminate — lets the process clean up before exiting</td></tr>
+                <tr><td>SIGKILL</td><td><code>kill -KILL &lt;PID&gt;</code></td><td>Force-kill immediately with no cleanup — <strong>last resort, can cause damage</strong></td></tr>
+                <tr><td>SIGTSTP</td><td><code>kill -TSTP &lt;PID&gt;</code> / <kbd>Ctrl+Z</kbd></td><td>Suspend / pause the process</td></tr>
+                <tr><td>SIGCONT</td><td><code>kill -CONT &lt;PID&gt;</code></td><td>Continue a suspended process</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Resource Monitoring</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Command / Tool</th><th>OS</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Resource Monitor</td><td>Windows</td><td>Best way to track process CPU, memory, disk, and network usage</td></tr>
+                <tr><td><code>Get-Process | Sort-Object CPU -Descending | Select-Object -First 3 -Property ID,ProcessName,CPU</code></td><td>Windows (PS)</td><td>Show top 3 CPU-consuming processes</td></tr>
+                <tr><td><code>top</code></td><td>Linux</td><td>Live view of top processes; <code>%CPU</code> and <code>%MEM</code> are most useful columns</td></tr>
+                <tr><td><code>htop</code></td><td>Linux</td><td>Improved interactive version of top</td></tr>
+                <tr><td><code>uptime</code></td><td>Linux</td><td>Shows current time, system uptime, users logged in, and average CPU load</td></tr>
+                <tr><td><code>lsof</code></td><td>Linux</td><td>Lists open files and which processes are using them — useful for finding what's keeping a file locked</td></tr>
+              </tbody>
+            </table>
+            <div class="note">
+              <strong>Load average</strong> (from <code>uptime</code> or <code>top</code>) shows how many processes are in the run queue averaged over 1, 5, and 15 minutes. A load of 1.0 on a single-core CPU means it's fully utilized.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Logging</p>
+            <ul class="concept-list">
+              <li>Logs record events with timestamps: who did what, and when. They're essential for troubleshooting and security auditing.</li>
+              <li><strong>Unix Epoch time</strong> — how logs often represent time: the number of seconds elapsed since midnight January 1, 1970 UTC.</li>
+              <li><strong>Log rotation</strong> automatically archives old log files (compressed) and deletes very old ones to prevent logs from filling the disk.</li>
+              <li><strong>Centralized logging</strong> aggregates logs from many systems into one location — important in enterprise environments.</li>
+            </ul>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Location / Tool</th><th>OS</th><th>What it contains</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Event Viewer (<code>eventvwr.msc</code>)</td><td>Windows</td><td>GUI log viewer. "Windows Logs" = OS-level; "Application &amp; Services Logs" = specific services (e.g., PowerShell)</td></tr>
+                <tr><td><code>/var/log/</code></td><td>Linux</td><td>Root directory for all system logs</td></tr>
+                <tr><td><code>/var/log/syslog</code></td><td>Linux</td><td>General catch-all log for everything</td></tr>
+                <tr><td><code>/var/log/auth.log</code></td><td>Linux</td><td>Security and authorization events (logins, sudo usage)</td></tr>
+                <tr><td><code>/var/log/dmesg</code></td><td>Linux</td><td>Kernel ring buffer / hardware messages (also via <code>dmesg</code> command)</td></tr>
+                <tr><td><code>/var/log/kern.log</code></td><td>Linux</td><td>Kernel messages</td></tr>
+                <tr><td><code>tail -f /var/log/syslog</code></td><td>Linux</td><td>Follow a log file live as it updates</td></tr>
+                <tr><td><code>journalctl</code></td><td>Linux (systemd)</td><td>Query the systemd journal; <code>journalctl -u &lt;service&gt;</code> for a specific service</td></tr>
+              </tbody>
+            </table>
+            <div class="note">
+              <strong>Troubleshooting with logs:</strong> Start by searching for <code>ERROR</code> or <code>CRIT</code> keywords. Use timestamps to narrow the window. Look for root causes, not symptoms. Review from the bottom up for the most recent events. <code>tail -f</code> is great for watching a problem happen in real time.
+            </div>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s5')">◈ Quiz Me</button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What is PID 1 in Linux and what does it do?</li>
+                <li>What is the difference between SIGTERM and SIGKILL?</li>
+                <li>Which Linux command shows a live view of the top resource-consuming processes?</li>
+                <li>What does the STAT code <code>S</code> mean in <code>ps</code> output?</li>
+                <li>What does Ctrl+C send to a process?</li>
+                <li>Where does Linux store security and authorization logs?</li>
+                <li>What is Unix Epoch time?</li>
+                <li>Which command follows a log file live as it writes new entries?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>The <code>init</code> process (PID 1) is the first process created by the kernel at boot. It's the parent of all other processes and is responsible for starting system services.</li>
+                  <li>SIGTERM asks the process to terminate gracefully (it can clean up first). SIGKILL instantly forces the process to stop with no cleanup — it cannot be caught or ignored. Use SIGKILL only as a last resort.</li>
+                  <li><code>top</code> (or <code>htop</code> for an improved version)</li>
+                  <li><code>S</code> = interruptible sleep (the process is waiting for something, like user input or a file read to complete).</li>
+                  <li>SIGINT (signal interrupt) — a polite request to stop the current process.</li>
+                  <li><code>/var/log/auth.log</code></li>
+                  <li>The number of seconds elapsed since midnight January 1, 1970 UTC. It's a universal timestamp format used in logs across Unix/Linux systems.</li>
+                  <li><code>tail -f &lt;logfile&gt;</code></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
+      </div><!-- /section-body -->
+    </div><!-- /topic-section -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 6 - OS in Practice
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s6">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>6 &nbsp;·&nbsp; OS in Practice: Remote Access, Virtualization &amp; Deployment</h2>
         </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c03-s6" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
       </div>
-    </div>
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">Remote Connections</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Protocol / Tool</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>SSH (Secure Shell)</strong></td><td>Securely connect to a remote machine's command line over the network. Encrypted.</td></tr>
+                <tr><td><strong>PuTTY</strong></td><td>Free open-source SSH/Telnet client for Windows. GUI or CLI: <code>putty.exe -ssh user@ipaddress</code></td></tr>
+                <tr><td><strong>RDP (Remote Desktop Protocol)</strong></td><td>Full graphical remote desktop — see and control the remote machine's desktop</td></tr>
+                <tr><td><code>mstsc.exe</code></td><td>Microsoft Terminal Services Client — the built-in Windows app for making RDP connections</td></tr>
+                <tr><td><strong>SCP (Secure Copy)</strong></td><td>Copies files between machines over SSH on Linux: <code>scp file user@host:/path</code></td></tr>
+                <tr><td><code>pscp.exe</code></td><td>PuTTY's SCP implementation for Windows — same concept as Linux <code>scp</code></td></tr>
+                <tr><td>Shared Folders (Windows)</td><td>Easier approach for sharing files with specific users on the local network</td></tr>
+              </tbody>
+            </table>
+            <div class="note">
+              Enable remote connections on Windows via: right-click <em>This PC</em> → Properties → Remote Settings → allow Remote Desktop. Must be done as an admin.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Virtualization</p>
+            <ul class="concept-list">
+              <li>A <strong>Virtual Machine (VM)</strong> is a software emulation of a computer that runs inside your real computer — complete with its own virtual CPU, RAM, hard drive, and network adapter.</li>
+              <li>You allocate a slice of your real hardware (e.g., 2 cores, 4 GB RAM, 50 GB disk) to the VM. Multiple VMs can run simultaneously.</li>
+              <li><strong>VirtualBox</strong> is a popular free VM platform. Others include VMware and Hyper-V (built into Windows).</li>
+              <li>VMs are commonly used for testing, running a different OS, sandboxing, and server consolidation.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">OS Deployment</p>
+            <ul class="concept-list">
+              <li><strong>Disk cloning</strong> makes an exact copy of an entire drive — useful for deploying a pre-configured OS image to many machines at once.</li>
+              <li><strong>Disk-to-disk cloning</strong>: connect the source and target hard drives and copy directly.</li>
+              <li><strong>Hard disk duplicator</strong>: hardware device that makes identical copies of drives without a computer.</li>
+              <li><strong>Disk cloning software</strong>: copies drives using software running on the OS (e.g., Clonezilla, Acronis).</li>
+              <li><strong>Network-initiated deployment</strong>: machines boot from the network (PXE boot) and receive their OS image from a deployment server — scales well in enterprise environments.</li>
+              <li>Linux <strong><code>dd</code></strong> command: low-level byte-for-byte copy. Use: <code>dd if=/dev/sda of=/dev/sdb</code> — copies one disk to another.</li>
+              <li><strong>Flash drive distribution</strong>: distribute OS installers on USB drives.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Troubleshooting Windows</p>
+            <ul class="concept-list">
+              <li>Before diving in, ask: Is the problem unique to this machine? Does it affect one user or all users? Is it related to a specific app?</li>
+              <li>Analyze Event Viewer logs — filter by error/warning. Search for error keywords related to the symptom.</li>
+            </ul>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Windows Update</span><span class="term-val">Update from Windows (patches, security fixes)</span></div>
+              <div class="term-row"><span class="term-key">Hardware Update</span><span class="term-val">Update from the hardware manufacturer (drivers, firmware)</span></div>
+              <div class="term-row"><span class="term-key">Disk Cleanup</span><span class="term-val">Remove temp files and free up disk space</span></div>
+              <div class="term-row"><span class="term-key">Defragment Disks</span><span class="term-val">Reorganize HDD files for better performance (not needed for SSDs)</span></div>
+              <div class="term-row"><span class="term-key">CHKDSK</span><span class="term-val">Check disk for filesystem errors and fix them</span></div>
+              <div class="term-row"><span class="term-key">Disk Management</span><span class="term-val">Create/resize/format partitions</span></div>
+              <div class="term-row"><span class="term-key">Event Viewer</span><span class="term-val">Browse system and application logs (<code>eventvwr.msc</code>)</span></div>
+              <div class="term-row"><span class="term-key">Registry Editor</span><span class="term-val">Edit Windows registry (<code>regedit</code>) — advanced, use with caution</span></div>
+              <div class="term-row"><span class="term-key">msconfig</span><span class="term-val">System Configuration tool — manage startup items, boot options, services</span></div>
+              <div class="term-row"><span class="term-key">Safe Mode</span><span class="term-val">Boot with minimal drivers/services — useful for diagnosing driver or software conflicts</span></div>
+            </div>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s6')">◈ Quiz Me</button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What is the difference between SSH and RDP?</li>
+                <li>What Windows command-line tool creates RDP connections?</li>
+                <li>What is PuTTY and why is it useful on Windows?</li>
+                <li>What does the Linux <code>dd</code> command do and how would you use it to clone a disk?</li>
+                <li>What is the benefit of network-initiated OS deployment over disk cloning?</li>
+                <li>Which Windows tool would you open to browse system logs from the GUI?</li>
+                <li>What is Safe Mode and when would you use it?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>SSH gives you a remote <em>command line</em> (text-only, very lightweight). RDP gives you a full <em>graphical desktop</em> — you can see and interact with the remote machine's GUI.</li>
+                  <li><code>mstsc.exe</code> (Microsoft Terminal Services Client)</li>
+                  <li>PuTTY is a free, open-source SSH/Telnet client for Windows. Since Windows doesn't have a built-in SSH client in older versions, PuTTY lets you connect to Linux/Unix machines securely from Windows. It also supports SCP via <code>pscp.exe</code>.</li>
+                  <li><code>dd</code> is a low-level byte-for-byte copy tool. To clone disk sda to sdb: <code>dd if=/dev/sda of=/dev/sdb</code>. (<code>if</code> = input file, <code>of</code> = output file)</li>
+                  <li>Network-initiated deployment (PXE boot) scales much better — you can deploy OS images to hundreds of machines simultaneously from a central server without needing physical media or staff at each machine.</li>
+                  <li>Event Viewer (<code>eventvwr.msc</code>)</li>
+                  <li>Safe Mode boots Windows with only the minimum required drivers and services. Use it when Windows won't boot normally, or to isolate whether a problem is caused by a driver or third-party software (which won't load in Safe Mode).</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
+      </div><!-- /section-body -->
+    </div><!-- /topic-section -->
+
+
+    <!-- ══════════════════════════════════════════════
+         SECTION 7 - What Actually Matters
+    ══════════════════════════════════════════════ -->
+    <div class="topic-section" id="s7">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>7 &nbsp;·&nbsp; What Actually Matters — Key Takeaways</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c03-s7" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">The CLI — two languages, one concept</p>
+            <p style="font-size:.875rem;color:var(--text-1);margin-bottom:.7rem;line-height:1.6;">Everything in this course is navigating a tree, acting on files/processes/users, and reading output. The commands differ between Linux and Windows but the mental model is identical.</p>
+            <div class="ref-table">
+              <table>
+                <thead><tr><th>Action</th><th>Linux (bash)</th><th>Windows (PowerShell/cmd)</th></tr></thead>
+                <tbody>
+                  <tr><td>Where am I?</td><td><code>pwd</code></td><td><code>cd</code> / <code>Get-Location</code></td></tr>
+                  <tr><td>List contents</td><td><code>ls -la</code></td><td><code>dir</code> / <code>Get-ChildItem</code></td></tr>
+                  <tr><td>Move around</td><td><code>cd path</code></td><td><code>cd path</code></td></tr>
+                  <tr><td>View file</td><td><code>cat</code> / <code>less</code></td><td><code>type</code> / <code>Get-Content</code></td></tr>
+                  <tr><td>Find text</td><td><code>grep -r "pattern"</code></td><td><code>Select-String</code></td></tr>
+                  <tr><td>Copy/Move</td><td><code>cp</code> / <code>mv</code></td><td><code>copy</code> / <code>move</code></td></tr>
+                  <tr><td>Delete</td><td><code>rm -rf</code></td><td><code>del</code> / <code>rm -Recurse</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="note" style="margin-top:.65rem;">
+              <strong>Tab completion</strong> works in both environments. Use it constantly — it prevents typos in destructive commands and speeds everything up.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Permissions — the octet and the principle</p>
+            <p style="font-size:.875rem;color:var(--text-1);margin-bottom:.7rem;line-height:1.6;">The most important thing isn't memorizing modes — it's the underlying principle: <em>grant the minimum permissions necessary to accomplish the task</em>. Everything flows from that.</p>
+            <ul class="concept-list">
+              <li><strong>Linux octet recap:</strong> rwx = 4+2+1. Three octets: owner, group, others. <code>chmod 755</code> = rwxr-xr-x (owner full, everyone else read+execute). <code>chmod 644</code> = rw-r--r-- (owner read/write, everyone else read only). These two cover 90% of real use cases.</li>
+              <li><strong>SUID/SGID</strong> are the exceptions to memorize: a SUID binary runs as its <em>owner</em> (often root) regardless of who executes it. This is how <code>sudo</code> and <code>passwd</code> work. A SUID root binary with a vulnerability = privilege escalation. Audit them periodically.</li>
+              <li><strong>Windows ACLs</strong> are more granular than Linux DAC but the principle is the same: Deny beats Allow, permissions cascade down folders unless inheritance is broken. Use <code>icacls</code> or the Security tab to inspect.</li>
+              <li><strong>sudo vs su:</strong> prefer <code>sudo command</code> over <code>su -</code>. It limits blast radius (only that command runs elevated), logs who ran what, and avoids leaving a root shell open.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Packages — trust the package manager</p>
+            <ul class="concept-list">
+              <li>Package managers (apt, dnf, brew, winget, Chocolatey) handle dependency resolution, cryptographic verification, and clean upgrades. Manual installs from the internet bypass all of this.</li>
+              <li><strong>Repositories are the trust boundary.</strong> Adding a third-party PPA or Chocolatey source means trusting that maintainer with code that runs as root on your machines. Vet sources carefully in enterprise environments.</li>
+              <li>The three commands you'll use 90% of the time on Debian/Ubuntu: <code>apt update</code> (refresh repo index), <code>apt install</code> (add package), <code>apt upgrade</code> (update installed packages). Run <code>update</code> before <code>install</code>.</li>
+              <li>Compiling from source (<code>./configure && make && sudo make install</code>) is sometimes necessary but leaves no clean uninstall path unless the software provides one. Use it as a last resort.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Filesystems — what matters in practice</p>
+            <div class="ref-table">
+              <table>
+                <thead><tr><th>Filesystem</th><th>Use when</th><th>Avoid when</th></tr></thead>
+                <tbody>
+                  <tr><td>ext4</td><td>Linux OS, data drives, VMs</td><td>Cross-platform USB shares</td></tr>
+                  <tr><td>NTFS</td><td>Windows OS and data drives</td><td>Native Linux root partition</td></tr>
+                  <tr><td>FAT32</td><td>USB drives that must work everywhere</td><td>Files &gt; 4 GB</td></tr>
+                  <tr><td>exFAT</td><td>Large files on cross-platform drives</td><td>Root partition (any OS)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="concept-list" style="margin-top:.7rem;">
+              <li><strong>Inodes</strong>: every file/directory is an inode. Running out of inodes (even with free disk space) causes "no space left on device" errors. Check with <code>df -i</code>.</li>
+              <li><strong>Hard vs soft links</strong>: a hard link is another directory entry pointing to the same inode — deleting the original doesn't remove the data. A symlink is a pointer to a path — it breaks if the target moves.</li>
+              <li><strong>Virtual filesystems</strong> (<code>/proc</code>, <code>/sys</code>, <code>/dev</code>) don't store anything on disk — they expose live kernel state. Reading <code>/proc/cpuinfo</code> doesn't read a file; it queries the kernel.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Processes &amp; signals — discipline before force</p>
+            <ul class="concept-list">
+              <li><strong>Always try SIGTERM (15) before SIGKILL (9).</strong> SIGTERM lets the process clean up — flush buffers, release locks, close network connections. SIGKILL is instant but can leave corrupted state, dangling lock files, or incomplete writes.</li>
+              <li><strong>Zombie ≠ orphan.</strong> A zombie has finished but its parent hasn't read its exit code (harmless, small PID table entry). An orphan's parent exited before it did — init/systemd adopts it (also harmless). Neither is a problem until you have hundreds of zombies, which signals a buggy parent process.</li>
+              <li><code>top</code> / <code>htop</code> are for interactive diagnosis. For scripting or alerting, use <code>ps aux | grep</code> or <code>pgrep</code>.</li>
+              <li>On Windows, <strong>Task Manager → Details</strong> shows PID and parent. Services with "automatic" start type are the equivalent of Linux systemd units.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Logs — where truth lives</p>
+            <div class="math-block">
+              <span class="label">Linux auth</span>    <span class="val">/var/log/auth.log &nbsp;·&nbsp; who logged in, sudo use, SSH attempts</span><br>
+              <span class="label">Linux kernel</span>  <span class="val">/var/log/kern.log &nbsp;·&nbsp; hardware errors, OOM killer, driver issues</span><br>
+              <span class="label">Linux apps</span>    <span class="val">/var/log/syslog &nbsp;·&nbsp; catch-all; systemd units log here unless overridden</span><br>
+              <span class="label">journalctl</span>    <span class="val">journalctl -u sshd -f &nbsp;·&nbsp; follow a specific unit in real time</span><br>
+              <span class="label">Windows</span>       <span class="val">Event Viewer → Windows Logs → System / Application / Security</span>
+            </div>
+            <div class="note" style="margin-top:.65rem;">
+              When troubleshooting, <strong>check logs before changing anything</strong>. The error is almost always in the log. Changing settings first and checking logs second is how you end up with two problems instead of one.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">The bigger picture</p>
+            <div class="note">
+              The OS course is the practical foundation for everything that follows. System Administration (Course 4) is just this at scale — the same permissions model, the same package concepts, the same log files, applied across hundreds of machines using automation. Every command-line skill you build here compounds. The difference between a technician who can administer ten machines and one who can administer ten thousand is mostly automation fluency — and that starts with being comfortable at a CLI.
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
+      </div><!-- /section-body -->
+    </div><!-- /s7 -->
 
   </div><!-- /section-list -->
 
@@ -143,6 +943,44 @@
 <footer class="site-footer">
   Google IT Support Professional Certificate · Course 3 - Operating Systems
 </footer>
+
+<!-- ══ QUIZ MODAL ══════════════════════════════════════ -->
+<div class="quiz-overlay" id="quiz-overlay" onclick="handleOverlayClick(event)">
+  <div class="quiz-modal">
+    <button class="quiz-close-btn" onclick="closeQuiz()" aria-label="Close quiz">✕</button>
+
+    <!-- Card face -->
+    <div id="quiz-card-face">
+      <div class="quiz-header">
+        <span class="quiz-label" id="quiz-section-label">Quiz Me</span>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+        </div>
+        <span class="quiz-counter" id="quiz-counter">1 / 8</span>
+      </div>
+      <p class="quiz-question-text" id="quiz-question-text"></p>
+      <div class="quiz-answer-area" id="quiz-answer-area"></div>
+      <div class="quiz-actions">
+        <button class="quiz-reveal-btn" id="quiz-reveal-btn" onclick="revealAnswer()">Reveal Answer</button>
+        <div class="quiz-grade-row" id="quiz-grade-row">
+          <button class="quiz-got-it-btn" onclick="gradeCard(true)">Got it</button>
+          <button class="quiz-missed-btn" onclick="gradeCard(false)">Missed it</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Score screen -->
+    <div class="quiz-score-screen" id="quiz-score-screen">
+      <div class="quiz-score-nums">
+        <span class="quiz-score-num" id="quiz-score-num">0</span>
+        <span class="quiz-score-denom" id="quiz-score-denom">/ 8</span>
+      </div>
+      <p class="quiz-score-msg" id="quiz-score-msg"></p>
+      <p class="quiz-score-label">correct</p>
+      <button class="quiz-retry-btn" onclick="retryQuiz()">Try Again</button>
+    </div>
+  </div>
+</div>
 
 <script>
   function saveProgress(cb) {
@@ -175,8 +1013,15 @@
     }
   }
 
+  function refreshHeight(el) {
+    const body = el.closest('.section-body');
+    if (body && body.style.maxHeight !== '0px') {
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  }
+
   function togglePractice(btn) {
-    const body = btn.nextElementSibling;
+    const body = btn.closest('.practice-section').querySelector('.practice-body');
     btn.classList.toggle('open');
     body.classList.toggle('open');
     const sb = btn.closest('.section-body');
@@ -192,6 +1037,199 @@
   }
 
   document.addEventListener('DOMContentLoaded', loadProgress);
+
+  /* ── Quiz Me ─────────────────────────────────────── */
+  (function () {
+    const LABELS = {
+      s1: 'Section 1 · Navigation',
+      s2: 'Section 2 · Users & Perms',
+      s3: 'Section 3 · Packages',
+      s4: 'Section 4 · Filesystems',
+      s5: 'Section 5 · Processes',
+      s6: 'Section 6 · OS in Practice',
+    };
+
+    const BANK = {
+      s1: [
+        { q: 'What character separates directories in a Windows path? What about Linux?',
+          a: 'Windows uses backslash (\\); Linux uses forward slash (/).' },
+        { q: 'Which flag shows hidden (dot) files with ls on Linux?',
+          a: 'ls -a  — in Linux, any file starting with a dot is hidden.' },
+        { q: 'What is the difference between a file\'s "size" and its "size on disk"?',
+          a: 'Size = actual data in the file. Size on disk = physical space used, always a multiple of the cluster size — so it can be larger than the actual file data.' },
+        { q: 'Which PowerShell flag forces ls to show hidden files?',
+          a: 'ls -Force <directory>' },
+        { q: 'What Linux command opens a command\'s manual page?',
+          a: 'man <command>' },
+        { q: 'What is the difference between an absolute path and a relative path?',
+          a: 'Absolute paths start from the root (e.g. /home/user or C:\\Users\\). Relative paths start from the current working directory (e.g. ../Desktop).' },
+      ],
+      s2: [
+        { q: 'What Linux command lets a standard user run a single command with root privileges?',
+          a: 'sudo' },
+        { q: 'What does chmod 644 mean? Who can do what?',
+          a: 'Owner: rw- (read + write). Group: r-- (read only). Others: r-- (read only). (6 = 4+2, 4 = read only)' },
+        { q: 'Which file in Linux lists all user accounts on the system?',
+          a: '/etc/passwd' },
+        { q: 'What is the difference between an ACL and a DACL?',
+          a: 'ACL (Access Control List) is the general concept of permission lists. DACL (Discretionary ACL) is the Windows implementation — "discretionary" because the owner controls access.' },
+        { q: 'Which PowerShell command lists all local groups on a Windows machine?',
+          a: 'Get-LocalGroup' },
+        { q: 'What numeric value represents read + write + execute in Linux permissions?',
+          a: '7  (r=4 + w=2 + x=1 = 7)' },
+      ],
+      s3: [
+        { q: 'What is the difference between apt and dpkg on Linux?',
+          a: 'apt is high-level: fetches packages from repos and resolves dependencies. dpkg is low-level: installs/removes .deb files directly but won\'t auto-resolve dependencies.' },
+        { q: 'What package format does the Microsoft Store use to distribute UWP apps?',
+          a: 'Appx packages' },
+        { q: 'What is the first thing Windows does when a new device is plugged in?',
+          a: 'Windows queries the hardware ID to find the right driver.' },
+        { q: 'What command shows the current Linux kernel version?',
+          a: 'uname -r' },
+        { q: 'Which Linux command upgrades the entire system including the kernel?',
+          a: 'sudo apt full-upgrade' },
+        { q: 'What is a DLL and why is it useful?',
+          a: 'A DLL (Dynamic Link Library) is a shared code library multiple programs can use simultaneously — avoids duplicating code across apps, all share one loaded copy in memory.' },
+      ],
+      s4: [
+        { q: 'Which filesystem is readable and writable on Windows, Mac, and Linux?',
+          a: 'FAT32 (and exFAT for files over 4 GB)' },
+        { q: 'What are the key differences between MBR and GPT partition tables?',
+          a: 'MBR: max 2 TB disk, max 4 primary partitions, older BIOS. GPT: 2 TB+, virtually unlimited partitions, required by UEFI (modern firmware).' },
+        { q: 'What is the difference between a symbolic (soft) link and a hard link?',
+          a: 'Symbolic link: points to a file\'s path — breaks if the target moves/is deleted. Hard link: points directly to the inode — survives even if the original filename is deleted.' },
+        { q: 'Why must you properly unmount a drive before removing it?',
+          a: 'The OS uses a data buffer (RAM) to stage writes. Proper unmounting flushes the buffer to disk. Removing early can corrupt the filesystem.' },
+        { q: 'What is the Linux equivalent of Windows\' Master File Table (MFT)?',
+          a: 'Inodes, stored in an inode table.' },
+        { q: 'Which Linux command shows free disk space across the whole machine in human-readable format?',
+          a: 'df -h' },
+        { q: 'What is /etc/fstab and why should it use UUIDs instead of device names?',
+          a: '/etc/fstab defines filesystems to mount automatically at boot. UUIDs are used because device names like /dev/sdb can change between reboots — UUIDs always identify the same partition.' },
+      ],
+      s5: [
+        { q: 'What is PID 1 in Linux and what does it do?',
+          a: 'The init process (PID 1) — the first process created by the kernel at boot. It\'s the parent of all other processes and starts system services.' },
+        { q: 'What is the difference between SIGTERM and SIGKILL?',
+          a: 'SIGTERM asks the process to terminate gracefully (it can clean up). SIGKILL instantly force-kills it with no cleanup — cannot be caught or ignored. Last resort only.' },
+        { q: 'Which Linux command shows a live view of top resource-consuming processes?',
+          a: 'top  (or htop for an improved interactive version)' },
+        { q: 'What does the STAT code "S" mean in ps output?',
+          a: 'S = interruptible sleep — the process is waiting for something (I/O, user input) and can be interrupted.' },
+        { q: 'What signal does Ctrl+C send to a process?',
+          a: 'SIGINT (signal interrupt) — a polite request to stop the current process.' },
+        { q: 'Where does Linux store security and authorization logs?',
+          a: '/var/log/auth.log' },
+        { q: 'What is Unix Epoch time?',
+          a: 'The number of seconds elapsed since midnight January 1, 1970 UTC. Used as a universal timestamp in Unix/Linux system logs.' },
+        { q: 'Which command follows a log file live as new entries are written?',
+          a: 'tail -f <logfile>' },
+      ],
+      s6: [
+        { q: 'What is the difference between SSH and RDP?',
+          a: 'SSH gives you a remote command line (text-only, lightweight). RDP gives you a full graphical desktop — you can see and control the remote machine\'s GUI.' },
+        { q: 'What Windows CLI tool creates RDP connections?',
+          a: 'mstsc.exe (Microsoft Terminal Services Client)' },
+        { q: 'What is PuTTY and why is it useful on Windows?',
+          a: 'PuTTY is a free open-source SSH/Telnet client for Windows. It lets you securely connect to Linux/Unix machines from Windows, and supports SCP via pscp.exe.' },
+        { q: 'What does the Linux dd command do? How would you clone disk sda to sdb?',
+          a: 'dd is a low-level byte-for-byte copy tool. To clone: dd if=/dev/sda of=/dev/sdb  (if = input file, of = output file)' },
+        { q: 'What is the main advantage of network-initiated (PXE) OS deployment?',
+          a: 'Scales much better — hundreds of machines can receive their OS image simultaneously from a central server, with no physical media or staff at each machine.' },
+        { q: 'Which Windows tool browses system event logs from the GUI?',
+          a: 'Event Viewer (eventvwr.msc)' },
+        { q: 'What is Safe Mode and when would you use it?',
+          a: 'Safe Mode boots Windows with only minimum required drivers and services. Use it when Windows won\'t boot normally, or to isolate driver/software conflicts.' },
+      ],
+    };
+
+    let _state = { sectionId: null, cards: [], index: 0, score: 0 };
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    window.openQuiz = function (sectionId) {
+      const all = BANK[sectionId] || [];
+      const cards = shuffle(all).slice(0, Math.min(8, all.length));
+      _state = { sectionId, cards, index: 0, score: 0 };
+      document.getElementById('quiz-card-face').style.display = '';
+      document.getElementById('quiz-score-screen').classList.remove('visible');
+      renderCard();
+      document.getElementById('quiz-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closeQuiz = function () {
+      document.getElementById('quiz-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    window.handleOverlayClick = function (e) {
+      if (e.target === document.getElementById('quiz-overlay')) closeQuiz();
+    };
+
+    function renderCard() {
+      const { cards, index } = _state;
+      const total = cards.length;
+      document.getElementById('quiz-section-label').textContent = LABELS[_state.sectionId] || 'Quiz Me';
+      document.getElementById('quiz-counter').textContent = (index + 1) + ' / ' + total;
+      document.getElementById('quiz-progress-fill').style.width = Math.round((index / total) * 100) + '%';
+      document.getElementById('quiz-question-text').textContent = cards[index].q;
+      const ans = document.getElementById('quiz-answer-area');
+      ans.textContent = '';
+      ans.classList.remove('visible');
+      document.getElementById('quiz-reveal-btn').style.display = '';
+      document.getElementById('quiz-grade-row').classList.remove('visible');
+    }
+
+    window.revealAnswer = function () {
+      const card = _state.cards[_state.index];
+      const ans = document.getElementById('quiz-answer-area');
+      ans.textContent = card.a;
+      ans.classList.add('visible');
+      document.getElementById('quiz-reveal-btn').style.display = 'none';
+      document.getElementById('quiz-grade-row').classList.add('visible');
+    };
+
+    window.gradeCard = function (correct) {
+      if (correct) _state.score++;
+      _state.index++;
+      if (_state.index >= _state.cards.length) {
+        showScore();
+      } else {
+        renderCard();
+      }
+    };
+
+    function showScore() {
+      const { score, cards } = _state;
+      const total = cards.length;
+      document.getElementById('quiz-card-face').style.display = 'none';
+      document.getElementById('quiz-score-num').textContent = score;
+      document.getElementById('quiz-score-denom').textContent = '/ ' + total;
+      const pct = score / total;
+      document.getElementById('quiz-score-msg').textContent =
+        pct === 1 ? 'Perfect! Nailed it.' :
+        pct >= 0.75 ? 'Great work!' :
+        pct >= 0.5 ? 'Getting there — review the misses.' :
+        'Keep at it — you\'ve got this.';
+      document.getElementById('quiz-progress-fill').style.width = '100%';
+      document.getElementById('quiz-score-screen').classList.add('visible');
+    }
+
+    window.retryQuiz = function () { openQuiz(_state.sectionId); };
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeQuiz();
+    });
+  })();
 </script>
 
 </body>
