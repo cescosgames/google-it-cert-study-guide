@@ -1383,4 +1383,143 @@ pre.cmd-block .v { color: #56d364; }  /* value */
   .course-header h1 { font-size: 1.35rem; }
 
   .math-block .label { min-width: auto; display: block; }
+
+  .resources-grid { grid-template-columns: 1fr; }
+}
+
+/* =====================================================
+   RESOURCES PAGE
+   ===================================================== */
+
+.nav-sep {
+  width: 1px;
+  height: 16px;
+  background: var(--border);
+  flex-shrink: 0;
+  align-self: center;
+  margin: 0 0.25rem;
+  list-style: none;
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.resource-card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.4rem 1.4rem 1.25rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color .2s, transform .15s;
+}
+
+.resource-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--accent);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+
+.resource-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.resource-tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--accent-light);
+  background: var(--accent-dim);
+  padding: 0.18rem 0.6rem;
+  border-radius: 99px;
+  margin-bottom: 0.6rem;
+  width: fit-content;
+}
+
+.resource-card h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-0);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+
+.resource-card .desc {
+  font-size: 0.83rem;
+  color: var(--text-2);
+  margin-bottom: 1.1rem;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.resource-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-ghost {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  padding: 0.38rem 0.85rem;
+  border-radius: var(--r);
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: background .14s, color .14s, border-color .14s;
+  white-space: nowrap;
+}
+.btn-ghost:hover {
+  background: var(--bg-2);
+  color: var(--text-1);
+  text-decoration: none;
+}
+
+.btn-accent {
+  background: var(--accent-dim);
+  border: 1px solid var(--accent);
+  color: var(--accent-light);
+  padding: 0.38rem 0.85rem;
+  border-radius: var(--r);
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: background .14s, color .14s;
+  white-space: nowrap;
+}
+.btn-accent:hover {
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* =====================================================
+   PRINT — CHART PAGES
+   ===================================================== */
+
+@media print {
+  .print-hide { display: none !important; }
+  .site-nav, .site-footer { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  .page-wrap { padding: 0.5rem 1rem !important; max-width: 100% !important; }
 }

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Common Ports &amp; Protocols - Reference Sheet</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .port-chart-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.845rem;
+      margin-top: 0.25rem;
+    }
+    .port-chart-table th {
+      background: var(--bg-2);
+      color: var(--text-2);
+      font-weight: 600;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      padding: 0.45rem 0.75rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .port-chart-table td {
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--border-muted);
+      color: var(--text-1);
+      vertical-align: middle;
+      line-height: 1.45;
+    }
+    .port-chart-table tr:hover td { background: var(--bg-2); }
+    .port-num {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--accent-light);
+      font-size: 0.875rem;
+      white-space: nowrap;
+    }
+    .port-hook {
+      font-size: 0.8rem;
+      color: var(--text-2);
+      font-style: italic;
+    }
+    .chart-section-heading {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--accent-light);
+      margin: 1.75rem 0 0.5rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--border-muted);
+    }
+    .print-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .print-bar p {
+      font-size: 0.83rem;
+      color: var(--text-2);
+    }
+
+    @media print {
+      .print-hide { display: none !important; }
+      .site-nav, .site-footer { display: none !important; }
+      body { background: #fff !important; color: #000 !important; }
+      .page-wrap { padding: 0.5rem 1rem !important; max-width: 100% !important; }
+      .course-header { padding: 1rem 0 0.75rem !important; }
+      .course-header h1, .course-header .subtitle { color: #000 !important; }
+      .course-badge { background: #eee !important; color: #333 !important; }
+      .chart-section-heading { color: #000 !important; border-color: #ccc !important; }
+      .port-chart-table th { background: #f0f0f0 !important; color: #000 !important; border-color: #ccc !important; }
+      .port-chart-table td { color: #111 !important; border-color: #ccc !important; }
+      .port-chart-table tr:hover td { background: transparent !important; }
+      .port-num { color: #000 !important; }
+      .port-hook { color: #444 !important; }
+      .tag-tcp  { background: #dbeafe !important; color: #1e40af !important; }
+      .tag-udp  { background: #fef3c7 !important; color: #92400e !important; }
+      .tag-both { background: #ede9fe !important; color: #4c1d95 !important; }
+      @page { margin: 1.5cm; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav print-hide">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">IT Cert Study</a>
+    <ul class="nav-links">
+      <li><a href="../courses/01-technical-support-fundamentals.html">Course 1</a></li>
+      <li><a href="../courses/02-bits-and-bytes-networking.html">Course 2</a></li>
+      <li><a href="../courses/03-operating-systems.html">Course 3</a></li>
+      <li><a href="../courses/04-system-administration.html">Course 4</a></li>
+      <li><a href="../courses/05-it-security.html">Course 5</a></li>
+      <li class="nav-sep" aria-hidden="true"></li>
+      <li><a href="../resources.html" class="active">Resources</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+  <header class="course-header">
+    <span class="course-badge">Reference Sheet</span>
+    <h1>Common Ports &amp; Protocols</h1>
+    <p class="subtitle">A+ Exam &middot; Google IT Cert &middot; Networking fundamentals</p>
+  </header>
+
+  <div class="print-bar print-hide">
+    <button class="btn-accent" onclick="window.print()">&#128438;&nbsp; Print / Save as PDF</button>
+    <p>In Chrome: choose "Save as PDF" as the destination. Landscape orientation recommended.</p>
+  </div>
+
+  <!-- FILE TRANSFER & REMOTE ACCESS -->
+  <p class="chart-section-heading">File Transfer &amp; Remote Access</p>
+  <table class="port-chart-table">
+    <thead>
+      <tr>
+        <th style="width:8%">Port</th>
+        <th style="width:10%">Protocol</th>
+        <th style="width:26%">Service</th>
+        <th>Memory Hook</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="port-num">20</td>
+        <td><span class="tag tag-tcp">TCP</span></td>
+        <td>FTP &mdash; Data transfer</td>
+        <td class="port-hook">20 moves the data — "2 computers passing files"</td>
+      </tr>
+      <tr>
+        <td class="port-num">21</td>
+        <td><span class="tag tag-tcp">TCP</span></td>
+        <td>FTP &mdash; Control / commands</td>
+        <td class="port-hook">21 is the boss — commands and control; 20 does the work</td>
+      </tr>
+      <tr>
+        <td class="port-num">22</td>
+        <td><span class="tag tag-tcp">TCP</span></td>
+        <td>SSH / SFTP / SCP</td>
+        <td class="port-hook">"22 = two locks" — Secure Shell, everything encrypted</td>
+      </tr>
+      <tr>
+        <td class="port-num">23</td>
+        <td><span class="tag tag-tcp">TCP</span></td>
+        <td>Telnet</td>
+        <td class="port-hook">23 = old, plaintext, insecure — replaced by SSH (22)</td>
+      </tr>
+      <tr>
+        <td class="port-num">3389</td>
+        <td><span class="tag tag-both">TCP/UDP</span></td>
+        <td>RDP &mdash; Remote Desktop Protocol</td>
+        <td class="port-hook">"33-89 = Remote Desktop" — Windows remote GUI access</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- EMAIL -->
+  <p class="chart-section-heading">Email</p>
+  <table class="port-chart-table">
+    <thead>
+      <tr>
+        <th style="width:8%">Port</th>
+        <th style="width:10%">Protocol</th>
+        <th style="width:26%">Service</th>
+        <th>Memory Hook</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="port-num">25</td>
+        <td><span class="tag tag-tcp">TCP</span></td>
+        <td>SMTP &mdash; Sending mail (server-to-server)</td>
+        <td class="port-hook">"Send Mail To People" — 25 letters in the alphabet (minus 1)</td>
+      </tr>
+      <tr>
+        <td class="port-num">110</td>
+        <td><span class="tag tag-tcp">TCP</span></td>
+        <td>POP3 &mdash; Retrieve &amp; delete from server</td>
+        <td class="port-hook">POP3 = 110; "Point Of Pickup" — grabs mail and removes it from server</td>
+      </tr>
+      <tr>
+        <td class="port-num">143</td>
+        <td><span class="tag tag-tcp">TCP</span></td>
+        <td>IMAP &mdash; Sync mail, stays on server</td>
+        <td class="port-hook">"I MAP 143" — syncs across devices, mail lives on server</td>
+      </tr>
+      <tr>
+        <td class="port-num">465 / 587</td>
+        <td><span class="tag tag-tcp">TCP</span></td>
+        <td>SMTPS / SMTP+STARTTLS (secure sending)</td>
+        <td class="port-hook">587 = "Submit" — modern secure outbound; 465 = legacy SMTPS</td>
+      </tr>
+      <tr>
+        <td class="port-num">993</td>
+        <td><span class="tag tag-tcp">TCP</span></td>
+        <td>IMAPS &mdash; IMAP over SSL/TLS</td>
+        <td class="port-hook">993 = secure IMAP — same sync behavior as 143, but encrypted</td>
+      </tr>
+      <tr>
+        <td class="port-num">995</td>
+        <td><span class="tag tag-tcp">TCP</span></td>
+        <td>POP3S &mdash; POP3 over SSL/TLS</td>
+        <td class="port-hook">995 = secure POP3 — same grab-and-go as 110, but encrypted</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- WEB & PROXY -->
+  <p class="chart-section-heading">Web &amp; Proxy</p>
+  <table class="port-chart-table">
+    <thead>
+      <tr>
+        <th style="width:8%">Port</th>
+        <th style="width:10%">Protocol</th>
+        <th style="width:26%">Service</th>
+        <th>Memory Hook</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="port-num">80</td>
+        <td><span class="tag tag-tcp">TCP</span></td>
+        <td>HTTP &mdash; Unencrypted web</td>
+        <td class="port-hook">"80 = HTTP" — standard web, no padlock</td>
+      </tr>
+      <tr>
+        <td class="port-num">443</td>
+        <td><span class="tag tag-both">TCP/UDP</span></td>
+        <td>HTTPS &mdash; Encrypted web (TLS)</td>
+        <td class="port-hook">"443 = padlock" — HTTPS, the secure web; UDP for HTTP/3 (QUIC)</td>
+      </tr>
+      <tr>
+        <td class="port-num">8080</td>
+        <td><span class="tag tag-tcp">TCP</span></td>
+        <td>HTTP Alternate / Web proxy</td>
+        <td class="port-hook">8080 = 80 doubled — common for dev servers and HTTP proxies</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- NETWORK SERVICES -->
+  <p class="chart-section-heading">Network Services</p>
+  <table class="port-chart-table">
+    <thead>
+      <tr>
+        <th style="width:8%">Port</th>
+        <th style="width:10%">Protocol</th>
+        <th style="width:26%">Service</th>
+        <th>Memory Hook</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="port-num">53</td>
+        <td><span class="tag tag-both">TCP/UDP</span></td>
+        <td>DNS &mdash; Domain name resolution</td>
+        <td class="port-hook">"53 = DNS" — UDP for queries, TCP for zone transfers</td>
+      </tr>
+      <tr>
+        <td class="port-num">67</td>
+        <td><span class="tag tag-udp">UDP</span></td>
+        <td>DHCP &mdash; Server (assigns IPs)</td>
+        <td class="port-hook">67 = server listens; "6 + 7 = 13 = unlucky without an IP"</td>
+      </tr>
+      <tr>
+        <td class="port-num">68</td>
+        <td><span class="tag tag-udp">UDP</span></td>
+        <td>DHCP &mdash; Client (requests IPs)</td>
+        <td class="port-hook">68 = client; 67 server, 68 client — one apart, always together</td>
+      </tr>
+      <tr>
+        <td class="port-num">123</td>
+        <td><span class="tag tag-udp">UDP</span></td>
+        <td>NTP &mdash; Network Time Protocol</td>
+        <td class="port-hook">"123 = time" — counts up like a clock: 1, 2, 3!</td>
+      </tr>
+      <tr>
+        <td class="port-num">161</td>
+        <td><span class="tag tag-udp">UDP</span></td>
+        <td>SNMP &mdash; Polling (manager queries device)</td>
+        <td class="port-hook">"161 = SNMP" — Simple Network Management Protocol queries</td>
+      </tr>
+      <tr>
+        <td class="port-num">162</td>
+        <td><span class="tag tag-udp">UDP</span></td>
+        <td>SNMP Trap &mdash; Device alerts manager</td>
+        <td class="port-hook">162 = trap; device pushes alert to manager — 161 + 1 = triggered</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- FILE SHARING & DIRECTORY SERVICES -->
+  <p class="chart-section-heading">File Sharing &amp; Directory Services</p>
+  <table class="port-chart-table">
+    <thead>
+      <tr>
+        <th style="width:8%">Port</th>
+        <th style="width:10%">Protocol</th>
+        <th style="width:26%">Service</th>
+        <th>Memory Hook</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="port-num">389</td>
+        <td><span class="tag tag-both">TCP/UDP</span></td>
+        <td>LDAP &mdash; Directory lookup (Active Directory)</td>
+        <td class="port-hook">"389 = LDAP" — Lightweight Directory Access Protocol; 3-8-9 = find the user</td>
+      </tr>
+      <tr>
+        <td class="port-num">445</td>
+        <td><span class="tag tag-tcp">TCP</span></td>
+        <td>SMB / CIFS &mdash; Windows file &amp; printer shares</td>
+        <td class="port-hook">"445 = Samba" — Windows networking; think 4 + 4 + 5 = shared drives</td>
+      </tr>
+      <tr>
+        <td class="port-num">636</td>
+        <td><span class="tag tag-both">TCP/UDP</span></td>
+        <td>LDAPS &mdash; LDAP over SSL/TLS</td>
+        <td class="port-hook">636 = secure LDAP — same directory lookup as 389, encrypted</td>
+      </tr>
+    </tbody>
+  </table>
+
+</main>
+
+<footer class="site-footer print-hide">
+  Google IT Support Professional Certificate &mdash; Ports &amp; Protocols Reference Sheet
+</footer>
+
+</body>
+</html>
