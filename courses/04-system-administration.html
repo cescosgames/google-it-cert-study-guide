@@ -28,16 +28,17 @@
   <header class="course-header">
     <span class="course-badge">Course 4</span>
     <h1>System Administration &amp; IT Infrastructure Services</h1>
-    <p class="subtitle">Directory services · Storage &amp; filesystems · Software deployment · Network services · Disaster recovery</p>
+    <p class="subtitle">Sys admin role · Network &amp; infrastructure services · Software &amp; platform services · Directory services · Data recovery &amp; backups</p>
   </header>
 
   <div class="section-list">
 
+    <!-- ─── MODULE 1 ──────────────────────────────────────────────────────── -->
     <div class="topic-section" id="s1">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-title-row">
           <span class="chevron">▶</span>
-          <h2>1 &nbsp;·&nbsp; Users, Groups &amp; Directory Services</h2>
+          <h2>1 &nbsp;·&nbsp; What is System Administration?</h2>
         </div>
         <label class="complete-wrap" onclick="event.stopPropagation()">
           <input type="checkbox" class="complete-cb" data-section="c04-s1" onchange="saveProgress(this)">
@@ -46,19 +47,115 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: Active Directory (AD DS), LDAP, Organizational Units (OUs), Group Policy Objects (GPOs), OpenLDAP, single sign-on (SSO), RADIUS, centralized vs local authentication.</p>
+
+          <div class="subsection">
+            <p class="subsection-title">The Role of a Sys Admin</p>
+            <ul class="concept-list">
+              <li><strong>System administration</strong> is the field in IT responsible for maintaining reliable, multi-user computing environments — the hardware, networks, and services that a company depends on.</li>
+              <li><strong>IT infrastructure</strong> encompasses hardware, networking, and services such as email, file storage, and web hosting. These typically run on <strong>servers</strong>.</li>
+              <li>Machines that consume server resources are called <strong>clients</strong>. The sys admin manages the servers so clients can reliably reach them.</li>
+              <li><strong>Common server form factors:</strong>
+                <ul>
+                  <li><strong>Tower servers</strong> — look like desktop PCs; standalone units</li>
+                  <li><strong>Rack servers</strong> — slim units that slide into a rack; space-efficient for data centers</li>
+                  <li><strong>Blade servers</strong> — ultra-thin modules that share a common chassis for power and networking</li>
+                </ul>
+              </li>
+              <li><strong>KVM switch</strong> (Keyboard-Video-Mouse) — allows one keyboard, monitor, and mouse to control many servers. Critical when the network is down and remote access is unavailable.</li>
+              <li><strong>Cloud computing</strong> — remote servers and data centers managed by a third party (e.g., AWS, Azure, GCP). The company rents compute resources instead of owning physical hardware.</li>
+            </ul>
           </div>
-        </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Sys Admin Responsibilities</p>
+            <ul class="concept-list">
+              <li><strong>Policy &amp; security</strong> — in small companies the sys admin often sets organizational policies and owns computer security decisions end-to-end.</li>
+              <li><strong>Managing services</strong> — installing, configuring, updating, patching, and maintaining servers and the services running on them.</li>
+              <li><strong>Hardware lifecycle</strong> — four-stage process every piece of hardware goes through:
+                <ol>
+                  <li><strong>Procurement</strong> — purchasing hardware, often in bulk from a vendor</li>
+                  <li><strong>Deployment</strong> — setting up and configuring the hardware for use</li>
+                  <li><strong>Maintenance</strong> — routine updates, patches, and repairs</li>
+                  <li><strong>Retirement</strong> — decommissioning, wiping data, disposing or recycling</li>
+                </ol>
+              </li>
+              <li><strong>Batch updates</strong> — rolling out security patches to many machines at once during scheduled maintenance windows.</li>
+              <li><strong>Vendor lifecycle</strong> — understanding manufacturer support windows so you know when hardware or software reaches end-of-life and bulk replacements need to be planned.</li>
+              <li><strong>Troubleshooting</strong> — reading logs is step 1; gathering information from the user (customer service) is step 2. The goal is to reproduce and isolate the problem before acting.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Applying Changes Safely</p>
+            <ul class="concept-list">
+              <li><strong>Admin privilege mindset</strong> — admin rights give you enormous power. Key rules: respect privacy, think before you type, minimize time spent in elevated accounts, document everything.</li>
+              <li><strong>Session logging</strong> — record exactly what you did:
+                <ul>
+                  <li>Linux: <code>script session.log</code> — captures the session in ANSI format; exit with <code>exit</code></li>
+                  <li>Windows PowerShell: <code>Start-Transcript</code> / <code>Stop-Transcript</code> — plain-text output</li>
+                </ul>
+              </li>
+              <li><strong>Rollback plan</strong> — before changing anything, know how to undo it. Document the rollback steps as part of the change record.</li>
+              <li><strong>IT Change Management</strong> — a standardized process for planning, communicating, and implementing technical changes. A change record typically documents:
+                <ul>
+                  <li>Person / team responsible</li>
+                  <li>Priority and urgency</li>
+                  <li>Description and purpose of the change</li>
+                  <li>Scope and systems affected</li>
+                  <li>Date, time, and expected duration</li>
+                  <li>Rollback / backout plan</li>
+                  <li>Risk level and anticipated impact</li>
+                  <li>Resources and training needed</li>
+                </ul>
+              </li>
+              <li><strong>Production vs test environment</strong> — <strong>never test in production</strong>. Production is the live environment end users rely on. Use a test environment (usually a VM mirroring production settings) to validate changes before rolling them out.</li>
+              <li><strong>Reproduction case</strong> — when troubleshooting, document: (1) the steps taken that led to the issue, (2) the unexpected result, (3) the expected result. Always reproduce on a test instance, not production.</li>
+            </ul>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What are the three most common server form factors?</li>
+                <li>What is a KVM switch and why is it particularly useful for a sys admin?</li>
+                <li>List the four stages of the hardware lifecycle in order.</li>
+                <li>What is the difference between production and a test environment?</li>
+                <li>Which Linux command records a terminal session to a log file?</li>
+                <li>What is the Windows PowerShell equivalent of Linux's <code>script</code> command?</li>
+                <li>Name four things that should be included in a change management record.</li>
+                <li>What is a reproduction case and what three things does it document?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>Tower servers, rack servers, and blade servers.</li>
+                  <li>A KVM switch lets one keyboard, monitor, and mouse control multiple servers — critical when the network is down and remote access isn't available.</li>
+                  <li>Procurement → Deployment → Maintenance → Retirement.</li>
+                  <li>Production is the live environment end users depend on. A test environment mirrors production settings but is isolated, so changes can be validated safely before going live.</li>
+                  <li><code>script session.log</code> — records the session in ANSI format until you type <code>exit</code>.</li>
+                  <li><code>Start-Transcript</code> (and <code>Stop-Transcript</code> to end it). Output is plain text.</li>
+                  <li>Any four of: responsible person/team, change priority, description and purpose, scope, affected systems, date/time/duration, rollback plan, risk level, anticipated impact, resources/training needed.</li>
+                  <li>A reproduction case documents: (1) the steps taken to reach the issue, (2) the unexpected result observed, (3) the expected result. It must always be reproduced on a test instance.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
       </div>
     </div>
 
+    <!-- ─── MODULE 2 ──────────────────────────────────────────────────────── -->
     <div class="topic-section" id="s2">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-title-row">
           <span class="chevron">▶</span>
-          <h2>2 &nbsp;·&nbsp; Storage, RAID &amp; Backups</h2>
+          <h2>2 &nbsp;·&nbsp; Network &amp; Infrastructure Services</h2>
         </div>
         <label class="complete-wrap" onclick="event.stopPropagation()">
           <input type="checkbox" class="complete-cb" data-section="c04-s2" onchange="saveProgress(this)">
@@ -67,19 +164,183 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: DAS / NAS / SAN, RAID levels (0, 1, 5, 6, 10), full vs incremental vs differential backups, backup rotation (3-2-1 rule), backup verification, RPO vs RTO.</p>
+
+          <div class="subsection">
+            <p class="subsection-title">IT Infrastructure Overview</p>
+            <ul class="concept-list">
+              <li>IT infrastructure has four main pillars: <strong>physical</strong> (hardware), <strong>network</strong>, <strong>software</strong>, and <strong>directory</strong> services.</li>
+              <li>Cloud delivery models — what the provider manages for you:
+                <ul>
+                  <li><strong>IaaS</strong> (Infrastructure as a Service) — raw compute, storage, networking (e.g., Amazon EC2, Linode, Azure VMs)</li>
+                  <li><strong>NaaS</strong> (Network as a Service) — networking infrastructure delivered over the cloud</li>
+                  <li><strong>SaaS</strong> (Software as a Service) — fully managed applications (e.g., Gmail, Dropbox)</li>
+                  <li><strong>PaaS</strong> (Platform as a Service) — runtime environment for developers (e.g., Heroku, Google App Engine)</li>
+                  <li><strong>DaaS</strong> (Directory as a Service) — cloud-hosted directory (e.g., Azure AD, JumpCloud)</li>
+                </ul>
+              </li>
+            </ul>
           </div>
-        </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Physical Infrastructure: Servers &amp; Remote Access</p>
+            <ul class="concept-list">
+              <li>Servers run their own specific operating systems (often Linux or Windows Server).</li>
+              <li><strong>Dedicated hardware</strong> — one service per physical machine. Better performance, but costly and underutilizes resources.</li>
+              <li><strong>Virtualized instances</strong> — multiple services share one physical machine via a hypervisor. Maximizes resource usage and allows live migration during hardware maintenance.</li>
+              <li><strong>OpenSSH</strong> — the most popular remote access tool on Linux. Requires an SSH client on your machine and an SSH server on the target.
+                <ul>
+                  <li>Install: <code>sudo apt-get install openssh-client</code> / <code>openssh-server</code></li>
+                  <li>Connect: <code>ssh user@ipaddress</code></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Network Services</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Service</th><th>What it does</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>FTP</strong></td><td>File Transfer Protocol — transfers files between machines</td><td>No encryption; primarily used to share web content</td></tr>
+                <tr><td><strong>SFTP</strong></td><td>Secure FTP — FTP over SSH</td><td>Encrypted; use this instead of plain FTP</td></tr>
+                <tr><td><strong>TFTP</strong></td><td>Trivial FTP — simplified file transfer</td><td>No encryption, no authentication; used for PXE boot</td></tr>
+                <tr><td><strong>PXE boot</strong></td><td>Boot a machine from the network instead of local storage</td><td>Uses TFTP to deliver the OS image</td></tr>
+                <tr><td><strong>NTP</strong></td><td>Network Time Protocol — synchronizes clocks across machines</td><td>Install NTP server, connect all machines to it</td></tr>
+                <tr><td><strong>Intranet</strong></td><td>Private internal network within a company</td><td>Common in large enterprises</td></tr>
+                <tr><td><strong>Proxy server</strong></td><td>Intermediary between clients and the internet</td><td>Provides privacy, content filtering, access control</td></tr>
+                <tr><td><strong>DNS server</strong></td><td>Resolves domain names to IP addresses</td><td>Own DNS server lets you control name resolution internally</td></tr>
+                <tr><td><strong>DHCP</strong></td><td>Assigns IP addresses automatically to machines on the network</td><td>Eliminates manual IP assignment</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Managing System Services (Daemons)</p>
+            <ul class="concept-list">
+              <li>A <strong>daemon</strong> is a background process (service) that runs continuously. Daemons have one or more config files that control their behavior.</li>
+              <li>Services are usually configured to start automatically at boot and on restart.</li>
+              <li>Config files for installed services live in the <code>/etc</code> directory on Linux.</li>
+            </ul>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Linux command</th><th>What it does</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>service ntp status</code></td><td>Check whether the NTP daemon is running</td></tr>
+                <tr><td><code>sudo service ntp stop</code></td><td>Stop the NTP daemon</td></tr>
+                <tr><td><code>sudo service ntp restart</code></td><td>Stop then start NTP (calls both stop and start)</td></tr>
+                <tr><td><code>sudo date -s "YYYY-MM-DD HH:MM:SS"</code></td><td>Manually set the system date/time (to test NTP)</td></tr>
+                <tr><td><code>sudo service --status-all</code></td><td>List all services: <code>[+]</code> active, <code>[-]</code> inactive, <code>[?]</code> unknown</td></tr>
+                <tr><td><code>sudo apt install vsftpd</code></td><td>Install the vsftpd FTP server (starts automatically)</td></tr>
+                <tr><td><code>lftp localhost</code></td><td>Connect to the local FTP server via the lftp client</td></tr>
+              </tbody>
+            </table>
+            <div class="note">NTP daemon auto-corrects only if the clock is within 128 ms of the true time; it adjusts gradually at ~0.5 ms/step. Outside 128 ms it does nothing — you must manually set the time first.</div>
+
+            <table class="ref-table" style="margin-top:1rem">
+              <thead>
+                <tr><th>Windows PowerShell command</th><th>What it does</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>Get-Service wauserv</code></td><td>Check if Windows Update service is running</td></tr>
+                <tr><td><code>Get-Service wauserv | Format-List *</code></td><td>Show full details of the service</td></tr>
+                <tr><td><code>Stop-Service wauserv</code></td><td>Stop a service (admin only)</td></tr>
+                <tr><td><code>Start-Service wauserv</code></td><td>Start a service (admin only)</td></tr>
+              </tbody>
+            </table>
+            <div class="note">Windows service configuration is stored in the registry. The Services Management Console (services.msc) provides a GUI alternative to PowerShell commands.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Configuring Network Services with Dnsmasq</p>
+            <ul class="concept-list">
+              <li><strong>Dnsmasq</strong> is a lightweight package that provides DNS, DHCP, TFTP, and PXE services in a single program — ideal for small networks or lab environments.</li>
+              <li>Install: <code>sudo apt install dnsmasq</code> — comes with sensible defaults and starts immediately.</li>
+            </ul>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Command</th><th>What it does</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>dig www.example.com @localhost</code></td><td>Query the local DNS server to test resolution</td></tr>
+                <tr><td><code>sudo service dnsmasq stop</code></td><td>Stop dnsmasq</td></tr>
+                <tr><td><code>sudo dnsmasq -d -q</code></td><td>Run dnsmasq in debug mode, logging all queries</td></tr>
+                <tr><td><code>sudo dnsmasq -d -q -H myhosts.txt</code></td><td>Run with a custom hosts file mapping names to IPs</td></tr>
+                <tr><td><code>sudo dnsmasq -d -q -C dhcp.conf</code></td><td>Start dnsmasq with a DHCP config file</td></tr>
+                <tr><td><code>ip address show &lt;interface&gt;</code></td><td>Show the IP address of a network interface</td></tr>
+                <tr><td><code>sudo dhclient -i &lt;interface&gt; -v</code></td><td>Request a DHCP lease on the client side</td></tr>
+              </tbody>
+            </table>
+            <ul class="concept-list" style="margin-top:0.75rem">
+              <li>Dnsmasq caches DNS responses, speeding up repeat queries.</li>
+              <li><strong>NXDomain</strong> — the DNS response when a domain does not exist.</li>
+              <li>DHCP client and server typically run on separate machines. The client uses <code>dhclient</code> to request an IP lease; the server uses <code>dhcp.conf</code> to define address ranges and options.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Troubleshooting Network Services</p>
+            <ul class="concept-list">
+              <li>Can't resolve a domain name? Work through this sequence:
+                <ol>
+                  <li><code>ping 8.8.8.8</code> — ping a known IP (like Google's DNS) to confirm basic connectivity</li>
+                  <li><code>nslookup &lt;domain&gt;</code> — check DNS resolution; returns the name server and IP for the domain</li>
+                  <li>Compare the returned IP against what you expect — a mismatch points to a DNS misconfiguration</li>
+                </ol>
+              </li>
+              <li>If ping to an IP succeeds but DNS resolution fails, the problem is DNS-specific, not network-wide.</li>
+            </ul>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What does IaaS stand for and give two real-world examples?</li>
+                <li>What is the key difference between FTP and SFTP?</li>
+                <li>Why would you use TFTP instead of SFTP?</li>
+                <li>What is a daemon?</li>
+                <li>Where are service config files stored on Linux?</li>
+                <li>Within what clock-offset range will the NTP daemon automatically correct the system time?</li>
+                <li>What does Dnsmasq provide in a single package?</li>
+                <li>What command tests DNS resolution against a local dnsmasq instance?</li>
+                <li>You can ping Google's IP but can't reach google.com by name. What type of problem is this and what command helps diagnose it?</li>
+                <li>What is the difference between a dedicated server and a virtualized instance?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>Infrastructure as a Service — raw compute, storage, and networking managed by a provider. Examples: Amazon EC2, Azure Virtual Machines, Linode.</li>
+                  <li>FTP transmits data in plain text (no encryption). SFTP tunnels FTP over SSH, encrypting the connection.</li>
+                  <li>TFTP is used for PXE booting — its simplicity (no auth, no encryption) makes it lightweight enough to deliver OS boot images over the network before an OS is loaded.</li>
+                  <li>A daemon is a background process that runs continuously, usually starting at boot. It has config files an admin uses to control its behavior.</li>
+                  <li>The <code>/etc</code> directory.</li>
+                  <li>Within 128 ms. If the offset is larger, NTP won't auto-correct — you must manually set the time first.</li>
+                  <li>DNS, DHCP, TFTP, and PXE services.</li>
+                  <li><code>dig www.example.com @localhost</code></li>
+                  <li>It's a DNS problem, not a network problem. Use <code>nslookup google.com</code> to check what the DNS server returns.</li>
+                  <li>A dedicated server runs one service on one physical machine (better performance, higher cost, underutilized resources). A virtualized instance runs multiple services on one machine via a hypervisor (efficient, flexible, supports live migration).</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
       </div>
     </div>
 
+    <!-- ─── MODULE 3 ──────────────────────────────────────────────────────── -->
     <div class="topic-section" id="s3">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-title-row">
           <span class="chevron">▶</span>
-          <h2>3 &nbsp;·&nbsp; Software &amp; OS Deployment</h2>
+          <h2>3 &nbsp;·&nbsp; Software &amp; Platform Services</h2>
         </div>
         <label class="complete-wrap" onclick="event.stopPropagation()">
           <input type="checkbox" class="complete-cb" data-section="c04-s3" onchange="saveProgress(this)">
@@ -90,17 +351,18 @@
         <div class="section-inner">
           <div class="stub-box">
             <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: image-based deployment (PXE boot, WDS, MDT), configuration management (Puppet, Chef, Ansible), patch management, MDM (Mobile Device Management), virtual machines &amp; hypervisors (Type 1 vs Type 2).</p>
+            <p>Placeholder — fill in while studying.<br>Topics: software deployment, configuration management (Puppet, Chef, Ansible), web servers (Apache, nginx, IIS), email servers (SMTP, IMAP, POP3, MX records), print services, file services (NFS, Samba/SMB), chat &amp; collaboration services, platform services.</p>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- ─── MODULE 4 ──────────────────────────────────────────────────────── -->
     <div class="topic-section" id="s4">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-title-row">
           <span class="chevron">▶</span>
-          <h2>4 &nbsp;·&nbsp; Network Services Configuration</h2>
+          <h2>4 &nbsp;·&nbsp; Directory Services</h2>
         </div>
         <label class="complete-wrap" onclick="event.stopPropagation()">
           <input type="checkbox" class="complete-cb" data-section="c04-s4" onchange="saveProgress(this)">
@@ -111,17 +373,18 @@
         <div class="section-inner">
           <div class="stub-box">
             <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: DNS server setup (zones, records, forwarders), DHCP server scopes and options, print servers, file servers (NFS, Samba/SMB), web servers (IIS, Apache, nginx), email server basics (MX, relay), monitoring (SNMP, Nagios).</p>
+            <p>Placeholder — fill in while studying.<br>Topics: Active Directory (AD DS), LDAP, Organizational Units (OUs), Group Policy Objects (GPOs), OpenLDAP, centralized vs local authentication, single sign-on (SSO), RADIUS, DaaS (Directory as a Service).</p>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- ─── MODULE 5 ──────────────────────────────────────────────────────── -->
     <div class="topic-section" id="s5">
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-title-row">
           <span class="chevron">▶</span>
-          <h2>5 &nbsp;·&nbsp; Disaster Recovery &amp; Business Continuity</h2>
+          <h2>5 &nbsp;·&nbsp; Data Recovery &amp; Backups</h2>
         </div>
         <label class="complete-wrap" onclick="event.stopPropagation()">
           <input type="checkbox" class="complete-cb" data-section="c04-s5" onchange="saveProgress(this)">
@@ -132,7 +395,29 @@
         <div class="section-inner">
           <div class="stub-box">
             <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: RPO (Recovery Point Objective) vs RTO (Recovery Time Objective), DR testing, hot/warm/cold sites, failover clustering, UPS, incident response basics, change management, documentation.</p>
+            <p>Placeholder — fill in while studying.<br>Topics: RPO (Recovery Point Objective) vs RTO (Recovery Time Objective), 3-2-1 backup rule, full vs incremental vs differential backups, RAID levels, backup verification, hot/warm/cold disaster recovery sites, failover clustering, UPS.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── MODULE 6 ──────────────────────────────────────────────────────── -->
+    <div class="topic-section" id="s6">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>6 &nbsp;·&nbsp; Final Project</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c04-s6" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="stub-box">
+            <p class="stub-icon">📝</p>
+            <p>Placeholder — fill in while studying.<br>Topics: end-to-end IT infrastructure design, integrating all modules — physical infrastructure, network services, software platforms, directory services, and a backup/recovery strategy for a sample organization.</p>
           </div>
         </div>
       </div>
