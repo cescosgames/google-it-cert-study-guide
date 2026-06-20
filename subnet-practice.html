@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subnet Practice</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Page layout ───────────────────────────────────── */
+    .practice-wrap {
+      max-width: 640px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    .page-sub {
+      color: var(--text-2);
+      font-size: .9rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ── Stats bar ─────────────────────────────────────── */
+    .stats-bar {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .stat-pill {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: .3rem .9rem;
+      font-size: .82rem;
+      color: var(--text-1);
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+
+    .stat-pill span {
+      color: var(--accent-light);
+      font-weight: 700;
+    }
+
+    /* ── Prompt card ───────────────────────────────────── */
+    .prompt-card {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .prompt-label {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-2);
+      margin-bottom: .5rem;
+    }
+
+    .prompt-ip {
+      font-family: var(--font-mono);
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--accent-light);
+      letter-spacing: .04em;
+    }
+
+    /* ── Field grid ────────────────────────────────────── */
+    .fields-card {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto auto;
+      align-items: center;
+      gap: .75rem;
+      padding: .75rem 1rem;
+      border-bottom: 1px solid var(--border-muted);
+    }
+
+    .field-row:last-child {
+      border-bottom: none;
+    }
+
+    .field-label {
+      font-size: .82rem;
+      color: var(--text-1);
+      white-space: nowrap;
+    }
+
+    .field-input {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      color: var(--text-0);
+      font-family: var(--font-mono);
+      font-size: .9rem;
+      padding: .45rem .7rem;
+      width: 100%;
+      transition: border-color .15s;
+    }
+
+    .field-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .field-input.correct {
+      border-color: var(--success);
+      background: rgba(63, 185, 80, .07);
+    }
+
+    .field-input.incorrect {
+      border-color: var(--danger);
+      background: rgba(248, 81, 73, .07);
+    }
+
+    .feedback-icon {
+      font-size: .95rem;
+      font-weight: 700;
+      width: 1.2rem;
+      text-align: center;
+    }
+
+    .feedback-icon.ok  { color: var(--success); }
+    .feedback-icon.bad { color: var(--danger); }
+
+    .feedback-correct {
+      font-family: var(--font-mono);
+      font-size: .8rem;
+      color: var(--success);
+      white-space: nowrap;
+      min-width: 9rem;
+    }
+
+    .feedback-correct.revealed {
+      color: var(--warning);
+    }
+
+    /* ── Result banner ─────────────────────────────────── */
+    .result-area {
+      border-radius: var(--r);
+      padding: .65rem 1rem;
+      font-size: .9rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      min-height: 2.4rem;
+    }
+
+    .result-area.success {
+      background: rgba(63, 185, 80, .12);
+      color: var(--success);
+      border: 1px solid rgba(63, 185, 80, .3);
+    }
+
+    .result-area.failure {
+      background: rgba(248, 81, 73, .1);
+      color: var(--danger);
+      border: 1px solid rgba(248, 81, 73, .25);
+    }
+
+    .result-area.neutral {
+      background: rgba(210, 153, 34, .1);
+      color: var(--warning);
+      border: 1px solid rgba(210, 153, 34, .25);
+    }
+
+    /* ── Buttons ───────────────────────────────────────── */
+    .btn-row {
+      display: flex;
+      gap: .75rem;
+    }
+
+    .btn {
+      padding: .55rem 1.25rem;
+      border-radius: var(--r);
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: opacity .15s;
+    }
+
+    .btn:hover { opacity: .85; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      flex: 1;
+    }
+
+    .btn-secondary {
+      background: var(--bg-3);
+      color: var(--text-1);
+      border: 1px solid var(--border);
+    }
+
+    /* ── Reference hint ────────────────────────────────── */
+    .hint {
+      margin-top: 2rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      font-size: .82rem;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    .hint strong { color: var(--text-1); }
+  </style>
+</head>
+<body data-course="02">
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">IT Cert Study</a>
+    <ul class="nav-links">
+      <li><a href="courses/01-technical-support-fundamentals.html">Course 1</a></li>
+      <li><a href="courses/02-bits-and-bytes-networking.html">Course 2</a></li>
+      <li><a href="courses/03-operating-systems.html">Course 3</a></li>
+      <li><a href="courses/04-system-administration.html">Course 4</a></li>
+      <li><a href="courses/05-it-security.html">Course 5</a></li>
+      <li class="nav-sep" aria-hidden="true"></li>
+      <li><a href="resources.html">Resources</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+  <header class="course-header">
+    <span class="course-badge">Course 2</span>
+    <h1>Bits and Bytes of Networking</h1>
+    <p class="subtitle">TCP/IP &amp; OSI models · IP addressing &amp; subnetting · Ethernet · Transport layer · Application services · Troubleshooting</p>
+    <nav class="course-tabs">
+      <a href="courses/02-bits-and-bytes-networking.html" class="course-tab">Study Notes</a>
+      <a href="subnet-practice.html" class="course-tab active">Subnet Practice</a>
+    </nav>
+  </header>
+
+<div class="practice-wrap" style="margin-top:1.5rem">
+
+  <p class="page-sub">Given an IP address and CIDR prefix, fill in all five fields. Press Enter or click Submit.</p>
+
+  <div class="stats-bar">
+    <div class="stat-pill">Streak: <span id="streak-count">0</span></div>
+    <div class="stat-pill">Accuracy: <span id="accuracy">—</span></div>
+  </div>
+
+  <div class="prompt-card">
+    <p class="prompt-label">IP / Prefix</p>
+    <p class="prompt-ip" id="subnet-prompt">—</p>
+  </div>
+
+  <div class="fields-card">
+
+    <div class="field-row">
+      <label class="field-label" for="field-mask">Subnet Mask</label>
+      <input class="field-input" id="field-mask" type="text" placeholder="255.255.255.0" autocomplete="off" spellcheck="false">
+      <span class="feedback-icon"></span>
+      <span class="feedback-correct"></span>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label" for="field-network">Network Address</label>
+      <input class="field-input" id="field-network" type="text" placeholder="192.168.1.0" autocomplete="off" spellcheck="false">
+      <span class="feedback-icon"></span>
+      <span class="feedback-correct"></span>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label" for="field-broadcast">Broadcast Address</label>
+      <input class="field-input" id="field-broadcast" type="text" placeholder="192.168.1.255" autocomplete="off" spellcheck="false">
+      <span class="feedback-icon"></span>
+      <span class="feedback-correct"></span>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label" for="field-first-host">First Usable Host</label>
+      <input class="field-input" id="field-first-host" type="text" placeholder="192.168.1.1" autocomplete="off" spellcheck="false">
+      <span class="feedback-icon"></span>
+      <span class="feedback-correct"></span>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label" for="field-last-host">Last Usable Host</label>
+      <input class="field-input" id="field-last-host" type="text" placeholder="192.168.1.254" autocomplete="off" spellcheck="false">
+      <span class="feedback-icon"></span>
+      <span class="feedback-correct"></span>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label" for="field-hosts">Usable Hosts</label>
+      <input class="field-input" id="field-hosts" type="text" placeholder="254" autocomplete="off" spellcheck="false">
+      <span class="feedback-icon"></span>
+      <span class="feedback-correct"></span>
+    </div>
+
+  </div>
+
+  <div class="result-area" id="result-area"></div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" id="btn-submit">Submit</button>
+    <button class="btn btn-primary" id="btn-next" style="display:none">Next Question →</button>
+    <button class="btn btn-secondary" id="btn-reveal">Reveal Answers</button>
+  </div>
+
+  <div class="hint">
+    <strong>Quick reference:</strong> Hosts = 2<sup>(32−prefix)</sup> − 2 &nbsp;·&nbsp;
+    Network = IP AND Mask &nbsp;·&nbsp;
+    Broadcast = Network OR (NOT Mask) &nbsp;·&nbsp;
+    First host = Network + 1 &nbsp;·&nbsp;
+    Last host = Broadcast − 1
+  </div>
+
+</div>
+
+</main>
+
+<script src="subnet-scripts.js"></script>
+</body>
+</html>

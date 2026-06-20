@@ -1517,6 +1517,38 @@ pre.cmd-block .v { color: #56d364; }  /* value */
    PRINT — CHART PAGES
    ===================================================== */
 
+/* ── Course tab bar ───────────────────────────────────── */
+
+.course-tabs {
+  display: flex;
+  gap: .5rem;
+  margin-top: 1.25rem;
+}
+
+.course-tab {
+  display: inline-block;
+  padding: .35rem .9rem;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  text-decoration: none;
+  transition: color .15s, background .15s, border-color .15s;
+}
+
+.course-tab:hover {
+  color: var(--text-0);
+  text-decoration: none;
+}
+
+.course-tab.active {
+  color: var(--accent-light);
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+
 @media print {
   .print-hide { display: none !important; }
   .site-nav, .site-footer { display: none !important; }
