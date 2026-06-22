@@ -349,11 +349,189 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder — fill in while studying.<br>Topics: software deployment, configuration management (Puppet, Chef, Ansible), web servers (Apache, nginx, IIS), email servers (SMTP, IMAP, POP3, MX records), print services, file services (NFS, Samba/SMB), chat &amp; collaboration services, platform services.</p>
+
+          <div class="subsection">
+            <p class="subsection-title">Communication Services</p>
+            <ul class="concept-list">
+              <li><strong>IRC</strong> (Internet Relay Chat) — free, open-source chat protocol. A self-hosted alternative to Slack or Teams for internal team communication.</li>
+              <li><strong>XMPP</strong> (Extensible Messaging and Presence Protocol) — popular open standard for instant messaging. Used under the hood by many chat systems.</li>
+              <li>For email you can either run your own mail server or pay an email service provider (Google Workspace, Microsoft 365). Self-hosting gives full control; a provider reduces operational burden.</li>
+              <li>DNS records for email:
+                <ul>
+                  <li><strong>A record</strong> — maps a hostname to an IP address</li>
+                  <li><strong>MX record</strong> — Mail Exchange; tells the internet which server accepts email for a domain</li>
+                </ul>
+              </li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Protocol</th><th>Direction</th><th>Key behaviour</th></tr></thead>
+              <tbody>
+                <tr><td><strong>SMTP</strong></td><td>Sending only</td><td>The only protocol for sending email — client → server and server → server</td></tr>
+                <tr><td><strong>POP3</strong></td><td>Receiving</td><td>Downloads email to local device and <em>removes it from the server</em> — private/offline model</td></tr>
+                <tr><td><strong>IMAP</strong></td><td>Receiving</td><td>Downloads to device but <em>keeps a copy on the server</em> — synced across multiple devices</td></tr>
+              </tbody>
+            </table>
+            <ul class="concept-list" style="margin-top:0.75rem">
+              <li><strong>Spam mitigation</strong> — three DNS-based mechanisms that verify the sender is who they claim to be:
+                <ul>
+                  <li><strong>SPF</strong> (Sender Policy Framework) — lists which IP addresses are authorized to send email for your domain</li>
+                  <li><strong>DKIM</strong> (DomainKeys Identified Mail) — cryptographically signs outgoing messages so receivers can verify they weren't tampered with</li>
+                  <li><strong>DMARC</strong> (Domain-Based Message Authentication, Reporting &amp; Conformance) — ties SPF and DKIM together and tells receivers what to do with mail that fails (quarantine, reject, or do nothing)</li>
+                </ul>
+              </li>
+              <li><strong>User Productivity Services</strong> — business licensing for productivity suites (Office 365, Google Workspace) is separate from personal licensing. Enterprise versions include admin controls, compliance tooling, and user management.</li>
+            </ul>
           </div>
-        </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Security Services — HTTPS &amp; TLS</p>
+            <ul class="concept-list">
+              <li>Any service you run must <strong>guarantee</strong> to users that their information is handled securely — especially anything accepting credentials or personal data.</li>
+              <li><strong>HTTPS</strong> — secure version of HTTP. Encrypts all communication between the browser and the web server so data cannot be read or tampered with in transit.</li>
+              <li><strong>TLS</strong> (Transport Layer Security) — the cryptographic protocol that powers HTTPS. It is the current standard for securing network communication.</li>
+              <li><strong>SSL</strong> (Secure Sockets Layer) — the predecessor to TLS. SSL v3.0 was effectively renamed TLS v1.0. SSL is deprecated and should never be used for new systems.</li>
+              <li>To enable HTTPS you need a <strong>TLS certificate</strong> issued by a trusted <strong>Certificate Authority (CA)</strong>. The CA vouches that the certificate belongs to the domain it claims to represent. <strong>Let's Encrypt</strong> is a free, automated CA widely used for this purpose.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">File Services</p>
+            <ul class="concept-list">
+              <li>Choosing the right file system or sharing protocol depends on who needs to access the files and from what OS.</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Technology</th><th>What it is</th><th>Best for</th></tr></thead>
+              <tbody>
+                <tr><td><strong>FAT32</strong></td><td>Old filesystem format</td><td>Cross-platform USB drives; limited by 4 GB max file size and 8 TB volume size</td></tr>
+                <tr><td><strong>NFS</strong> (Network File System)</td><td>Protocol for sharing files over a network</td><td>Linux/Unix environments; fast and native on Linux, slow on Windows</td></tr>
+                <tr><td><strong>Samba / SMB</strong></td><td>Open-source implementation of the SMB protocol</td><td>Windows-heavy or mixed environments; integrates with Active Directory</td></tr>
+                <tr><td><strong>NAS</strong> (Network Attached Storage)</td><td>Dedicated storage device with a stripped-down OS</td><td>Simple, high-capacity shared file storage for a team or office</td></tr>
+              </tbody>
+            </table>
+            <ul class="concept-list" style="margin-top:0.75rem">
+              <li>On Linux, NFS clients mount a remote share using the host path: e.g., <code>mount host:/nfs /mnt/shared</code>.</li>
+              <li><strong>Mobile device file sync</strong> — always sync mobile data to a cloud server or local IT infrastructure. If the device is lost, data is not lost with it.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Print Services</p>
+            <ul class="concept-list">
+              <li>Large organizations need a <strong>print server</strong> to manage a fleet of printers centrally — handling queues, drivers, and permissions from one place.</li>
+              <li><strong>CUPS</strong> (Common Unix Printing System) — the built-in Linux print server. Most modern OSes ship with a print server included.</li>
+              <li>When provisioning new computers, have printer drivers and default settings (orientation, quality, tray, duplex) pre-staged so users can print immediately.</li>
+              <li>Cloud print management services let both users and admins manage printers through a web interface — useful for distributed offices.</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Language</th><th>Creator</th><th>Device-dependent?</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td><strong>PCL</strong> (Printer Control Language)</td><td>HP</td><td>Yes</td><td>Optimized for speed on HP hardware; output may differ across printers</td></tr>
+                <tr><td><strong>PostScript (PS)</strong></td><td>Adobe</td><td>No</td><td>Device-independent; output is identical on any PS-compatible printer — preferred for graphics/publishing</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Platform Services — Web Servers &amp; Databases</p>
+            <ul class="concept-list">
+              <li><strong>Platform services</strong> give developers an environment to build and deploy software without managing the underlying hardware or OS — this is the PaaS model.</li>
+              <li>A <strong>web server</strong> is a program (or the machine running it) that listens for HTTP requests and responds with the requested files or data.</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Web Server</th><th>Model</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Apache HTTP Server</strong></td><td>Process/thread per request (event-driven config available)</td><td>Most widely deployed; runs on localhost by default; extensive module ecosystem</td></tr>
+                <tr><td><strong>NGINX</strong></td><td>Asynchronous, non-blocking</td><td>Handles high concurrency efficiently; also used as a reverse proxy and load balancer</td></tr>
+                <tr><td><strong>Microsoft IIS</strong></td><td>Windows-native</td><td>Tight Windows integration; preferred in Microsoft-stack environments</td></tr>
+              </tbody>
+            </table>
+            <ul class="concept-list" style="margin-top:0.75rem">
+              <li><strong>Load balancer</strong> — sits in front of multiple servers and distributes incoming traffic evenly. Can be hardware or software. Prevents any single server from being overwhelmed and enables horizontal scaling.</li>
+              <li><strong>Databases</strong> — store, retrieve, and manage structured data. The two most popular open-source relational databases are <strong>MySQL</strong> and <strong>PostgreSQL</strong>.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Troubleshooting Platform Services — HTTP Status Codes</p>
+            <ul class="concept-list">
+              <li>When something goes wrong with a web service, HTTP status codes are your first diagnostic signal — they tell you immediately whether the problem is on the client side or the server side.</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Range</th><th>Category</th><th>Common examples</th></tr></thead>
+              <tbody>
+                <tr><td><strong>1xx</strong></td><td>Informational</td><td>100 Continue — server received the request headers, client should proceed</td></tr>
+                <tr><td><strong>2xx</strong></td><td>Success</td><td>200 OK — request succeeded and response contains the result</td></tr>
+                <tr><td><strong>3xx</strong></td><td>Redirection</td><td>301 Moved Permanently, 302 Found (temporary redirect)</td></tr>
+                <tr><td><strong>4xx</strong></td><td>Client error</td><td>400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</td></tr>
+                <tr><td><strong>5xx</strong></td><td>Server error</td><td>500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable</td></tr>
+              </tbody>
+            </table>
+            <div class="note">4xx = the client sent a bad request. 5xx = the server failed to fulfill a valid request. Start your investigation on whichever side the code points to.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Managing Cloud Services</p>
+            <ul class="concept-list">
+              <li><strong>SaaS</strong> — the software is fully pre-configured; you choose from a small set of admin options. You don't manage the underlying infrastructure at all.</li>
+              <li><strong>IaaS</strong> — you configure and manage your services on rented hardware. Start small; scale as you understand your actual usage patterns.</li>
+              <li><strong>Cloud deployment models:</strong>
+                <ul>
+                  <li><strong>Public</strong> — infrastructure owned and operated by a provider, shared across many customers (AWS, GCP, Azure)</li>
+                  <li><strong>Private</strong> — cloud infrastructure run entirely by your own company; more control, higher cost</li>
+                  <li><strong>Hybrid</strong> — a mix of public and private; sensitive workloads stay on-premises, burst capacity moves to public cloud</li>
+                </ul>
+              </li>
+              <li><strong>Regions</strong> — cloud providers organize their data centers into geographic regions. Choose regions close to your users to minimize latency; use multiple regions for redundancy.</li>
+              <li><strong>Load balancer</strong> — in a cloud context, ensures each VM instance receives a balanced share of queries as traffic scales up.</li>
+              <li><strong>Autoscaling</strong> — automatically increases or reduces VM capacity in response to actual demand. Ideal for workloads with variable traffic (seasonal spikes, marketing events).</li>
+              <li>Cloud infrastructure avoids large upfront capital investment — you pay for what you use. This makes it especially cost-effective when demand varies significantly throughout the year.</li>
+            </ul>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What is the only email protocol used for <em>sending</em> email?</li>
+                <li>What is the key difference between POP3 and IMAP?</li>
+                <li>Name the three DNS-based spam mitigation mechanisms and describe what each one does.</li>
+                <li>What is the difference between SSL and TLS?</li>
+                <li>What do you need to enable HTTPS on a web server?</li>
+                <li>When would you choose Samba over NFS for file sharing?</li>
+                <li>What is a NAS device?</li>
+                <li>What is the difference between PCL and PostScript?</li>
+                <li>What does CUPS stand for and what OS is it used on?</li>
+                <li>A user reports they're getting a 403 when visiting your internal web app. Is this a client-side or server-side error? What does it mean?</li>
+                <li>What is the difference between a Public, Private, and Hybrid cloud?</li>
+                <li>What does autoscaling do and when is it most useful?</li>
+                <li>Which web server is best suited for high-concurrency async workloads?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>SMTP (Simple Mail Transfer Protocol).</li>
+                  <li>POP3 downloads email to your local device and removes it from the server — it's a private, offline model. IMAP downloads email but keeps a copy on the server, so your inbox stays in sync across multiple devices.</li>
+                  <li>SPF — lists which IP addresses are allowed to send email for a domain. DKIM — cryptographically signs outgoing messages so receivers can verify they weren't modified. DMARC — ties SPF and DKIM together and tells receivers what to do with mail that fails verification (quarantine, reject, or allow).</li>
+                  <li>SSL (Secure Sockets Layer) is the deprecated predecessor. TLS (Transport Layer Security) is the current standard. SSL v3.0 was effectively renamed TLS v1.0. Never use SSL for new systems.</li>
+                  <li>A TLS certificate issued by a trusted Certificate Authority (CA). The CA vouches that the certificate legitimately belongs to your domain.</li>
+                  <li>When the environment is Windows-heavy or mixed Windows/Linux. Samba (SMB) integrates natively with Windows and Active Directory. NFS is fast on Linux but slow on Windows.</li>
+                  <li>A Network Attached Storage device is a dedicated storage appliance running a stripped-down OS designed solely for file delivery — essentially a plug-and-play shared file server.</li>
+                  <li>PCL (HP) is device-dependent — output can vary across different printers. PostScript (Adobe) is device-independent — output looks identical on any PS-compatible printer, making it preferred for graphics and publishing work.</li>
+                  <li>Common Unix Printing System — the built-in print server on Linux.</li>
+                  <li>Client-side error (4xx range). 403 Forbidden means the server understood the request but is refusing to fulfill it — typically a permissions problem. Check whether the user's account has access to that resource.</li>
+                  <li>Public — infrastructure shared across customers and operated by a provider. Private — infrastructure owned and operated entirely by your own company. Hybrid — a mix of both, where sensitive workloads stay on-premises and burst capacity or less-sensitive services use the public cloud.</li>
+                  <li>Autoscaling automatically adds or removes compute instances in response to actual demand. It's most useful for workloads with variable traffic — seasonal spikes, flash sales, or marketing campaigns — so you only pay for capacity when you need it.</li>
+                  <li>NGINX — its asynchronous, non-blocking architecture handles large numbers of concurrent connections efficiently.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
       </div>
     </div>
 
@@ -371,11 +549,268 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder — fill in while studying.<br>Topics: Active Directory (AD DS), LDAP, Organizational Units (OUs), Group Policy Objects (GPOs), OpenLDAP, centralized vs local authentication, single sign-on (SSO), RADIUS, DaaS (Directory as a Service).</p>
+
+          <div class="subsection">
+            <p class="subsection-title">Introduction to Directory Services</p>
+            <ul class="concept-list">
+              <li>A <strong>directory server</strong> is a lookup service that maps network resources (users, groups, devices, phone numbers) to their network addresses — like a phone book for your IT infrastructure.</li>
+              <li><strong>Replication</strong> — directory data is copied across multiple physically distributed servers but still appears as one unified system for queries. Benefits:
+                <ul>
+                  <li>No single point of failure — if one replica goes down, others serve requests</li>
+                  <li>Reduced latency — clients query the geographically nearest replica</li>
+                </ul>
+              </li>
+              <li>Data is organized <strong>hierarchically</strong> like a filesystem: company domain → department OUs → individual objects. Organizational Units (OUs) can contain objects or other OUs.</li>
+              <li>The sysadmin owns setup, configuration, and ongoing maintenance of the directory.</li>
+              <li>Standard directory protocols come from the <strong>X.500</strong> family: DAP, DSP, DISP, DOP. These are complex and heavyweight.</li>
+              <li><strong>LDAP</strong> (Lightweight Directory Access Protocol) is the simplified, practical alternative used everywhere today. It gives clients network access to directory data.</li>
+              <li>Two dominant implementations: <strong>Microsoft Active Directory</strong> and <strong>OpenLDAP</strong> (open-source).</li>
+            </ul>
           </div>
-        </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Centralized Management &amp; AAA</p>
+            <ul class="concept-list">
+              <li><strong>Centralized management</strong> — a single service that issues instructions and enforces policy across the entire IT infrastructure. Without it, each machine is an island with its own local accounts.</li>
+              <li>Directory services provide centralized <strong>AAA</strong>:
+                <ul>
+                  <li><strong>Authentication</strong> — prove who you are</li>
+                  <li><strong>Authorization</strong> — determine what you're allowed to do</li>
+                  <li><strong>Accounting</strong> — log what you actually did</li>
+                </ul>
+              </li>
+              <li><strong>RBAC</strong> (Role-Based Access Control) — permissions are assigned to roles, not individuals. A user's access is determined by their role in the org.</li>
+              <li>When someone changes roles, leaves, or joins — update their group membership. No need to touch individual machine accounts.</li>
+              <li>Centralized policy can be as simple as <strong>logon scripts</strong> that map drives or printers when a user signs in.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">LDAP — Protocol &amp; Notation</p>
+            <ul class="concept-list">
+              <li>LDAP is the wire protocol used to read and write data in a directory service. Both Active Directory and OpenLDAP speak LDAP.</li>
+              <li>Every directory entry has a <strong>distinguished name (DN)</strong> — a unique, comma-separated path that identifies its location in the hierarchy:</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Abbreviation</th><th>Meaning</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td><code>dn</code></td><td>Distinguished Name — full path</td><td><code>dn: uid=jane,ou=sales,dc=example,dc=com</code></td></tr>
+                <tr><td><code>cn</code></td><td>Common Name — object's name</td><td><code>cn=Jane Smith</code></td></tr>
+                <tr><td><code>ou</code></td><td>Organizational Unit</td><td><code>ou=engineering</code></td></tr>
+                <tr><td><code>dc</code></td><td>Domain Component</td><td><code>dc=example,dc=com</code></td></tr>
+              </tbody>
+            </table>
+            <ul class="concept-list" style="margin-top:0.75rem">
+              <li>Common LDAP operations: add entry, modify entry, delete entry, search.</li>
+              <li>The <strong>Bind</strong> operation authenticates a client to the directory server before it can perform operations. Three authentication modes:
+                <ul>
+                  <li><strong>Anonymous</strong> — no credentials; read-only public data</li>
+                  <li><strong>Simple</strong> — username and password in plain text (use only over TLS)</li>
+                  <li><strong>SASL</strong> (Simple Authentication and Security Layer) — pluggable auth; typically uses TLS and supports Kerberos</li>
+                </ul>
+              </li>
+              <li><strong>Kerberos</strong> — a network authentication protocol used to prove identity without sending passwords over the wire. Widely used with Active Directory.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Active Directory (AD)</p>
+            <ul class="concept-list">
+              <li><strong>Active Directory</strong> is Microsoft's native directory service for Windows environments. It speaks LDAP, so it can interact with non-Windows hosts as well.</li>
+              <li><strong>ADAC</strong> (Active Directory Administrative Center) is the primary GUI for managing AD objects.</li>
+              <li>Key structural concepts:
+                <ul>
+                  <li><strong>Domain</strong> — the basic administrative boundary; a collection of computers, users, and resources</li>
+                  <li><strong>Forest</strong> — one or more domains that share a schema and trust each other</li>
+                  <li><strong>Organizational Unit (OU)</strong> — a folder-like container inside a domain; used to organize objects and delegate admin control</li>
+                  <li><strong>Domain Controller (DC)</strong> — the server running AD; it authenticates logins and enforces policy</li>
+                  <li><strong>FSMO</strong> (Flexible Single Master Operation) — certain AD tasks require one authoritative DC to avoid conflicts (PDC Emulator, RID Master, etc.)</li>
+                  <li><strong>SAM</strong> (Security Account Manager) — stores usernames and hashed passwords</li>
+                </ul>
+              </li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Built-in Group</th><th>Scope</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td>Domain Admins</td><td>Domain</td><td>Full control of the domain — not for daily use</td></tr>
+                <tr><td>Enterprise Admins</td><td>Forest</td><td>Full control across all domains in the forest</td></tr>
+                <tr><td>Domain Users</td><td>Domain</td><td>All standard user accounts</td></tr>
+                <tr><td>Domain Computers</td><td>Domain</td><td>All computers joined to the domain</td></tr>
+                <tr><td>Domain Controllers</td><td>Domain</td><td>All DCs in the domain</td></tr>
+              </tbody>
+            </table>
+            <div class="note">Never use Domain Admin or Enterprise Admin accounts for day-to-day work — use a standard account and elevate only when necessary.</div>
+            <ul class="concept-list" style="margin-top:0.75rem">
+              <li>AD has three group scopes — choose based on what you're grouping and where it's used:
+                <ul>
+                  <li><strong>Domain Local</strong> — assign permissions to a specific resource (e.g., a shared folder)</li>
+                  <li><strong>Global</strong> — group accounts by role within a domain (e.g., "RnD" global group contains "Researchers" sub-group)</li>
+                  <li><strong>Universal</strong> — group global roles across an entire forest</li>
+                </ul>
+              </li>
+              <li><strong>Security groups</strong> can contain user accounts, computer accounts, or other security groups — used to grant access to resources.</li>
+              <li><strong>Distribution groups</strong> are email-only — they cannot be used to assign permissions.</li>
+              <li>Admins should never know a user's password. Only reset when you've absolutely verified the request is legitimate. One person, one authenticator.</li>
+              <li>Tip: ADAC shells out to PowerShell. Watch the command history pane to see the exact commands it runs — then script those for bulk operations.</li>
+            </ul>
+            <table class="ref-table" style="margin-top:1rem">
+              <thead><tr><th>PowerShell command</th><th>What it does</th></tr></thead>
+              <tbody>
+                <tr><td><code>Add-Computer -DomainName 'example.com' -Server 'dc1'</code></td><td>Join a computer to the domain via command line</td></tr>
+                <tr><td><code>Get-AdForest</code></td><td>View forest info including functional level</td></tr>
+                <tr><td><code>Get-AdDomain</code></td><td>View domain info including functional level (year/version)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Group Policy Objects (GPOs)</p>
+            <ul class="concept-list">
+              <li>A <strong>GPO</strong> is a set of policies and preferences that can be applied to a group of AD objects (users, computers, or both).</li>
+              <li>GPOs must be <strong>linked</strong> to a domain, site, or OU to take effect — creating a GPO alone does nothing.</li>
+              <li>Each GPO has two sections:
+                <ul>
+                  <li><strong>Computer Configuration</strong> — applied when the machine boots</li>
+                  <li><strong>User Configuration</strong> — applied when the user logs on</li>
+                </ul>
+              </li>
+              <li><strong>Policies</strong> — settings that are re-enforced every few minutes; users cannot override them.</li>
+              <li><strong>Preferences</strong> — settings that act as templates; users can change them after the fact.</li>
+              <li>GPO data is stored in the <strong>SYSVOL</strong> folder, which is replicated to all DCs.</li>
+              <li>The <strong>Windows Registry</strong> is the hierarchical database where GPO policy settings ultimately land on the client machine.</li>
+            </ul>
+            <div class="note">Before editing any GPO, back it up first. If something breaks, restoring from a backup is much faster than manually reversing settings. Always test changes in a non-production OU first.</div>
+
+            <p class="subsection-title" style="margin-top:1.25rem">GPO Processing Order (LSDOU)</p>
+            <ul class="concept-list">
+              <li>GPOs are applied in this order — later wins when there are conflicts:</li>
+            </ul>
+            <ol class="concept-list">
+              <li><strong>L</strong>ocal GPO — settings stored directly on the machine</li>
+              <li><strong>S</strong>ite-linked GPOs</li>
+              <li><strong>D</strong>omain-linked GPOs</li>
+              <li><strong>O</strong>U-linked GPOs — most specific container is applied last (and wins)</li>
+            </ol>
+            <ul class="concept-list" style="margin-top:0.5rem">
+              <li>Within an OU, each GPO has a <strong>link order</strong>. Higher link-order number = applied first = lowest precedence. The GPO applied last wins.</li>
+              <li>An upstream GPO can be set to <strong>Enforced</strong> to prevent child OUs from overriding it.</li>
+              <li>An OU can be set to <strong>Block Inheritance</strong> to ignore GPOs from parent containers (unless a parent GPO is Enforced).</li>
+            </ul>
+
+            <p class="subsection-title" style="margin-top:1.25rem">GPO Tooling &amp; Troubleshooting</p>
+            <table class="ref-table">
+              <thead><tr><th>Tool / Command</th><th>What it does</th></tr></thead>
+              <tbody>
+                <tr><td><code>gpupdate /force /sync</code></td><td>Force-apply all GPOs immediately on the client</td></tr>
+                <tr><td><code>gpresult /R</code></td><td>Summary of which GPOs applied or were denied</td></tr>
+                <tr><td><code>gpresult /z</code></td><td>Verbose RSOP output</td></tr>
+                <tr><td><code>gpresult /s &lt;host&gt; /u &lt;user&gt;</code></td><td>Remote RSOP for a specific machine and user</td></tr>
+                <tr><td><code>gpedit</code></td><td>Local Group Policy editor</td></tr>
+                <tr><td>GPMC</td><td>Group Policy Management Console — full forest-wide GPO view</td></tr>
+                <tr><td>RSOP report</td><td>Resultant Set of Policy — the combined effect of all applied GPOs</td></tr>
+                <tr><td>Group Policy Modeling</td><td>Predicts which policies will apply before you make changes</td></tr>
+                <tr><td><code>w32tm /resync</code></td><td>Force time resync (fix Kerberos auth failures caused by clock skew)</td></tr>
+                <tr><td><code>Resolve-DNSName -Type SRV -Name _ldap._tcp.dc._msdcs.DOMAIN.NAME</code></td><td>Verify DC SRV records in DNS (key AD health check)</td></tr>
+              </tbody>
+            </table>
+            <div class="note">Kerberos authentication fails if the client clock differs from the DC by more than 5 minutes. If users suddenly can't log in after a power event, check the time first with <code>w32tm /resync</code>.</div>
+
+            <p class="subsection-title" style="margin-top:1.25rem">GPO Troubleshooting Checklist</p>
+            <ol class="concept-list">
+              <li>Check the GPO scope — is it linked to the right OU/domain?</li>
+              <li>Check security filtering — does the target user/computer have Read and Apply permission?</li>
+              <li>Verify Read and Apply permissions on the GPO</li>
+              <li>Check Group Policy delegation settings</li>
+              <li>Is the relevant config section (Computer or User) enabled?</li>
+              <li>Confirm the LSDOU processing order — is a higher-priority GPO overriding?</li>
+              <li>Ensure the GPO link is enabled (not just created)</li>
+              <li>Is an upstream GPO set to Enforced, blocking your override?</li>
+              <li>Is the affected OU set to Block Inheritance?</li>
+              <li>Is Loopback processing enabled? (changes how User Config applies to shared machines)</li>
+              <li>Check WMI filters — an unexpected filter may exclude the target</li>
+              <li>Verify your expectations match the GPO setting's actual behavior</li>
+            </ol>
+            <div class="note"><strong>MDM</strong> (Mobile Device Management) is the equivalent of GPOs for mobile devices and cloud-enrolled devices. It can enforce policies and trigger a remote wipe if a device is lost or stolen.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">OpenLDAP</p>
+            <ul class="concept-list">
+              <li>OpenLDAP is the most popular open-source LDAP implementation. It works on any OS and operates similarly to Active Directory's LDAP layer.</li>
+              <li>Two management interfaces:
+                <ul>
+                  <li><strong>phpLDAPadmin</strong> — web-based GUI; easiest for browsing and editing entries</li>
+                  <li><strong>CLI tools</strong> — scriptable; required for automation</li>
+                </ul>
+              </li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+              <tbody>
+                <tr><td><code>sudo apt-get install slapd ldap-utils</code></td><td>Install the OpenLDAP server (<code>slapd</code>) and CLI utilities</td></tr>
+                <tr><td><code>sudo dpkg-reconfigure slapd</code></td><td>Run the interactive setup wizard (domain, admin password, etc.)</td></tr>
+                <tr><td><code>ldapadd</code></td><td>Add an entry from an LDIF file</td></tr>
+                <tr><td><code>ldapmodify</code></td><td>Modify an existing entry using an LDIF file</td></tr>
+                <tr><td><code>ldapdelete</code></td><td>Delete an entry by DN</td></tr>
+                <tr><td><code>ldapsearch</code></td><td>Search the directory and return matching entries</td></tr>
+              </tbody>
+            </table>
+            <ul class="concept-list" style="margin-top:0.75rem">
+              <li><strong>LDIF</strong> (LDAP Data Interchange Format) — plain-text files that describe directory entries or changes. The workflow is: write an LDIF file → run the appropriate <code>ldap*</code> command. That's it.</li>
+            </ul>
+            <div class="example-box">
+              <strong>Sample LDIF — adding a user entry:</strong>
+              <pre style="margin:0.5rem 0 0;font-size:0.82rem;line-height:1.5">dn: uid=jane,ou=people,dc=example,dc=com
+objectClass: inetOrgPerson
+cn: Jane Smith
+sn: Smith
+uid: jane
+mail: jane@example.com</pre>
+            </div>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What is a directory server and what does it map?</li>
+                <li>What two benefits does directory replication provide?</li>
+                <li>What does AAA stand for in the context of centralized management?</li>
+                <li>What does the LDAP Bind operation do?</li>
+                <li>Name the three LDAP authentication modes and describe each briefly.</li>
+                <li>What is the difference between a Security Group and a Distribution Group in Active Directory?</li>
+                <li>What are the three AD group scopes and when would you use each?</li>
+                <li>What is LSDOU and why does it matter?</li>
+                <li>A GPO exists and is linked but isn't applying to a user. Name three things you'd check first.</li>
+                <li>What clock-skew limit causes Kerberos authentication to fail, and what command fixes it?</li>
+                <li>What is an LDIF file and how is it used with OpenLDAP?</li>
+                <li>What is the difference between a GPO Policy setting and a GPO Preference setting?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>A directory server is a lookup service that maps network resources (users, groups, devices) to their network addresses — like a searchable phone book for IT infrastructure.</li>
+                  <li>Replication eliminates single points of failure (if one server goes down, replicas keep serving) and reduces latency (clients query the nearest replica).</li>
+                  <li>Authentication (prove identity), Authorization (determine what's allowed), Accounting (log what was done).</li>
+                  <li>The Bind operation authenticates the client to the directory server, establishing the identity the client will act under for subsequent operations.</li>
+                  <li>Anonymous — no credentials, read-only public access; Simple — username and password (plaintext, use only over TLS); SASL — pluggable auth layer supporting Kerberos and TLS for secure authentication.</li>
+                  <li>Security Groups can be granted permissions to resources. Distribution Groups are email-only — they cannot be used to assign access rights.</li>
+                  <li>Domain Local — assign permissions to a specific resource; Global — group accounts into a role within a domain; Universal — group global roles across an entire forest.</li>
+                  <li>LSDOU is the GPO processing order: Local → Site → Domain → OU. Later settings override earlier ones when there are conflicts, so the most specific (OU-linked) GPO wins.</li>
+                  <li>Check the GPO link is enabled; check security filtering (Read + Apply permissions); check whether an upstream GPO is set to Enforced and overriding it.</li>
+                  <li>More than 5 minutes of clock skew causes Kerberos to fail. Fix it with <code>w32tm /resync</code>.</li>
+                  <li>An LDIF (LDAP Data Interchange Format) file is a plain-text file that describes a directory entry or a change to one. You write the LDIF, then pass it to a command like <code>ldapadd</code> or <code>ldapmodify</code>.</li>
+                  <li>Policies are enforced settings re-applied every few minutes — users cannot override them. Preferences are template defaults — users can change them after the GPO applies them.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
       </div>
     </div>
 
