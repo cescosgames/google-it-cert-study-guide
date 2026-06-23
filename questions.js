@@ -649,4 +649,682 @@ const QUESTIONS = [
     explanation: "Lowering TTL (e.g., to 300s) before a migration means clients re-query sooner after the DNS record changes. If you cut over with a high TTL, stale records may be cached for hours.",
     course: 2
   },
+
+  /* ── Course 3 · Operating Systems ──────────────────── */
+
+  {
+    q: "What is the key difference between a hard link and a symbolic (soft) link on Linux?",
+    options: [
+      "Hard links work across different filesystems; symbolic links do not",
+      "Hard links point directly to the inode and survive if the original filename is deleted; symbolic links break",
+      "Symbolic links can only point to directories; hard links can only point to files",
+      "Hard links require root privileges to create; symbolic links do not"
+    ],
+    answer: 1,
+    explanation: "A hard link is another name for the same inode — the file data persists as long as any hard link exists. A symbolic link stores a path; if that path is deleted or moved, the symlink breaks.",
+    course: 3
+  },
+  {
+    q: "A user runs chmod 754 on a file. What permissions does the group have?",
+    options: [
+      "Read, write, and execute",
+      "Read and execute only",
+      "Read only",
+      "No permissions"
+    ],
+    answer: 1,
+    explanation: "chmod 754 breaks down as owner=7 (rwx), group=5 (r-x), others=4 (r--). The middle digit 5 = read (4) + execute (1), so the group can read and execute but not write.",
+    course: 3
+  },
+  {
+    q: "What is the difference between SIGTERM and SIGKILL?",
+    options: [
+      "SIGTERM is for system processes only; SIGKILL is for user processes",
+      "SIGTERM asks the process to shut down gracefully; SIGKILL immediately force-kills it with no cleanup",
+      "SIGKILL can be caught and ignored by the process; SIGTERM cannot",
+      "They are identical — both terminate the process immediately"
+    ],
+    answer: 1,
+    explanation: "SIGTERM is a polite request — the process can catch it, save state, and exit cleanly. SIGKILL cannot be caught or ignored; the kernel kills the process instantly. SIGKILL is a last resort.",
+    course: 3
+  },
+  {
+    q: "Which file in Linux defines the filesystems to mount automatically at boot?",
+    options: [
+      "/etc/hosts",
+      "/proc/mounts",
+      "/etc/fstab",
+      "/boot/grub/grub.cfg"
+    ],
+    answer: 2,
+    explanation: "/etc/fstab lists each filesystem, its mount point, type, and options. The system reads it at boot to mount everything automatically. UUIDs are preferred over device names like /dev/sdb because device names can change.",
+    course: 3
+  },
+  {
+    q: "What does the apt package manager do that dpkg alone cannot?",
+    options: [
+      "Install .deb files from a local directory",
+      "Remove installed packages",
+      "Automatically fetch and resolve package dependencies",
+      "Show which files belong to an installed package"
+    ],
+    answer: 2,
+    explanation: "dpkg is the low-level tool — it installs or removes .deb files but won't pull in missing dependencies. apt is the high-level tool that contacts repositories, resolves and downloads all required dependencies automatically.",
+    course: 3
+  },
+  {
+    q: "A host is assigned the address 169.254.14.22. What does this indicate?",
+    options: [
+      "The host is on a private Class B network",
+      "DHCP failed and the host self-assigned an APIPA address",
+      "The host is behind a NAT gateway",
+      "The address was statically configured by the administrator"
+    ],
+    answer: 1,
+    explanation: "169.254.0.0/16 is the APIPA (Automatic Private IP Addressing) range. When DHCP is unreachable, the OS assigns itself an address in this range. It signals a DHCP failure, not intentional configuration.",
+    course: 3
+  },
+  {
+    q: "What is the difference between SSH and RDP?",
+    options: [
+      "SSH is Windows-only; RDP works on Linux and Windows",
+      "SSH provides a remote command line; RDP provides a full graphical desktop",
+      "RDP is encrypted; SSH transmits in plain text",
+      "SSH requires a VPN; RDP works without one"
+    ],
+    answer: 1,
+    explanation: "SSH gives you a text-based remote shell — lightweight and encrypted. RDP (Remote Desktop Protocol) streams a full GUI desktop session. Both are remote access tools but serve different use cases.",
+    course: 3
+  },
+  {
+    q: "What are the key differences between MBR and GPT partition tables?",
+    options: [
+      "MBR supports larger disks; GPT is limited to 2 TB",
+      "GPT supports disks over 2 TB and more than 4 primary partitions; MBR cannot",
+      "MBR requires UEFI firmware; GPT works with legacy BIOS",
+      "They are functionally identical — GPT is just a newer name for MBR"
+    ],
+    answer: 1,
+    explanation: "MBR is limited to 2 TB disks and 4 primary partitions, and it requires legacy BIOS. GPT removes those limits and is required by modern UEFI firmware. Any disk over 2 TB must use GPT.",
+    course: 3
+  },
+  {
+    q: "What is PID 1 in Linux and why is it special?",
+    options: [
+      "The kernel itself — it handles all hardware interrupts",
+      "The init process — it is the first process started at boot and the parent of all other processes",
+      "The root user's login shell",
+      "The process reserved for system logging (syslogd)"
+    ],
+    answer: 1,
+    explanation: "PID 1 is the init process (systemd on modern distros). It is started directly by the kernel after boot and is the ancestor of every other process. If PID 1 dies, the system halts.",
+    course: 3
+  },
+  {
+    q: "Why should you properly unmount a drive before physically removing it?",
+    options: [
+      "The OS encrypts the drive on unmount to protect data",
+      "The OS needs to assign a new device name before removal",
+      "The OS buffers writes in RAM; unmounting flushes the buffer to disk and prevents filesystem corruption",
+      "Removing without unmounting can cause the drive to lose its partition table"
+    ],
+    answer: 2,
+    explanation: "The OS stages writes in a memory buffer for performance. A proper unmount flushes all pending writes to disk. Removing the drive before this can leave the filesystem in an inconsistent state.",
+    course: 3
+  },
+
+  {
+    q: "Which Linux command shows free disk space across all mounted filesystems in human-readable format?",
+    options: ["du -sh", "ls -lh", "df -h", "free -h"],
+    answer: 2,
+    explanation: "df -h (disk free, human-readable) shows total, used, and available space per mounted filesystem. du measures directory sizes; free measures RAM; ls lists files.",
+    course: 3
+  },
+  {
+    q: "What does the Linux command tail -f do?",
+    options: [
+      "Shows the last 10 lines of a file and exits",
+      "Follows a log file live, printing new lines as they are written",
+      "Searches a file for a pattern and prints matching lines",
+      "Compresses a file and appends it to an archive"
+    ],
+    answer: 1,
+    explanation: "tail -f keeps the file open and streams new content to the terminal in real time — essential for watching logs as events happen, such as during a service restart or debugging a crash.",
+    course: 3
+  },
+  {
+    q: "What numeric permission value represents read + write + execute for a single role in Linux?",
+    options: ["5", "6", "7", "4"],
+    answer: 2,
+    explanation: "Linux uses octal: read=4, write=2, execute=1. Adding all three gives 4+2+1=7. So chmod 777 gives full permissions to owner, group, and others.",
+    course: 3
+  },
+  {
+    q: "Where does Linux store security and authentication logs by default?",
+    options: ["/var/log/syslog", "/var/log/auth.log", "/etc/security/log", "/proc/log/auth"],
+    answer: 1,
+    explanation: "/var/log/auth.log records sudo usage, SSH logins, failed authentication attempts, and other security-relevant events. It is a key file to check when investigating unauthorized access.",
+    course: 3
+  },
+  {
+    q: "What is the difference between a Type 1 and Type 2 hypervisor?",
+    options: [
+      "Type 1 runs on top of an existing OS; Type 2 runs directly on bare metal",
+      "Type 1 runs directly on bare metal hardware; Type 2 runs on top of an existing OS",
+      "Type 1 is for Linux VMs; Type 2 is for Windows VMs",
+      "Type 1 supports more VMs; Type 2 is limited to one at a time"
+    ],
+    answer: 1,
+    explanation: "Type 1 (bare-metal) hypervisors like VMware ESXi or Hyper-V run directly on hardware — faster and used in production. Type 2 hypervisors like VirtualBox run as apps inside an existing OS — easier to set up for personal use.",
+    course: 3
+  },
+  {
+    q: "What does the /etc/passwd file store in Linux?",
+    options: [
+      "Encrypted user passwords",
+      "A list of all user accounts and their attributes",
+      "PAM authentication configuration",
+      "The sudoers permission list"
+    ],
+    answer: 1,
+    explanation: "/etc/passwd lists all user accounts with username, UID, GID, home directory, and default shell. Despite the name, passwords are stored separately in /etc/shadow (hashed, not plain text).",
+    course: 3
+  },
+  {
+    q: "What is virtual memory and when does the OS use it?",
+    options: [
+      "Extra RAM added by the GPU when physical RAM runs out",
+      "A section of disk used to extend usable RAM when physical RAM is exhausted",
+      "Memory allocated to virtual machines by the hypervisor",
+      "Compressed RAM blocks used to speed up context switching"
+    ],
+    answer: 1,
+    explanation: "When physical RAM fills up, the OS moves inactive memory pages to a disk partition (swap on Linux, page file on Windows). Disk is much slower than RAM, causing noticeable slowdowns — sometimes called thrashing.",
+    course: 3
+  },
+  {
+    q: "What is the purpose of the Windows Event Viewer?",
+    options: [
+      "Monitors network traffic in real time",
+      "Browses system, application, and security event logs via a GUI",
+      "Displays running processes and their resource usage",
+      "Manages Windows Update download history"
+    ],
+    answer: 1,
+    explanation: "Event Viewer (eventvwr.msc) lets you browse structured logs categorized as System, Application, and Security. It is the first stop for diagnosing Windows crashes, service failures, and login issues.",
+    course: 3
+  },
+  {
+    q: "What signal does Ctrl+C send to a running process in the terminal?",
+    options: ["SIGKILL", "SIGTERM", "SIGINT", "SIGHUP"],
+    answer: 2,
+    explanation: "Ctrl+C sends SIGINT (interrupt signal) — a polite request to stop. Unlike SIGKILL, the process can catch SIGINT and do cleanup before exiting. Most programs treat it as a graceful stop.",
+    course: 3
+  },
+  {
+    q: "Which filesystem is natively readable and writable on Windows, macOS, and Linux without extra drivers?",
+    options: ["NTFS", "ext4", "FAT32", "HFS+"],
+    answer: 2,
+    explanation: "FAT32 is the universal cross-platform filesystem. NTFS is native to Windows (read-only on macOS without drivers). ext4 is Linux-native. HFS+ is macOS-native. For files over 4 GB, exFAT is the modern cross-platform alternative.",
+    course: 3
+  },
+
+  {
+    q: "What does the sudo command do in Linux?",
+    options: [
+      "Switches the current user to the root account permanently",
+      "Runs a single command with administrator (root) privileges without switching accounts",
+      "Creates a new superuser account on the system",
+      "Grants permanent elevated permissions to the current user"
+    ],
+    answer: 1,
+    explanation: "sudo (superuser do) lets a permitted user run one command as root without logging in as root. It is safer than staying in a root shell because privilege is scoped to a single command and every use is logged.",
+    course: 3
+  },
+  {
+    q: "What is the difference between an ACL and a DACL in Windows?",
+    options: [
+      "ACLs apply to files; DACLs apply to registry keys",
+      "ACL is the general concept of permission lists; DACL is the Windows implementation where the owner controls access",
+      "DACLs are read-only; ACLs allow write permissions",
+      "They are identical — DACL is just the older term for ACL"
+    ],
+    answer: 1,
+    explanation: "An ACL (Access Control List) is the broad concept. A DACL (Discretionary ACL) is the Windows-specific implementation — 'discretionary' because the resource owner decides who gets access. Windows also has a SACL for auditing.",
+    course: 3
+  },
+  {
+    q: "Which Linux command shows the currently running kernel version?",
+    options: ["lsb_release -a", "cat /etc/os-release", "uname -r", "dpkg --version"],
+    answer: 2,
+    explanation: "uname -r prints the kernel release version (e.g., 5.15.0-91-generic). This is useful for checking if a kernel update has been applied or verifying driver compatibility.",
+    course: 3
+  },
+  {
+    q: "What is a DLL and why is it useful?",
+    options: [
+      "A type of Windows executable that runs in its own memory space",
+      "A shared code library that multiple programs can use simultaneously, avoiding duplicated code",
+      "A driver file that lets Windows communicate with hardware devices",
+      "A compressed archive format used by the Windows installer"
+    ],
+    answer: 1,
+    explanation: "A DLL (Dynamic Link Library) contains reusable code and data loaded by programs at runtime. Multiple apps can share one loaded copy in memory — no duplication. This is why deleting a DLL can break multiple unrelated programs.",
+    course: 3
+  },
+  {
+    q: "What is the difference between an absolute path and a relative path?",
+    options: [
+      "Absolute paths work on Linux only; relative paths work on both Windows and Linux",
+      "Absolute paths start from the root of the filesystem; relative paths start from the current working directory",
+      "Relative paths are shorter versions of absolute paths stored in environment variables",
+      "Absolute paths use forward slashes; relative paths use backslashes"
+    ],
+    answer: 1,
+    explanation: "An absolute path fully specifies a location from the root (e.g., /home/user/docs or C:\\Users\\). A relative path starts from wherever you currently are (e.g., ../Desktop). Relative paths break if you change directory; absolute paths always work.",
+    course: 3
+  },
+  {
+    q: "What is Unix epoch time?",
+    options: [
+      "The maximum date a 32-bit Unix timestamp can represent",
+      "The number of seconds elapsed since midnight January 1, 1970 UTC",
+      "The Unix standard for synchronizing clocks across networked machines",
+      "A timestamp format that stores date and time as a human-readable string"
+    ],
+    answer: 1,
+    explanation: "Unix epoch time counts seconds from Jan 1, 1970 00:00:00 UTC. It gives every moment in time a single integer, making timestamp math trivial. System logs use it internally; tools convert it to human-readable dates for display.",
+    course: 3
+  },
+  {
+    q: "When would you boot Windows into Safe Mode?",
+    options: [
+      "To apply Windows updates that require elevated privileges",
+      "When Windows won't boot normally, or to isolate driver and software conflicts",
+      "To recover deleted files from the Recycle Bin",
+      "To run disk encryption without interruption from background services"
+    ],
+    answer: 1,
+    explanation: "Safe Mode boots Windows with only the minimum required drivers and services. If the system crashes normally but works in Safe Mode, the culprit is a driver or startup program — not a hardware failure. It is the key tool for diagnosing boot problems.",
+    course: 3
+  },
+  {
+    q: "Which command lets you view running processes and their resource usage interactively in Linux?",
+    options: ["ps aux", "jobs -l", "top", "lsof"],
+    answer: 2,
+    explanation: "top shows a live, updating view of processes sorted by CPU usage. ps aux gives a static snapshot. htop is an improved interactive version of top. lsof lists open files, not processes by resource usage.",
+    course: 3
+  },
+  {
+    q: "What is mstsc.exe and what does it do?",
+    options: [
+      "Microsoft Security Center — manages Windows Defender settings",
+      "Microsoft Terminal Services Client — opens Remote Desktop (RDP) connections to other machines",
+      "Microsoft System Configuration — manages startup programs and services",
+      "Microsoft Storage Console — manages disk partitions and volumes"
+    ],
+    answer: 1,
+    explanation: "mstsc.exe (Microsoft Terminal Services Client) is the built-in Windows tool for making RDP connections. You enter the remote machine's IP or hostname and connect to its full graphical desktop.",
+    course: 3
+  },
+  {
+    q: "What does the man command do in Linux?",
+    options: [
+      "Manages user accounts and groups",
+      "Opens the manual page for a command, showing its flags, usage, and description",
+      "Monitors active network connections",
+      "Displays available disk partitions"
+    ],
+    answer: 1,
+    explanation: "man <command> opens the built-in manual page for that command. It is the authoritative reference for flags and behavior — faster than searching the web. Press q to quit, / to search within the page.",
+    course: 3
+  },
+
+  /* ── Course 4 · System Administration ──────────────── */
+
+  {
+    q: "What is the hardware lifecycle stage that follows Procurement?",
+    options: ["Maintenance", "Retirement", "Deployment", "Auditing"],
+    answer: 2,
+    explanation: "The four stages are Procurement → Deployment → Maintenance → Retirement. After purchasing hardware, the next step is setting it up and configuring it for use — Deployment.",
+    course: 4
+  },
+  {
+    q: "Why should you never test changes directly in the production environment?",
+    options: [
+      "Production servers run a different OS than test servers",
+      "Production is the live environment end users depend on — a failed change causes real downtime",
+      "Testing in production bypasses the change management process",
+      "Production environments do not have logging enabled"
+    ],
+    answer: 1,
+    explanation: "Production is where real users are. A failed or untested change there causes actual outages. Changes should be validated in a test environment — usually a VM mirroring production settings — before going live.",
+    course: 4
+  },
+  {
+    q: "What is a golden image in the context of OS deployment?",
+    options: [
+      "A backup copy of the production server stored offsite",
+      "A pre-configured OS snapshot with standard software and settings, cloned to new machines",
+      "A BIOS firmware update image distributed by the hardware vendor",
+      "A read-only system partition created by Windows during install"
+    ],
+    answer: 1,
+    explanation: "A golden image is a fully configured reference machine — OS, company software, drivers, and security settings all pre-installed. You capture a disk snapshot and clone it to any number of new machines, avoiding manual setup on each one.",
+    course: 4
+  },
+  {
+    q: "In a PXE boot deployment, which protocol actually delivers the OS image to the client machine?",
+    options: ["SFTP", "TFTP", "HTTP", "SMB"],
+    answer: 1,
+    explanation: "TFTP (Trivial FTP) is used for PXE boot because it is extremely simple — no authentication, no encryption — which is exactly what you need when a bare-metal machine has no OS or credentials yet.",
+    course: 4
+  },
+  {
+    q: "What does LSDOU describe in Active Directory?",
+    options: [
+      "The four types of AD objects: Local, Site, Domain, OU",
+      "The order in which Group Policy Objects are applied: Local → Site → Domain → OU",
+      "The replication schedule between domain controllers",
+      "The four AD group scopes: Local, Site, Domain, Organization-wide"
+    ],
+    answer: 1,
+    explanation: "LSDOU is the GPO processing order. Later policies override earlier ones on conflicts, so an OU-linked GPO wins over a Domain-level GPO. This determines which settings actually apply to a user or computer.",
+    course: 4
+  },
+  {
+    q: "What is the difference between a GPO Policy and a GPO Preference?",
+    options: [
+      "Policies apply to computers; Preferences apply to users",
+      "Policies are enforced and users cannot override them; Preferences are defaults users can change",
+      "Preferences are applied first; Policies override them",
+      "Policies require LDAP; Preferences use Kerberos"
+    ],
+    answer: 1,
+    explanation: "Policies are enforced settings re-applied automatically every few minutes — users have no ability to change them. Preferences are template defaults that get applied once; users can modify them afterwards.",
+    course: 4
+  },
+  {
+    q: "What does the 3-2-1 backup rule specify?",
+    options: [
+      "3 daily backups, 2 weekly, 1 monthly",
+      "3 copies of data, on 2 different media types, with 1 copy stored off-site",
+      "3 full backups before switching to incremental, 2 off-site, 1 on-site",
+      "Backups must complete within 3 hours, 2 retries allowed, 1 verification step"
+    ],
+    answer: 1,
+    explanation: "The 3-2-1 rule: keep 3 total copies, stored on 2 different media types (e.g., disk + tape), with 1 copy off-site. This protects against single points of failure, media degradation, and site-wide disasters.",
+    course: 4
+  },
+  {
+    q: "Why is RAID not considered a backup solution?",
+    options: [
+      "RAID is too slow to be used for backup purposes",
+      "RAID only works with identical drives, limiting flexibility",
+      "RAID provides redundancy but all copies live together — ransomware, accidental deletion, or a site disaster destroys all copies simultaneously",
+      "RAID requires a separate OS and cannot protect the primary system drive"
+    ],
+    answer: 2,
+    explanation: "RAID mirrors or stripes data across drives for availability — but all drives are in the same machine. If a user deletes a file, all RAID copies reflect that deletion. A true backup is physically or logically separate.",
+    course: 4
+  },
+  {
+    q: "What is AAA in the context of centralized IT management?",
+    options: [
+      "Availability, Accountability, and Auditing",
+      "Authentication, Authorization, and Accounting",
+      "Access, Administration, and Alerting",
+      "Active Directory, Apache, and Auditing"
+    ],
+    answer: 1,
+    explanation: "AAA: Authentication (prove who you are), Authorization (determine what you're allowed to do), Accounting (log what you actually did). Directory services like Active Directory implement all three.",
+    course: 4
+  },
+  {
+    q: "What is a KVM switch and why is it critical for a sys admin?",
+    options: [
+      "A virtual machine manager that lets one server run multiple OS instances",
+      "A device that lets one keyboard, monitor, and mouse control multiple servers — essential when the network is down",
+      "A network switch that prioritizes keyboard and video traffic",
+      "A remote access protocol used as an alternative to SSH"
+    ],
+    answer: 1,
+    explanation: "KVM stands for Keyboard-Video-Mouse. A KVM switch lets one set of peripherals control many physical servers. It is critical when the network is down and SSH/RDP are unavailable — you still have direct console access.",
+    course: 4
+  },
+  {
+    q: "What is the difference between RPO and RTO?",
+    options: [
+      "RPO measures downtime; RTO measures data loss",
+      "RPO is the max acceptable data loss measured in time; RTO is the max acceptable downtime",
+      "RPO applies to cloud backups; RTO applies to on-site backups",
+      "They are the same metric measured from different perspectives"
+    ],
+    answer: 1,
+    explanation: "RPO (Recovery Point Objective) defines how much data you can afford to lose — e.g., RPO of 1 hour means backups every hour. RTO (Recovery Time Objective) defines how fast you must restore — e.g., RTO of 4 hours means systems back online within 4 hours of failure.",
+    course: 4
+  },
+  {
+    q: "What does the Linux command 'script session.log' do?",
+    options: [
+      "Runs a shell script and redirects output to session.log",
+      "Records everything typed and displayed in the terminal session to session.log",
+      "Backs up the current shell environment to a log file",
+      "Monitors system calls and writes them to session.log"
+    ],
+    answer: 1,
+    explanation: "The script command captures the entire terminal session — input and output — to a file. Sys admins use it to document exactly what they did during a change. Type exit to stop recording. Windows equivalent is Start-Transcript.",
+    course: 4
+  },
+  {
+    q: "What is a daemon in Linux?",
+    options: [
+      "A privileged user account with root access",
+      "A background process that runs continuously, usually starting at boot",
+      "A kernel module that handles hardware interrupts",
+      "A system call for inter-process communication"
+    ],
+    answer: 1,
+    explanation: "A daemon is a background service process — it runs silently without user interaction. Examples: NTP daemon syncing the clock, vsftpd serving FTP connections. Config files live in /etc; daemons start automatically at boot.",
+    course: 4
+  },
+  {
+    q: "What is the Kerberos clock skew limit, and what do you do when it is exceeded?",
+    options: [
+      "10 minutes; restart the domain controller",
+      "5 minutes; sync the client clock with w32tm /resync",
+      "1 minute; re-join the client to the domain",
+      "30 seconds; reissue the user's Kerberos ticket manually"
+    ],
+    answer: 1,
+    explanation: "Kerberos requires client and domain controller clocks to be within 5 minutes of each other. If the skew exceeds this, authentication fails. Fix it by running w32tm /resync on the client to sync its clock with the domain.",
+    course: 4
+  },
+  {
+    q: "What is the difference between a Security Group and a Distribution Group in Active Directory?",
+    options: [
+      "Security Groups are for administrators only; Distribution Groups are for all users",
+      "Security Groups can be assigned resource permissions; Distribution Groups are email-only and cannot control access",
+      "Distribution Groups inherit permissions from Security Groups",
+      "Security Groups require a domain controller; Distribution Groups work in workgroups"
+    ],
+    answer: 1,
+    explanation: "Security Groups are used to grant permissions to files, printers, and other resources. Distribution Groups exist only for email distribution lists — they cannot be used for access control at all.",
+    course: 4
+  },
+  {
+    q: "What does an unattended install answer file accomplish during OS deployment?",
+    options: [
+      "It applies GPOs before the user logs in for the first time",
+      "It automates every setup prompt — language, disk layout, product key, admin password — so no human is needed during install",
+      "It pre-loads device drivers after the OS has finished installing",
+      "It connects the machine to the domain before the OS installer runs"
+    ],
+    answer: 1,
+    explanation: "An answer file (unattend.xml on Windows, kickstart on Linux) pre-answers every interactive setup prompt. Combined with PXE boot, a technician can rack a machine, plug in a cable, and walk away — the machine configures itself end-to-end.",
+    course: 4
+  },
+  {
+    q: "What are the three types of disaster recovery sites?",
+    options: [
+      "Primary, Secondary, and Tertiary",
+      "Hot, Warm, and Cold",
+      "On-site, Off-site, and Cloud",
+      "Active, Passive, and Standby"
+    ],
+    answer: 1,
+    explanation: "Hot site: fully operational duplicate, fails over in minutes. Warm site: hardware is ready but data must be restored — hours to bring online. Cold site: just space and power — provisioning takes days to weeks. Cost and recovery speed are the main trade-offs.",
+    course: 4
+  },
+  {
+    q: "What is the difference between a differential and an incremental backup?",
+    options: [
+      "Differential backs up everything; incremental backs up only new files",
+      "Differential copies all changes since the last full backup; incremental copies only changes since the last backup of any type",
+      "Incremental requires a full restore first; differential does not",
+      "They are identical — the terms are interchangeable"
+    ],
+    answer: 1,
+    explanation: "Differential: grows over time, always copying from the last full — restore needs just the full + latest differential. Incremental: smallest daily backup, but restore needs the full + every incremental in sequence. Incremental is more efficient to store; differential is faster to restore.",
+    course: 4
+  },
+  {
+    q: "What does Dnsmasq provide in a single package?",
+    options: [
+      "SSH, FTP, HTTP, and DNS",
+      "DNS, DHCP, TFTP, and PXE services",
+      "LDAP, Kerberos, NTP, and DHCP",
+      "Firewall, proxy, DNS, and VPN"
+    ],
+    answer: 1,
+    explanation: "Dnsmasq bundles DNS resolution, DHCP IP assignment, TFTP file serving, and PXE network boot into one lightweight package — useful for small networks or lab setups where you want all these services without running separate servers.",
+    course: 4
+  },
+  {
+    q: "What is the difference between IaaS, PaaS, and SaaS?",
+    options: [
+      "IaaS = apps, PaaS = platforms, SaaS = raw infrastructure",
+      "IaaS provides raw compute and storage; PaaS provides a runtime for developers; SaaS provides fully managed applications",
+      "They are identical services offered at different price tiers",
+      "IaaS is on-premise; PaaS and SaaS are always cloud-based"
+    ],
+    answer: 1,
+    explanation: "IaaS (e.g., AWS EC2) gives you virtual hardware to manage yourself. PaaS (e.g., Heroku) gives you a platform to deploy code without managing servers. SaaS (e.g., Gmail) gives you a finished application — you just use it.",
+    course: 4
+  },
+  {
+    q: "What is the only email protocol used for sending mail?",
+    options: ["IMAP", "POP3", "SMTP", "MAPI"],
+    answer: 2,
+    explanation: "SMTP (Simple Mail Transfer Protocol) is the sending protocol — used between mail clients and mail servers, and between mail servers. POP3 and IMAP are receiving protocols only.",
+    course: 4
+  },
+  {
+    q: "What do SPF, DKIM, and DMARC each protect against?",
+    options: [
+      "SPF blocks malware attachments; DKIM encrypts email bodies; DMARC manages spam folders",
+      "SPF authorizes sending IPs for a domain; DKIM cryptographically signs messages; DMARC ties them together and tells receivers what to do with failures",
+      "They are three names for the same email encryption standard",
+      "SPF handles routing; DKIM handles delivery receipts; DMARC handles bounce messages"
+    ],
+    answer: 1,
+    explanation: "SPF lists the IP addresses allowed to send mail for your domain. DKIM adds a cryptographic signature to outgoing mail so receivers can verify it wasn't tampered with. DMARC uses both to set a policy — reject, quarantine, or report — for mail that fails either check.",
+    course: 4
+  },
+  {
+    q: "What is the relationship between SSL and TLS?",
+    options: [
+      "SSL is the modern replacement for the deprecated TLS protocol",
+      "TLS is the modern successor to SSL; SSL is deprecated and should never be used on new systems",
+      "They are identical protocols with different names depending on the vendor",
+      "SSL encrypts data; TLS only authenticates the server certificate"
+    ],
+    answer: 1,
+    explanation: "SSL (Secure Sockets Layer) is the older, deprecated protocol. TLS (Transport Layer Security) replaced it — TLS 1.0 was essentially SSL 3.0 renamed. Modern systems use TLS 1.2 or 1.3. When people say 'SSL certificate' today they mean a TLS certificate.",
+    course: 4
+  },
+  {
+    q: "What are the three Active Directory group scopes?",
+    options: [
+      "Local, Regional, and Global",
+      "Domain Local, Global, and Universal",
+      "Site, Domain, and Forest",
+      "Standard, Security, and Distribution"
+    ],
+    answer: 1,
+    explanation: "Domain Local: grants permissions to resources within a specific domain. Global: groups accounts by role within a domain. Universal: groups roles across an entire AD forest. You pick scope based on how widely the group needs to be applied.",
+    course: 4
+  },
+  {
+    q: "What is an LDIF file and how is it used?",
+    options: [
+      "A binary export of an entire Active Directory database",
+      "A plain-text file describing a directory entry or change, passed to ldapadd or ldapmodify to apply it",
+      "A log file generated by the LDAP server recording all queries",
+      "A config file that sets LDAP server connection settings"
+    ],
+    answer: 1,
+    explanation: "LDIF (LDAP Data Interchange Format) is a plain-text format for describing directory entries and changes. You write the LDIF file, then pipe it to ldapadd (new entries), ldapmodify (changes), or ldapdelete (removals). It is the standard way to script bulk directory operations.",
+    course: 4
+  },
+  {
+    q: "What does rsync do and why is it useful for backups?",
+    options: [
+      "Encrypts files before transferring them to a remote server",
+      "Efficiently syncs files between locations by transferring only data that has changed since the last sync",
+      "Creates compressed archives of directories for long-term storage",
+      "Monitors a directory for changes and immediately mirrors them to a backup location"
+    ],
+    answer: 1,
+    explanation: "rsync compares source and destination and transfers only the differences — much faster than copying everything each time. It is widely used for incremental backups, especially over SSH (rsync -avz -e ssh), because it is efficient and resumable.",
+    course: 4
+  },
+  {
+    q: "When must you prepare a rollback plan according to IT Change Management best practices?",
+    options: [
+      "Within 24 hours after a change is deployed",
+      "Only for high-risk changes flagged by the change advisory board",
+      "Before making any change — the rollback steps are part of the change record",
+      "After the change is validated in the test environment"
+    ],
+    answer: 2,
+    explanation: "A rollback plan documents exactly how to undo a change if it causes problems. It must exist before the change is made — not after something goes wrong. It is a required section of any IT change management record.",
+    course: 4
+  },
+  {
+    q: "What is a proxy server and what are its two main uses in a company network?",
+    options: [
+      "A secondary DNS server that handles overflow queries",
+      "An intermediary between clients and the internet used to provide privacy and regulate/filter employee access",
+      "A server that caches static website content to reduce page load times",
+      "A firewall that inspects packets at the application layer"
+    ],
+    answer: 1,
+    explanation: "A proxy server sits between internal clients and the internet. Companies use it to anonymize outbound traffic (privacy) and to enforce content filtering policies — blocking certain sites or logging what employees access.",
+    course: 4
+  },
+  {
+    q: "What does autoscaling do in a cloud environment and when is it most valuable?",
+    options: [
+      "Automatically upgrades server hardware when performance degrades",
+      "Automatically adds or removes compute instances based on real-time demand",
+      "Distributes traffic evenly across all available servers at all times",
+      "Scales storage capacity based on how much disk space is used"
+    ],
+    answer: 1,
+    explanation: "Autoscaling monitors load and spins up extra instances when demand spikes, then removes them when traffic drops — so you only pay for capacity you actually need. It is most valuable for variable workloads like seasonal sales or viral traffic events.",
+    course: 4
+  },
+  {
+    q: "What are the five sections of a standard post-mortem report?",
+    options: [
+      "Summary, Root Cause, Timeline, Resolution, Lessons Learned",
+      "Brief Summary, Detailed Timeline, Root Cause, Resolution & Recovery, Action Items",
+      "Incident Log, Impact Assessment, Blame Report, Fix Description, Sign-off",
+      "Problem Statement, Hypothesis, Test Results, Fix Applied, Follow-up"
+    ],
+    answer: 1,
+    explanation: "A post-mortem documents: (1) Brief summary, (2) Detailed timeline, (3) Root cause, (4) Resolution & recovery steps, (5) Action items to prevent recurrence. The goal is learning — not blame.",
+    course: 4
+  }
 ];

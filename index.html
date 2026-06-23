@@ -21,6 +21,7 @@
         <li><a href="courses/04-system-administration.html">Course 4</a></li>
         <li><a href="courses/05-it-security.html">Course 5</a></li>
         <li class="nav-sep" aria-hidden="true"></li>
+        <li><a href="quiz.html">Rapid Fire</a></li>
         <li><a href="resources.html">Resources</a></li>
       </ul>
     </div>
@@ -48,6 +49,11 @@
         <p class="dq-done-msg" id="dq-done-msg"></p>
       </div>
     </div>
+
+    <a href="quiz.html" class="rf-dashboard-btn">
+      ◈ Rapid Fire &nbsp;—&nbsp; All 4 courses (so far) · Quiz Yourself · Shuffled Every Session
+      <span class="rf-dashboard-arrow">→</span>
+    </a>
 
     <div class="course-grid">
 
@@ -224,7 +230,7 @@
         const color = COURSE_COLORS[q.course] || 'var(--accent)';
         const widget = document.getElementById('dq-widget');
         const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-        const alreadyAnswered = saved && saved.date === todayStr();
+        const alreadyAnswered = saved && saved.date === todayStr() && saved.idx === idx;
 
         widget.style.setProperty('--dq-color', color);
         document.getElementById('dq-badge').textContent = COURSE_NAMES[q.course] || '';

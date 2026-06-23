@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rapid Fire Quiz — IT Cert Study</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-course="00">
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">IT Cert Study</a>
+    <ul class="nav-links">
+      <li><a href="courses/01-technical-support-fundamentals.html">Course 1</a></li>
+      <li><a href="courses/02-bits-and-bytes-networking.html">Course 2</a></li>
+      <li><a href="courses/03-operating-systems.html">Course 3</a></li>
+      <li><a href="courses/04-system-administration.html">Course 4</a></li>
+      <li><a href="courses/05-it-security.html">Course 5</a></li>
+      <li class="nav-sep" aria-hidden="true"></li>
+      <li><a href="quiz.html" class="active">Rapid Fire</a></li>
+      <li><a href="resources.html">Resources</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+  <header class="course-header">
+    <span class="course-badge">◈</span>
+    <h1>Rapid Fire</h1>
+    <p class="subtitle">All courses · shuffled every session</p>
+  </header>
+
+  <!-- ── Setup screen ─────────────────────────────── -->
+  <div class="rf-setup" id="rf-setup">
+
+    <!-- Mode toggle -->
+    <p class="rf-setup-label">Mode</p>
+    <div class="rf-mode-row">
+      <button class="rf-mode-btn active" data-mode="flash" onclick="selectMode(this)">Flashcards</button>
+      <button class="rf-mode-btn" data-mode="mc" onclick="selectMode(this)">Multiple Choice</button>
+    </div>
+
+    <p class="rf-setup-label">How many questions?</p>
+    <div class="rf-count-row">
+      <button class="rf-count-btn" data-count="10" onclick="selectCount(this)">10</button>
+      <button class="rf-count-btn active" data-count="25" onclick="selectCount(this)">25</button>
+      <button class="rf-count-btn" data-count="9999" onclick="selectCount(this)">All</button>
+    </div>
+
+    <button class="rf-start-btn" onclick="startQuiz()">Start</button>
+    <p class="rf-pool-label" id="rf-pool-label"></p>
+    <p class="rf-hint" id="rf-hint">Tip: Space or Enter to reveal · ← Got it  →  Missed it</p>
+  </div>
+
+  <!-- ── Flashcard area ───────────────────────────── -->
+  <div class="rf-card-wrap" id="rf-card-wrap" style="display:none">
+    <div class="rf-card">
+      <div class="quiz-header">
+        <span class="quiz-label" id="rf-label">C1 · Hardware</span>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill" id="rf-progress-fill"></div>
+        </div>
+        <span class="quiz-counter" id="rf-counter">1 / 25</span>
+      </div>
+      <p class="quiz-question-text" id="rf-question"></p>
+      <div class="quiz-answer-area" id="rf-answer"></div>
+      <div class="quiz-actions">
+        <button class="quiz-reveal-btn" id="rf-reveal-btn" onclick="rfReveal()">Reveal Answer</button>
+        <div class="quiz-grade-row" id="rf-grade-row">
+          <button class="quiz-got-it-btn" onclick="rfGrade(true)">Got it</button>
+          <button class="quiz-missed-btn" onclick="rfGrade(false)">Missed it</button>
+        </div>
+      </div>
+    </div>
+    <button class="rf-quit-btn" onclick="rfQuit()">← Back to Setup</button>
+  </div>
+
+  <!-- ── Multiple choice area ─────────────────────── -->
+  <div class="rf-card-wrap" id="mc-card-wrap" style="display:none">
+    <div class="rf-card">
+      <div class="quiz-header">
+        <span class="quiz-label" id="mc-label">C1 · Multiple Choice</span>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill" id="mc-progress-fill"></div>
+        </div>
+        <span class="quiz-counter" id="mc-counter">1 / 10</span>
+      </div>
+      <p class="quiz-question-text" id="mc-question"></p>
+      <div class="mc-options" id="mc-options"></div>
+      <div class="mc-explanation" id="mc-explanation"></div>
+      <button class="mc-next-btn" id="mc-next-btn" onclick="mcNext()" style="display:none">Next →</button>
+    </div>
+    <button class="rf-quit-btn" onclick="mcQuit()">← Back to Setup</button>
+  </div>
+
+  <!-- ── Score screen (shared) ────────────────────── -->
+  <div class="rf-score-wrap" id="rf-score-wrap" style="display:none">
+    <div class="rf-card">
+      <div class="quiz-score-screen visible">
+        <div class="quiz-score-nums">
+          <span class="quiz-score-num" id="rf-score-num">0</span>
+          <span class="quiz-score-denom" id="rf-score-denom">/ 25</span>
+        </div>
+        <p class="quiz-score-msg" id="rf-score-msg"></p>
+        <p class="quiz-score-label">correct</p>
+        <div class="rf-score-btns">
+          <button class="quiz-retry-btn" onclick="scoreRetry()">Try Again</button>
+          <button class="rf-new-btn" onclick="scoreNew()">New Quiz</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  Google IT Support Professional Certificate · Rapid Fire Quiz
+</footer>
+
+<script src="quiz-bank.js"></script>
+<script src="questions.js"></script>
+<script>
+  (function () {
+    var _mode  = 'flash';
+    var _count = 25;
+    var _flashState = { cards: [], index: 0, score: 0 };
+    var _mcState    = { cards: [], index: 0, score: 0 };
+
+    /* ── Mode & count selection ─────────────────────── */
+    window.selectMode = function (btn) {
+      document.querySelectorAll('.rf-mode-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      _mode = btn.dataset.mode;
+
+      // swap default count and hint text
+      if (_mode === 'mc') {
+        if (_count === 25) {
+          document.querySelectorAll('.rf-count-btn').forEach(function (b) { b.classList.remove('active'); });
+          var ten = document.querySelector('[data-count="10"]');
+          if (ten) { ten.classList.add('active'); _count = 10; }
+        }
+        document.getElementById('rf-hint').textContent = 'Tip: click an option to answer · explanation revealed automatically';
+      } else {
+        document.getElementById('rf-hint').textContent = 'Tip: Space or Enter to reveal · ← Got it  →  Missed it';
+      }
+      updatePoolLabel();
+    };
+
+    window.selectCount = function (btn) {
+      document.querySelectorAll('.rf-count-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      _count = parseInt(btn.dataset.count, 10);
+      updatePoolLabel();
+    };
+
+    function updatePoolLabel() {
+      if (_mode === 'flash') {
+        var total = (window.RAPID_FIRE_BANK || []).length;
+        var pick  = Math.min(_count, total);
+        document.getElementById('rf-pool-label').textContent =
+          'Drawing ' + (pick === total ? 'all' : pick) + ' of ' + total + ' cards across 4 courses';
+      } else {
+        var pool  = (QUESTIONS || []).length;
+        var pick2 = Math.min(_count, pool);
+        document.getElementById('rf-pool-label').textContent =
+          'Drawing ' + (pick2 === pool ? 'all' : pick2) + ' of ' + pool + ' questions' +
+          (pool === 0 ? ' — add questions to questions.js to enable this mode' : '');
+      }
+    }
+
+    /* ── Start ──────────────────────────────────────── */
+    window.startQuiz = function () {
+      if (_mode === 'mc') { startMC(); return; }
+      startFlash();
+    };
+
+    /* ════════════════════════════════════════════════
+       FLASHCARD MODE
+    ════════════════════════════════════════════════ */
+    function startFlash() {
+      var bank = window.RAPID_FIRE_BANK || [];
+      if (!bank.length) { alert('Flashcard bank not loaded — check quiz-bank.js.'); return; }
+      var shuffled = shuffle(bank).slice(0, Math.min(_count, bank.length));
+      _flashState = { cards: shuffled, index: 0, score: 0 };
+      show('rf-card-wrap');
+      hide('rf-setup'); hide('rf-score-wrap'); hide('mc-card-wrap');
+      renderFlashCard();
+    }
+
+    function renderFlashCard() {
+      var card  = _flashState.cards[_flashState.index];
+      var total = _flashState.cards.length;
+      var idx   = _flashState.index;
+
+      document.getElementById('rf-label').textContent    = card.label;
+      document.getElementById('rf-counter').textContent  = (idx + 1) + ' / ' + total;
+      document.getElementById('rf-progress-fill').style.width = Math.round((idx / total) * 100) + '%';
+      document.getElementById('rf-question').textContent = card.q;
+
+      var ans = document.getElementById('rf-answer');
+      ans.textContent = '';
+      ans.classList.remove('visible');
+      document.getElementById('rf-reveal-btn').style.display = '';
+      document.getElementById('rf-grade-row').classList.remove('visible');
+    }
+
+    window.rfReveal = function () {
+      var card = _flashState.cards[_flashState.index];
+      var ans  = document.getElementById('rf-answer');
+      ans.textContent = card.a;
+      ans.classList.add('visible');
+      document.getElementById('rf-reveal-btn').style.display = 'none';
+      document.getElementById('rf-grade-row').classList.add('visible');
+    };
+
+    window.rfGrade = function (correct) {
+      if (correct) _flashState.score++;
+      _flashState.index++;
+      if (_flashState.index >= _flashState.cards.length) {
+        showScore(_flashState.score, _flashState.cards.length);
+        hide('rf-card-wrap');
+      } else {
+        renderFlashCard();
+      }
+    };
+
+    window.rfQuit = function () {
+      hide('rf-card-wrap');
+      returnToSetup();
+    };
+
+    /* ════════════════════════════════════════════════
+       MULTIPLE CHOICE MODE
+    ════════════════════════════════════════════════ */
+    function startMC() {
+      var pool = QUESTIONS || [];
+      if (!pool.length) { alert('No questions yet — add some to questions.js.'); return; }
+      var shuffled = shuffle(pool).slice(0, Math.min(_count, pool.length));
+      _mcState = { cards: shuffled, index: 0, score: 0 };
+      show('mc-card-wrap');
+      hide('rf-setup'); hide('rf-score-wrap'); hide('rf-card-wrap');
+      renderMCCard();
+    }
+
+    function renderMCCard() {
+      var card  = _mcState.cards[_mcState.index];
+      var total = _mcState.cards.length;
+      var idx   = _mcState.index;
+
+      document.getElementById('mc-label').textContent   = 'C' + card.course + ' · Multiple Choice';
+      document.getElementById('mc-counter').textContent = (idx + 1) + ' / ' + total;
+      document.getElementById('mc-progress-fill').style.width = Math.round((idx / total) * 100) + '%';
+      document.getElementById('mc-question').textContent = card.q;
+
+      var optWrap = document.getElementById('mc-options');
+      optWrap.innerHTML = '';
+      card.options.forEach(function (text, i) {
+        var btn = document.createElement('button');
+        btn.className = 'mc-option-btn';
+        btn.textContent = text;
+        btn.onclick = function () { mcSelectOption(i); };
+        optWrap.appendChild(btn);
+      });
+
+      document.getElementById('mc-explanation').textContent = '';
+      document.getElementById('mc-explanation').classList.remove('visible');
+      document.getElementById('mc-next-btn').style.display = 'none';
+    }
+
+    window.mcSelectOption = function (chosen) {
+      var card = _mcState.cards[_mcState.index];
+      var btns = document.querySelectorAll('.mc-option-btn');
+
+      // lock all buttons
+      btns.forEach(function (b) { b.disabled = true; });
+
+      // colour correct and chosen
+      btns[card.answer].classList.add('correct');
+      if (chosen !== card.answer) {
+        btns[chosen].classList.add('wrong');
+      } else {
+        _mcState.score++;
+      }
+
+      // show explanation
+      var expl = document.getElementById('mc-explanation');
+      expl.textContent = card.explanation;
+      expl.classList.add('visible');
+
+      // show next button (label changes on last card)
+      var nextBtn = document.getElementById('mc-next-btn');
+      nextBtn.textContent = (_mcState.index + 1 >= _mcState.cards.length) ? 'See Results' : 'Next →';
+      nextBtn.style.display = '';
+    };
+
+    window.mcNext = function () {
+      _mcState.index++;
+      if (_mcState.index >= _mcState.cards.length) {
+        showScore(_mcState.score, _mcState.cards.length);
+        hide('mc-card-wrap');
+      } else {
+        renderMCCard();
+      }
+    };
+
+    window.mcQuit = function () {
+      hide('mc-card-wrap');
+      returnToSetup();
+    };
+
+    /* ════════════════════════════════════════════════
+       SHARED SCORE SCREEN
+    ════════════════════════════════════════════════ */
+    function showScore(score, total) {
+      var pct = score / total;
+      document.getElementById('rf-score-num').textContent   = score;
+      document.getElementById('rf-score-denom').textContent = '/ ' + total;
+      document.getElementById('rf-score-msg').textContent   =
+        pct === 1   ? 'Perfect — flawless run!'      :
+        pct >= 0.85 ? 'Excellent work!'                    :
+        pct >= 0.7  ? 'Solid — review the misses.'   :
+        pct >= 0.5  ? 'Getting there — keep drilling.' :
+                      'Keep at it — you\'ve got this.';
+      if (_mode === 'flash') {
+        document.getElementById('rf-progress-fill').style.width = '100%';
+      } else {
+        document.getElementById('mc-progress-fill').style.width = '100%';
+      }
+      show('rf-score-wrap');
+    }
+
+    window.scoreRetry = function () {
+      hide('rf-score-wrap');
+      if (_mode === 'flash') {
+        var reshuffled = shuffle(_flashState.cards);
+        _flashState = { cards: reshuffled, index: 0, score: 0 };
+        show('rf-card-wrap');
+        renderFlashCard();
+      } else {
+        var reshuffled2 = shuffle(_mcState.cards);
+        _mcState = { cards: reshuffled2, index: 0, score: 0 };
+        show('mc-card-wrap');
+        renderMCCard();
+      }
+    };
+
+    window.scoreNew = function () {
+      hide('rf-score-wrap');
+      returnToSetup();
+    };
+
+    /* ── Utilities ──────────────────────────────────── */
+    function returnToSetup() {
+      show('rf-setup');
+      updatePoolLabel();
+    }
+
+    function show(id) { document.getElementById(id).style.display = ''; }
+    function hide(id) { document.getElementById(id).style.display = 'none'; }
+
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+
+    /* ── Keyboard shortcuts (flashcard mode only) ───── */
+    document.addEventListener('keydown', function (e) {
+      if (_mode !== 'flash') return;
+      var gradeVisible = document.getElementById('rf-grade-row').classList.contains('visible');
+      var cardVisible  = document.getElementById('rf-card-wrap').style.display !== 'none';
+      if (!cardVisible) return;
+
+      if (!gradeVisible && (e.key === ' ' || e.key === 'Enter')) {
+        e.preventDefault();
+        rfReveal();
+      } else if (gradeVisible) {
+        if (e.key === 'ArrowLeft'  || e.key === 'g') rfGrade(true);
+        if (e.key === 'ArrowRight' || e.key === 'm') rfGrade(false);
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', updatePoolLabel);
+  })();
+</script>
+
+</body>
+</html>

@@ -18,6 +18,7 @@
       <li><a href="04-system-administration.html" class="active">Course 4</a></li>
       <li><a href="05-it-security.html">Course 5</a></li>
       <li class="nav-sep" aria-hidden="true"></li>
+      <li><a href="../quiz.html">Rapid Fire</a></li>
       <li><a href="../resources.html">Resources</a></li>
     </ul>
   </div>
@@ -117,6 +118,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s1')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>What are the three most common server form factors?</li>
@@ -217,6 +219,69 @@
           </div>
 
           <div class="subsection">
+            <p class="subsection-title">OS Imaging &amp; Mass Deployment</p>
+            <ul class="concept-list">
+              <li>When a company is growing fast, manually setting up each new computer one-by-one is too slow. The solution is <strong>disk imaging</strong> — create one perfectly configured machine (the <em>golden image</em>), capture a snapshot of its entire disk, then flash that snapshot onto any number of new machines in minutes.</li>
+              <li>A <strong>golden image</strong> (also called a <em>base image</em> or <em>reference image</em>) contains:
+                <ul>
+                  <li>The operating system, fully installed and activated</li>
+                  <li>Standard company software (Office, antivirus, VPN client, etc.)</li>
+                  <li>Company-wide settings and security baselines</li>
+                  <li>Any drivers needed for your hardware fleet</li>
+                </ul>
+              </li>
+              <li>Once a machine is imaged, it is <strong>domain-joined</strong> and receives any remaining per-user settings via Group Policy (GPO) automatically at login.</li>
+            </ul>
+
+            <p class="subsection-title" style="margin-top:1.25rem">How PXE Boot Powers Mass Deployment</p>
+            <ul class="concept-list">
+              <li><strong>PXE (Preboot eXecution Environment)</strong> — a machine boots from the <em>network</em> instead of its local disk. It contacts a DHCP server which tells it where to find a TFTP server, then downloads a boot loader and OS image over the network. No USB drive or DVD needed.</li>
+              <li>The full flow for flashing a new computer:
+                <ol>
+                  <li>Technician plugs the machine into the network and powers it on.</li>
+                  <li>Machine sends a PXE broadcast — DHCP replies with the TFTP server address.</li>
+                  <li>Machine downloads a lightweight boot loader via TFTP.</li>
+                  <li>Boot loader pulls the golden image from the deployment server.</li>
+                  <li>Image is written to the local disk. Machine reboots into a fully configured OS.</li>
+                </ol>
+              </li>
+              <li><strong>TFTP</strong> (Trivial FTP) is used here because it is extremely simple and requires no authentication — ideal for bare-metal machines that have no OS or credentials yet.</li>
+            </ul>
+
+            <p class="subsection-title" style="margin-top:1.25rem">Deployment Tools</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Tool</th><th>Platform</th><th>What it does</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>WDS</strong> (Windows Deployment Services)</td><td>Windows Server</td><td>Hosts and delivers Windows images over PXE; built into Windows Server</td></tr>
+                <tr><td><strong>MDT</strong> (Microsoft Deployment Toolkit)</td><td>Windows</td><td>Extends WDS — automates driver injection, app installs, and domain join; uses answer files</td></tr>
+                <tr><td><strong>Clonezilla</strong></td><td>Linux / cross-platform</td><td>Open-source disk cloning tool; can push one image to many machines simultaneously</td></tr>
+                <tr><td><strong>Foreman / Cobbler</strong></td><td>Linux</td><td>Open-source provisioning servers that manage PXE, DHCP, DNS, and kickstart files in one place</td></tr>
+              </tbody>
+            </table>
+
+            <p class="subsection-title" style="margin-top:1.25rem">Unattended Installs &amp; Answer Files</p>
+            <ul class="concept-list">
+              <li>An <strong>unattended install</strong> automates every prompt that would normally require a human to click through during OS setup — language, timezone, disk partitioning, product key, admin password, and more.</li>
+              <li><strong>Windows</strong> — uses an XML answer file called <code>unattend.xml</code> (created with the Windows System Image Manager tool). MDT reads this file during deployment and answers every setup question automatically.</li>
+              <li><strong>Linux</strong> — uses a <strong>kickstart file</strong> (Red Hat / CentOS) or a <strong>preseed file</strong> (Debian / Ubuntu). The file is referenced by the PXE boot loader and drives a fully automated install.</li>
+              <li>Combined with PXE, an unattended install means a technician can rack a machine, plug in a network cable, and walk away — the machine configures itself end-to-end.</li>
+            </ul>
+
+            <div class="example-box">
+              <strong>Scenario — rapidly growing startup:</strong> You just received 50 identical laptops for new hires starting Monday. Instead of spending a week manually setting up each one, you:
+              <ol style="margin-top:.5rem">
+                <li>Build a golden image on one laptop with Windows, company apps, and security settings.</li>
+                <li>Upload the image to WDS/MDT running on your deployment server.</li>
+                <li>PXE-boot all 50 laptops simultaneously — each pulls the image over the network.</li>
+                <li>Unattend.xml handles all setup prompts automatically.</li>
+                <li>Machines reboot, join the domain, and pull GPOs. Total hands-on time: ~30 minutes.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="subsection">
             <p class="subsection-title">Managing System Services (Daemons)</p>
             <ul class="concept-list">
               <li>A <strong>daemon</strong> is a background process (service) that runs continuously. Daemons have one or more config files that control their behavior.</li>
@@ -298,6 +363,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s2')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>What does IaaS stand for and give two real-world examples?</li>
@@ -492,6 +558,7 @@
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s3')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>What is the only email protocol used for <em>sending</em> email?</li>
@@ -773,6 +840,7 @@ mail: jane@example.com</pre>
             <button class="practice-btn" onclick="togglePractice(this)">
               <span class="arr">▶</span> Practice Questions
             </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s4')">◈ Quiz Me</button>
             <div class="practice-body">
               <ol class="q-list">
                 <li>What is a directory server and what does it map?</li>
@@ -828,10 +896,159 @@ mail: jane@example.com</pre>
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder — fill in while studying.<br>Topics: RPO (Recovery Point Objective) vs RTO (Recovery Time Objective), 3-2-1 backup rule, full vs incremental vs differential backups, RAID levels, backup verification, hot/warm/cold disaster recovery sites, failover clustering, UPS.</p>
+
+          <div class="subsection">
+            <p class="subsection-title">Planning for Data Recovery</p>
+            <ul class="concept-list">
+              <li><strong>Data recovery</strong> — the process of restoring data after an unexpected event involving data loss or corruption. The main objective is to resume normal operations as soon as possible.</li>
+              <li>The most important technique is <strong>backing up regularly</strong>. Restoring from backup is always the best solution when one exists.</li>
+              <li>Backup systems should prioritize important/essential data and account for future growth.</li>
+              <li><strong>On-site backups</strong> — data is physically nearby, low bandwidth to access. Risk: a local disaster destroys all copies.</li>
+              <li><strong>Off-site backups</strong> — data is safer across multiple locations. Requires security, encryption (TLS preferred), and sufficient bandwidth. Best practice is to maintain <em>both</em> on-site and off-site backups.</li>
+              <li><strong>Long-term archival</strong> — magnetic tape is the standard medium: inexpensive and long-lasting.</li>
+              <li><strong>Hard disks will fail eventually</strong> — redundancy and regular backups are non-negotiable.</li>
+              <li><strong>User backups</strong> — can be handled via SaaS solutions (Dropbox, iCloud, etc.) that are easy for users to configure.</li>
+              <li><strong>OS built-in tools:</strong>
+                <ul>
+                  <li>macOS → Time Machine</li>
+                  <li>Windows → Backup &amp; Restore</li>
+                  <li>Linux → <code>rsync</code> — a file-transfer utility designed to efficiently copy and sync files, transferring only changed data</li>
+                </ul>
+              </li>
+              <li><strong>Regular testing</strong> — backups must be tested regularly. Restoration procedures must be documented and exercised at least once a year (<em>disaster recovery testing</em>).</li>
+            </ul>
           </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Recovery Objectives</p>
+            <table class="ref-table">
+              <thead><tr><th>Term</th><th>Definition</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>RPO</strong> — Recovery Point Objective</td>
+                  <td>Maximum acceptable amount of data loss measured in time — how far back can you afford to go?</td>
+                  <td>RPO of 4 h means you back up every 4 h; losing up to 4 h of data is tolerable</td>
+                </tr>
+                <tr>
+                  <td><strong>RTO</strong> — Recovery Time Objective</td>
+                  <td>Maximum acceptable downtime — how quickly must systems be back online?</td>
+                  <td>RTO of 2 h means you must restore service within 2 h of the incident</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Backup Types</p>
+            <ul class="concept-list">
+              <li><strong>Full backup</strong> — copies all data every time. Simple to restore but slow and storage-heavy for largely-static data.</li>
+              <li><strong>Differential backup</strong> — copies everything changed since the last <em>full</em> backup. Saves storage vs. repeated full backups; restore requires last full + latest differential.</li>
+              <li><strong>Incremental backup</strong> — copies only data changed since the last backup of <em>any</em> type. Most storage-efficient; restore requires last full + every incremental in order.</li>
+              <li>Best practice: infrequent full backups combined with more frequent differential or incremental backups.</li>
+              <li><strong>Compression</strong> — backups can be compressed to save space, but not all data types compress well. Compressed files must be decompressed before restoration.</li>
+            </ul>
+            <div class="note">The 3-2-1 rule: keep <strong>3</strong> copies of data, on <strong>2</strong> different media types, with <strong>1</strong> copy stored off-site.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">RAID Levels</p>
+            <div class="note"><strong>RAID</strong> (Redundant Array of Independent Disks) is an inexpensive way to create large storage with redundancy — but it is a <em>storage solution, not a backup solution</em>. A RAID array does not protect against accidental deletion, ransomware, or site disasters.</div>
+            <table class="ref-table">
+              <thead><tr><th>Level</th><th>Name</th><th>Min Drives</th><th>Fault Tolerance</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td><strong>RAID 0</strong></td><td>Striping</td><td>2</td><td>None — any drive failure = total loss</td><td>Best performance; no redundancy</td></tr>
+                <tr><td><strong>RAID 1</strong></td><td>Mirroring</td><td>2</td><td>1 drive</td><td>Exact copy on all drives; 50% storage efficiency</td></tr>
+                <tr><td><strong>RAID 5</strong></td><td>Striping + Distributed Parity</td><td>3</td><td>1 drive</td><td>Parity distributed across all drives; good balance of speed, capacity, redundancy</td></tr>
+                <tr><td><strong>RAID 6</strong></td><td>Striping + Double Parity</td><td>4</td><td>2 drives</td><td>Like RAID 5 but calculates two sets of parity; safer for large arrays</td></tr>
+                <tr><td><strong>RAID 10</strong></td><td>Mirroring + Striping (1+0)</td><td>4</td><td>1 per mirrored pair</td><td>Mirrors first, then stripes the mirrored sets; best performance + redundancy, highest cost</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Disaster Recovery Plans</p>
+            <ul class="concept-list">
+              <li>A <strong>disaster recovery plan (DRP)</strong> is a collection of documented procedures for reacting to an emergency or disaster scenario, with the goal of minimizing disruption to business operations.</li>
+              <li>A DRP covers three categories of measures:
+                <ol>
+                  <li><strong>Preventative</strong> — actions taken to reduce the likelihood of a disaster</li>
+                  <li><strong>Detection</strong> — monitoring and alerting systems that identify an incident quickly</li>
+                  <li><strong>Corrective / Recovery</strong> — steps to restore operations after an incident</li>
+                </ol>
+              </li>
+              <li><strong>Risk assessment</strong> — identify high-risk systems; pay special attention to systems that lack redundancy.</li>
+              <li>Determine which data/systems are highest priority and have a data recovery plan ready for each.</li>
+              <li>Verify that all operational documentation is current and accessible.</li>
+              <li>Define and test detection and alert measures so the team knows about an incident immediately.</li>
+              <li>Document and test recovery procedures in detail.</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>DR Site Type</th><th>Description</th><th>Recovery Time</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Hot site</strong></td><td>Fully operational duplicate environment, always running and in sync</td><td>Minutes</td></tr>
+                <tr><td><strong>Warm site</strong></td><td>Hardware and connectivity ready; data must be restored from backup before going live</td><td>Hours</td></tr>
+                <tr><td><strong>Cold site</strong></td><td>Physical space and power only; all equipment and data must be provisioned from scratch</td><td>Days–weeks</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Post-Mortems</p>
+            <ul class="concept-list">
+              <li>A <strong>post-mortem</strong> is created after an incident, outage, or event — or at the end of a project — to analyze what happened and how to improve.</li>
+              <li><strong>Purpose:</strong> to learn, not to punish or shame. Understanding is the goal.</li>
+              <li><strong>Standard post-mortem structure:</strong>
+                <ol>
+                  <li><strong>Brief summary</strong> — what the incident was, how long it lasted, what the impact was, and how it was resolved</li>
+                  <li><strong>Detailed timeline</strong> — every significant event and every attempt to fix the issue, with exact dates, times, and time zones</li>
+                  <li><strong>Root cause</strong> — the underlying reason the incident occurred and what can be learned from it</li>
+                  <li><strong>Resolution &amp; recovery</strong> — detailed account of the steps taken to fix the problem and restore service</li>
+                  <li><strong>Action items</strong> — concrete steps to prevent the same scenario in the future</li>
+                </ol>
+              </li>
+              <li>Highlight both what went <em>wrong</em> and what went <em>well</em> — cover everything.</li>
+              <li>Post-mortems also follow the end of a project to capture lessons learned even when nothing went wrong.</li>
+            </ul>
+          </div>
+
+          <div class="practice-section">
+            <button class="practice-btn" onclick="togglePractice(this)">
+              <span class="arr">▶</span> Practice Questions
+            </button>
+            <button class="quiz-me-btn" onclick="openQuiz('s5')">◈ Quiz Me</button>
+            <div class="practice-body">
+              <ol class="q-list">
+                <li>What is the difference between RPO and RTO?</li>
+                <li>What does the 3-2-1 backup rule say?</li>
+                <li>What is the difference between a differential and an incremental backup?</li>
+                <li>Why is RAID not considered a backup solution?</li>
+                <li>What is the standard medium for long-term archival storage and why?</li>
+                <li>Describe the three types of disaster recovery sites.</li>
+                <li>What are the five sections of a standard post-mortem report?</li>
+                <li>What does <code>rsync</code> do on Linux?</li>
+                <li>How often should disaster recovery procedures be formally tested?</li>
+                <li>What are the three categories of measures a disaster recovery plan covers?</li>
+              </ol>
+              <button class="ans-btn" onclick="toggleAnswers(this)">
+                <span class="arr">▶</span> Show answers
+              </button>
+              <div class="ans-body">
+                <ol class="a-list">
+                  <li>RPO (Recovery Point Objective) = the maximum acceptable amount of data loss measured in time. RTO (Recovery Time Objective) = the maximum acceptable downtime — how quickly systems must be restored after an incident.</li>
+                  <li>Keep 3 copies of data, on 2 different media types, with 1 copy stored off-site.</li>
+                  <li>Differential: copies everything changed since the last <em>full</em> backup. Incremental: copies only what changed since the last backup of <em>any</em> type — most storage-efficient but requires the full + every incremental to restore.</li>
+                  <li>RAID provides storage redundancy but doesn't protect against accidental deletion, ransomware, or a site-wide disaster. It's a storage solution — all copies live together and can be destroyed together.</li>
+                  <li>Magnetic tape — it is inexpensive and long-lasting compared to hard drives, making it cost-effective for large volumes of rarely-accessed archive data.</li>
+                  <li>Hot site — fully operational duplicate, minutes to fail over. Warm site — hardware ready, data must be restored from backup, hours to bring online. Cold site — physical space and power only, everything must be provisioned from scratch, days to weeks.</li>
+                  <li>1) Brief summary, 2) Detailed timeline, 3) Root cause, 4) Resolution &amp; recovery, 5) Action items to prevent recurrence.</li>
+                  <li>A file-transfer utility that efficiently copies and syncs files, transferring only data that has changed since the last sync.</li>
+                  <li>At least once a year.</li>
+                  <li>Preventative measures, Detection measures, and Corrective/Recovery measures.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -850,11 +1067,145 @@ mail: jane@example.com</pre>
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder — fill in while studying.<br>Topics: end-to-end IT infrastructure design, integrating all modules — physical infrastructure, network services, software platforms, directory services, and a backup/recovery strategy for a sample organization.</p>
+
+          <div class="subsection">
+            <p class="subsection-title">How to use these case studies</p>
+            <ul class="concept-list">
+              <li>Read the <strong>company snapshot</strong> and the <strong>problems identified</strong> — then try to work out your own approach before revealing mine.</li>
+              <li>The analysis is <strong>my own</strong>, written during the course. It isn't a model answer or AI-generated — it's how I thought through each scenario at the time. Your approach is most likely different so don't take mine as gospel! Lots of different approaches work!</li>
+              <li>Each point is tagged <span class="tag tag-section">§ Section N</span> to show which part of the course I was drawing on.</li>
+            </ul>
           </div>
-        </div>
+
+          <!-- ── SCENARIO 1 ─────────────────────────────────────── -->
+          <div class="subsection">
+            <p class="subsection-title">Scenario 1 — Network Funtime Company</p>
+            <table class="ref-table">
+              <thead><tr><th>Factor</th><th>Current state</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Industry</strong></td><td>Open source software</td></tr>
+                <tr><td><strong>Employees</strong></td><td>~100 (engineers, designers, HR, sales)</td></tr>
+                <tr><td><strong>Hardware</strong></td><td>HR buys cheapest available laptop per hire — every machine is a different model, nothing is labeled or inventoried</td></tr>
+                <tr><td><strong>Onboarding</strong></td><td>HR hands a blank laptop to the new hire; employee installs their own OS and software</td></tr>
+                <tr><td><strong>IT support</strong></td><td>HR is the de-facto IT contact — loses several hours per new hire</td></tr>
+                <tr><td><strong>Passwords</strong></td><td>No requirements and no recovery system — lost passwords result in a full reimage</td></tr>
+                <tr><td><strong>Services</strong></td><td>Cloud SaaS (email, docs, sheets) + Slack; no in-house infrastructure</td></tr>
+              </tbody>
+            </table>
+
+            <p class="subsection-title" style="margin-top:1.1rem">Problems identified</p>
+            <ul class="concept-list">
+              <li>Procurement is reactive and inefficient — one laptop at a time at the cheapest price, no vendor relationship, no bulk deal</li>
+              <li>Every employee has different hardware — impossible to standardize support, drivers, or images</li>
+              <li>No asset inventory — no way to audit what the company owns or track machine lifecycle</li>
+              <li>Employees self-installing software risks bloatware, misconfiguration, and security holes</li>
+              <li>HR is doing IT work and burning hours per hire — not scalable and not their job</li>
+              <li>No password policy and no recovery path — lost credential = wipe and start over</li>
+              <li>Cloud service access handed out ad-hoc with no central directory or SSO</li>
+            </ul>
+
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <ul class="concept-list">
+                <li><strong>Establish a vendor relationship and standardize hardware by role.</strong> Engineers and designers need stronger specs than sales; negotiate two or three laptop tiers with a vendor and buy in bulk. Saves money and makes support predictable. <span class="tag tag-section">§1 Hardware Lifecycle</span></li>
+                <li><strong>Create an asset inventory.</strong> Label every machine and log it in a directory — track owner, model, age, maintenance history, and lifecycle stage. Nothing disappears silently. <span class="tag tag-section">§4 Directory Services</span></li>
+                <li><strong>Build pre-configured disk images per department role.</strong> A developer image ships with the right OS, dev tools, and security baselines pre-installed. A designer image ships with creative tools. HR flashes a new hire in minutes — no self-installs, no surprises. <span class="tag tag-section">§2 OS Imaging</span></li>
+                <li><strong>Move IT onboarding off HR's plate.</strong> IT owns onboarding. New employees submit support tickets — HR is no longer the IT contact. Saves HR hours per hire and improves response quality. <span class="tag tag-section">§1 Sys Admin Responsibilities</span></li>
+                <li><strong>Implement a directory service with password policy and self-service recovery.</strong> Active Directory or a cloud equivalent enforces complexity requirements and lets IT reset credentials without reimaging the machine. <span class="tag tag-section">§4 Active Directory</span></li>
+                <li><strong>Provision cloud services through the directory (SSO).</strong> Instead of HR handing out individual logins, integrate SaaS tools with a central identity provider so accounts are created and revoked automatically. <span class="tag tag-section">§4 Directory Services</span></li>
+                <li><strong>Audit SaaS costs once the above is in place.</strong> You need a baseline before you can tell if you're overspending. Without seeing a balance sheet now, defer this until operations are stable. <span class="tag tag-section">§3 Managing Cloud Services</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- ── SCENARIO 2 ─────────────────────────────────────── -->
+          <div class="subsection">
+            <p class="subsection-title">Scenario 2 — W.D. Widgets</p>
+            <table class="ref-table">
+              <thead><tr><th>Factor</th><th>Current state</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Industry</strong></td><td>Widget sales (client-facing, revenue-generating)</td></tr>
+                <tr><td><strong>Employees</strong></td><td>80–100 now; expecting hundreds of new hires within a year</td></tr>
+                <tr><td><strong>Hardware</strong></td><td>Ordered directly from a business vendor; one or two spare machines kept on hand — solid process</td></tr>
+                <tr><td><strong>OS &amp; directory</strong></td><td>Windows only; managed via Windows Active Directory</td></tr>
+                <tr><td><strong>Onboarding</strong></td><td>IT manually sets up each machine and installs a long list of sales applications — time consuming</td></tr>
+                <tr><td><strong>File server</strong></td><td>All customer data on a single file server mapped to each salesperson's machine; folder creator owns it — anyone can delete anything</td></tr>
+                <tr><td><strong>Backups</strong></td><td>None</td></tr>
+                <tr><td><strong>IT support</strong></td><td>Email only — no ticketing system</td></tr>
+                <tr><td><strong>Services</strong></td><td>Fully in-house: email server, local software, instant messenger — no cloud</td></tr>
+              </tbody>
+            </table>
+
+            <p class="subsection-title" style="margin-top:1.1rem">Problems identified</p>
+            <ul class="concept-list">
+              <li>Manual machine setup with long app installs will not scale to hundreds of new hires — IT will be a bottleneck</li>
+              <li>File server has no access controls — any employee can permanently delete shared customer data</li>
+              <li>Zero backups — a single failure wipes everything, with no recovery path</li>
+              <li>Email-only IT support will be overwhelmed as headcount grows; no prioritization or tracking</li>
+              <li>In-house everything at rapid scale means IT team needs to grow or infrastructure will buckle</li>
+            </ul>
+
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <ul class="concept-list">
+                <li><strong>Build a pre-configured sales disk image and deploy it via PXE.</strong> One image per role ships with the OS and every required sales application pre-installed. New machines image themselves over the network — no manual installs, no room for human error. At hundreds of hires a year, this is the only viable path. <span class="tag tag-section">§2 OS Imaging &amp; PXE</span></li>
+                <li><strong>Lock down the file server with GPOs immediately.</strong> Salespeople should have read/write access but not delete. Assign delete/ownership permissions only to department leads. This protects customer data from accidental or malicious wipes. <span class="tag tag-section">§4 Group Policy Objects</span></li>
+                <li><strong>Implement a disaster recovery plan — starting with backups.</strong> With no backups on a single server, one hardware failure ends the business. Set up on-site and off-site backup servers on a regular schedule, and run recovery drills. The company has revenue — use it. <span class="tag tag-section">§5 Data Recovery &amp; RAID</span></li>
+                <li><strong>Replace email support with a priority ticketing system.</strong> At scale, email is untrackable and unprioritizable. A ticketing system logs every request, tracks resolution, and lets IT triage by severity. <span class="tag tag-section">§1 Sys Admin Responsibilities</span></li>
+                <li><strong>Grow the IT team.</strong> Running in-house email, IM, software, and file servers at hundreds of employees requires dedicated headcount. Understaffed IT on in-house infra is a single point of failure. <span class="tag tag-section">§1 Sys Admin Responsibilities</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- ── SCENARIO 3 ─────────────────────────────────────── -->
+          <div class="subsection">
+            <p class="subsection-title">Scenario 3 — Dewgood (Non-Profit)</p>
+            <table class="ref-table">
+              <thead><tr><th>Factor</th><th>Current state</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Industry</strong></td><td>Local non-profit, not planning to grow</td></tr>
+                <tr><td><strong>Employees</strong></td><td>~50</td></tr>
+                <tr><td><strong>Hardware</strong></td><td>Purchased from a physical retail store on the day the hire starts — whatever is in stock that day</td></tr>
+                <tr><td><strong>OS &amp; directory</strong></td><td>Windows Active Directory — but departing employees are never disabled</td></tr>
+                <tr><td><strong>Onboarding</strong></td><td>IT logs them in, installs software, maps the file server to their machine manually</td></tr>
+                <tr><td><strong>Infrastructure</strong></td><td>Single server running file services and email; company website also hosted on this same server</td></tr>
+                <tr><td><strong>Website</strong></td><td>Static single-page site (mission, contact info) — goes down frequently, nobody knows how to fix it</td></tr>
+                <tr><td><strong>Backups</strong></td><td>Nightly backups to a disk that IT takes home every day</td></tr>
+                <tr><td><strong>IT support</strong></td><td>Open source ticketing system exists but nobody uses it — employees contact IT directly</td></tr>
+              </tbody>
+            </table>
+
+            <p class="subsection-title" style="margin-top:1.1rem">Problems identified</p>
+            <ul class="concept-list">
+              <li>Day-of retail procurement is the most expensive and least reliable option — whatever's in stock wins</li>
+              <li>Departing employees stay active in AD — security risk and directory clutter</li>
+              <li>Backup disk goes home with IT every night — one lost or damaged drive means data loss</li>
+              <li>Single server for files, email, and website — no redundancy; one crash takes everything offline</li>
+              <li>Static website going down on shared hardware is an unmonitored single point of failure</li>
+              <li>Ticketing system exists but has zero adoption — IT support is informal and untracked</li>
+            </ul>
+
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <ul class="concept-list">
+                <li><strong>Improve procurement — give HR advance notice and find cheaper sourcing.</strong> Ask HR to flag hires before the start date so you can shop around. Refurbished hardware or a small vendor relationship beats retail on price every time. At 50 employees with a tight budget, every dollar matters. <span class="tag tag-section">§1 Hardware Lifecycle</span></li>
+                <li><strong>Create a disk image for new hires — but keep the human touch.</strong> At this size, face-to-face onboarding is a genuine benefit — a small company values that relationship. Still, use a pre-built image so you're not manually installing software and mapping drives every time. Flash, then walk them through it together. <span class="tag tag-section">§2 OS Imaging</span></li>
+                <li><strong>Create an AD offboarding group and enforce account disabling on departure.</strong> Departed employees with active accounts are a security hole. A simple policy — HR notifies IT, IT disables the account that day — closes it immediately. <span class="tag tag-section">§4 Active Directory</span></li>
+                <li><strong>Move backups to a proper offsite location — not your home.</strong> A personal residence is not a secure storage environment. Set up a second drive at a different physical location (a trusted partner's office, a rented storage unit) and automate the rotation. Nightly frequency is fine; the storage location is the problem. <span class="tag tag-section">§5 Disaster Recovery</span></li>
+                <li><strong>Move the static website to a free cloud host.</strong> The site is a single static HTML page with no backend. Services like GitHub Pages, Netlify, or Cloudflare Pages host it for free with 99.9%+ uptime — no hardware to maintain, no mysterious downtime. Free up the server for what actually needs to be on-site. <span class="tag tag-section">§3 Platform Services</span></li>
+                <li><strong>Invest in getting the ticketing system adopted.</strong> At 50 employees, informal IT is manageable but tickets add real value: they log patterns, track resolution time, and let you prioritize. Make the case kindly — explain the benefit to employees, not just IT. If the current system is too confusing, explore a simpler alternative or ask finance for a small budget. <span class="tag tag-section">§1 Sys Admin Responsibilities</span></li>
+                <li><strong>Single server is acceptable at this scale — but monitor it closely.</strong> Schedule maintenance windows (late nights, weekends) and set up monitoring so you know before something fails. If the server does go down, you have a plan. <span class="tag tag-section">§2 Managing System Services</span></li>
+              </ul>
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
       </div>
     </div>
 
@@ -865,6 +1216,44 @@ mail: jane@example.com</pre>
 <footer class="site-footer">
   Google IT Support Professional Certificate · Course 4 - System Administration
 </footer>
+
+<!-- ══ QUIZ MODAL ══════════════════════════════════════ -->
+<div class="quiz-overlay" id="quiz-overlay" onclick="handleOverlayClick(event)">
+  <div class="quiz-modal">
+    <button class="quiz-close-btn" onclick="closeQuiz()" aria-label="Close quiz">✕</button>
+
+    <!-- Card face -->
+    <div id="quiz-card-face">
+      <div class="quiz-header">
+        <span class="quiz-label" id="quiz-section-label">Quiz Me</span>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+        </div>
+        <span class="quiz-counter" id="quiz-counter">1 / 8</span>
+      </div>
+      <p class="quiz-question-text" id="quiz-question-text"></p>
+      <div class="quiz-answer-area" id="quiz-answer-area"></div>
+      <div class="quiz-actions">
+        <button class="quiz-reveal-btn" id="quiz-reveal-btn" onclick="revealAnswer()">Reveal Answer</button>
+        <div class="quiz-grade-row" id="quiz-grade-row">
+          <button class="quiz-got-it-btn" onclick="gradeCard(true)">Got it</button>
+          <button class="quiz-missed-btn" onclick="gradeCard(false)">Missed it</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Score screen -->
+    <div class="quiz-score-screen" id="quiz-score-screen">
+      <div class="quiz-score-nums">
+        <span class="quiz-score-num" id="quiz-score-num">0</span>
+        <span class="quiz-score-denom" id="quiz-score-denom">/ 8</span>
+      </div>
+      <p class="quiz-score-msg" id="quiz-score-msg"></p>
+      <p class="quiz-score-label">correct</p>
+      <button class="quiz-retry-btn" onclick="retryQuiz()">Try Again</button>
+    </div>
+  </div>
+</div>
 
 <script>
   function saveProgress(cb) {
@@ -898,7 +1287,7 @@ mail: jane@example.com</pre>
   }
 
   function togglePractice(btn) {
-    const body = btn.nextElementSibling;
+    const body = btn.closest('.practice-section').querySelector('.practice-body');
     btn.classList.toggle('open');
     body.classList.toggle('open');
     const sb = btn.closest('.section-body');
@@ -914,6 +1303,200 @@ mail: jane@example.com</pre>
   }
 
   document.addEventListener('DOMContentLoaded', loadProgress);
+
+  /* ── Quiz Me ─────────────────────────────────────── */
+  (function () {
+    const LABELS = {
+      s1: 'Section 1 · Sys Admin',
+      s2: 'Section 2 · Network Services',
+      s3: 'Section 3 · Software Services',
+      s4: 'Section 4 · Directory Services',
+      s5: 'Section 5 · Backups & Recovery',
+    };
+
+    const BANK = {
+      s1: [
+        { q: 'What are the three common server form factors?',
+          a: 'Tower (standalone, desktop-like), Rack (slim, slides into a rack), Blade (ultra-thin modules sharing a chassis for power and networking).' },
+        { q: 'What is a KVM switch and why is it important to a sys admin?',
+          a: 'A KVM (Keyboard-Video-Mouse) switch lets one keyboard, monitor, and mouse control many servers — critical when the network is down and remote access is unavailable.' },
+        { q: 'Name the four stages of the hardware lifecycle in order.',
+          a: 'Procurement → Deployment → Maintenance → Retirement.' },
+        { q: 'What is the difference between a production environment and a test environment?',
+          a: 'Production is the live environment end users depend on. A test environment mirrors production but is isolated — changes are validated there before going live. Never test in production.' },
+        { q: 'Which Linux command records a terminal session to a log file?',
+          a: 'script session.log — captures the session in ANSI format until you type exit.' },
+        { q: 'What is a rollback plan and when should you prepare it?',
+          a: 'Documented steps to undo a change. It must be prepared before making any change — not after something goes wrong.' },
+        { q: 'What does IT Change Management standardize?',
+          a: 'A formal process for planning, communicating, and implementing technical changes. Each change is documented with responsible party, scope, date/time, rollback plan, and risk level.' },
+        { q: 'What three things does a reproduction case document?',
+          a: '(1) The steps taken that led to the issue, (2) the unexpected result observed, (3) the expected result.' },
+      ],
+      s2: [
+        { q: 'What is a daemon?',
+          a: 'A background process that runs continuously, usually starting at boot. It has config files to control its behavior. On Linux, config files live in /etc.' },
+        { q: 'What is the key difference between FTP and SFTP?',
+          a: 'FTP transmits data in plain text with no encryption. SFTP tunnels FTP over SSH, encrypting the entire connection.' },
+        { q: 'Why would you use TFTP instead of SFTP?',
+          a: 'TFTP is used for PXE booting — its simplicity (no auth, no encryption) lets it deliver OS images over the network before any OS is loaded on the client.' },
+        { q: 'What does NTP do and what is its 128 ms correction limit?',
+          a: 'NTP synchronizes system clocks across a network. It auto-corrects only if the clock is within 128 ms of true time, adjusting gradually at ~0.5 ms/step. If further off, you must manually set the time first.' },
+        { q: 'What four services does Dnsmasq provide in a single package?',
+          a: 'DNS, DHCP, TFTP, and PXE services.' },
+        { q: 'You can ping an IP address but cannot reach a domain by name. What type of problem is this?',
+          a: 'A DNS problem, not a network problem. Use nslookup <domain> to diagnose — it shows what the DNS server returns.' },
+        { q: 'What is the difference between a dedicated server and a virtualized instance?',
+          a: 'Dedicated: one service per physical machine — better performance, higher cost, underutilizes resources. Virtualized: multiple services share one machine via a hypervisor — efficient, flexible, supports live migration.' },
+        { q: 'What Linux command lists all services and shows which are active or inactive?',
+          a: 'sudo service --status-all  — [+] = active, [-] = inactive, [?] = unknown.' },
+      ],
+      s3: [
+        { q: 'What is the only email protocol used for sending mail?',
+          a: 'SMTP (Simple Mail Transfer Protocol).' },
+        { q: 'What is the difference between POP3 and IMAP?',
+          a: 'POP3 downloads email and removes it from the server — single-device model. IMAP keeps a copy on the server so your inbox syncs across multiple devices.' },
+        { q: 'What do SPF, DKIM, and DMARC each do?',
+          a: 'SPF — lists authorized IPs for a domain. DKIM — cryptographically signs outgoing messages. DMARC — ties SPF and DKIM together and tells receivers what to do with failing mail (quarantine, reject, or allow).' },
+        { q: 'What is the relationship between SSL and TLS?',
+          a: 'SSL is the deprecated predecessor to TLS. TLS v1.0 was effectively SSL v3.0 renamed. Never use SSL on new systems.' },
+        { q: 'What do you need to enable HTTPS on a web server?',
+          a: 'A TLS certificate issued by a trusted Certificate Authority (CA). The CA vouches that the certificate legitimately belongs to your domain.' },
+        { q: 'When would you choose Samba over NFS for file sharing?',
+          a: 'In Windows-heavy or mixed environments — Samba (SMB) integrates natively with Windows and Active Directory. NFS is fast on Linux but slow on Windows.' },
+        { q: 'What is the difference between PCL and PostScript printer languages?',
+          a: 'PCL (HP) is device-dependent — output can vary across different printers. PostScript (Adobe) is device-independent — output is identical on any PS-compatible printer.' },
+        { q: 'A user gets a 403 error on your web app. Client-side or server-side? What does it mean?',
+          a: 'Client-side (4xx range). 403 Forbidden means the server understood the request but is refusing it — typically a permissions problem. Check whether the user has access to that resource.' },
+        { q: 'What does autoscaling do and when is it most useful?',
+          a: 'Automatically adds or removes compute instances in response to actual demand. Most useful for variable-traffic workloads — seasonal spikes, flash sales — so you only pay for capacity when needed.' },
+      ],
+      s4: [
+        { q: 'What is LDAP and what is it used for?',
+          a: 'Lightweight Directory Access Protocol — a simplified protocol for accessing directory services. Used to read and write user, group, and device data in directories like Active Directory and OpenLDAP.' },
+        { q: 'What does AAA stand for in centralized management?',
+          a: 'Authentication (prove identity), Authorization (determine what\'s allowed), Accounting (log what was done).' },
+        { q: 'What does the LDAP Bind operation do?',
+          a: 'It authenticates the client to the directory server, establishing the identity the client will act under for all subsequent operations.' },
+        { q: 'What is LSDOU and why does the processing order matter?',
+          a: 'The GPO application order: Local → Site → Domain → OU. Later settings override earlier ones on conflicts, so the most specific (OU-linked) GPO wins.' },
+        { q: 'What clock-skew limit causes Kerberos authentication to fail, and how do you fix it?',
+          a: 'More than 5 minutes of difference between client and domain controller. Fix with w32tm /resync.' },
+        { q: 'What is the difference between a GPO Policy and a GPO Preference?',
+          a: 'Policies are enforced settings re-applied every few minutes — users cannot override them. Preferences are template defaults — users can change them after the GPO applies them.' },
+        { q: 'What is the difference between a Security Group and a Distribution Group in Active Directory?',
+          a: 'Security Groups can be granted resource permissions. Distribution Groups are email-only and cannot be used for access control.' },
+        { q: 'What are the three AD group scopes?',
+          a: 'Domain Local (assign permissions to a specific resource), Global (group accounts by role within a domain), Universal (group roles across an entire forest).' },
+        { q: 'What is an LDIF file and how is it used?',
+          a: 'A plain-text file that describes a directory entry or change. Write the LDIF, then pass it to ldapadd, ldapmodify, or ldapdelete.' },
+      ],
+      s5: [
+        { q: 'What is the difference between RPO and RTO?',
+          a: 'RPO (Recovery Point Objective) = max acceptable data loss measured in time. RTO (Recovery Time Objective) = max acceptable downtime — how fast systems must be restored after an incident.' },
+        { q: 'What does the 3-2-1 backup rule say?',
+          a: 'Keep 3 copies of data, on 2 different media types, with 1 copy stored off-site.' },
+        { q: 'What is the key difference between a differential and an incremental backup?',
+          a: 'Differential: copies everything changed since the last full backup. Incremental: copies only what changed since the last backup of any type — most efficient, but restore requires full + every incremental in order.' },
+        { q: 'Why is RAID not a backup solution?',
+          a: 'RAID provides storage redundancy but doesn\'t protect against accidental deletion, ransomware, or a site-wide disaster. All copies live together and can be destroyed together.' },
+        { q: 'What is the standard medium for long-term archival storage and why?',
+          a: 'Magnetic tape — inexpensive and long-lasting compared to hard drives, making it cost-effective for large volumes of rarely-accessed archive data.' },
+        { q: 'Describe the three types of disaster recovery sites.',
+          a: 'Hot site: fully operational duplicate, minutes to fail over. Warm site: hardware ready, data must be restored, hours to bring online. Cold site: space and power only, everything provisioned from scratch, days to weeks.' },
+        { q: 'What are the five main sections of a post-mortem report?',
+          a: '1) Brief summary, 2) Detailed timeline, 3) Root cause, 4) Resolution & recovery, 5) Action items to prevent recurrence.' },
+        { q: 'What does rsync do on Linux?',
+          a: 'A file-transfer utility that efficiently copies and syncs files, transferring only data that has changed since the last sync.' },
+      ],
+    };
+
+    let _state = { sectionId: null, cards: [], index: 0, score: 0 };
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    window.openQuiz = function (sectionId) {
+      const all = BANK[sectionId] || [];
+      const cards = shuffle(all).slice(0, Math.min(8, all.length));
+      _state = { sectionId, cards, index: 0, score: 0 };
+      document.getElementById('quiz-card-face').style.display = '';
+      document.getElementById('quiz-score-screen').classList.remove('visible');
+      renderCard();
+      document.getElementById('quiz-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closeQuiz = function () {
+      document.getElementById('quiz-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    window.handleOverlayClick = function (e) {
+      if (e.target === document.getElementById('quiz-overlay')) closeQuiz();
+    };
+
+    function renderCard() {
+      const { cards, index } = _state;
+      const total = cards.length;
+      document.getElementById('quiz-section-label').textContent = LABELS[_state.sectionId] || 'Quiz Me';
+      document.getElementById('quiz-counter').textContent = (index + 1) + ' / ' + total;
+      document.getElementById('quiz-progress-fill').style.width = Math.round((index / total) * 100) + '%';
+      document.getElementById('quiz-question-text').textContent = cards[index].q;
+      const ans = document.getElementById('quiz-answer-area');
+      ans.textContent = '';
+      ans.classList.remove('visible');
+      document.getElementById('quiz-reveal-btn').style.display = '';
+      document.getElementById('quiz-grade-row').classList.remove('visible');
+    }
+
+    window.revealAnswer = function () {
+      const card = _state.cards[_state.index];
+      const ans = document.getElementById('quiz-answer-area');
+      ans.textContent = card.a;
+      ans.classList.add('visible');
+      document.getElementById('quiz-reveal-btn').style.display = 'none';
+      document.getElementById('quiz-grade-row').classList.add('visible');
+    };
+
+    window.gradeCard = function (correct) {
+      if (correct) _state.score++;
+      _state.index++;
+      if (_state.index >= _state.cards.length) {
+        showScore();
+      } else {
+        renderCard();
+      }
+    };
+
+    function showScore() {
+      const { score, cards } = _state;
+      const total = cards.length;
+      document.getElementById('quiz-card-face').style.display = 'none';
+      document.getElementById('quiz-score-num').textContent = score;
+      document.getElementById('quiz-score-denom').textContent = '/ ' + total;
+      const pct = score / total;
+      document.getElementById('quiz-score-msg').textContent =
+        pct === 1 ? 'Perfect! Nailed it.' :
+        pct >= 0.75 ? 'Great work!' :
+        pct >= 0.5 ? 'Getting there — review the misses.' :
+        'Keep at it — you\'ve got this.';
+      document.getElementById('quiz-progress-fill').style.width = '100%';
+      document.getElementById('quiz-score-screen').classList.add('visible');
+    }
+
+    window.retryQuiz = function () { openQuiz(_state.sectionId); };
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeQuiz();
+    });
+  })();
 </script>
 
 </body>
