@@ -10,8 +10,9 @@ A personal study site I'm building alongside the Google IT Support Professional 
 - **Rapid fire flashcards** — 148 open-ended cards across all courses, shuffled every session.
 - **Multiple choice quiz** — 120 questions (30 per course), same deal, shuffled. Good cert prep since the real thing is multiple choice.
 - **Daily question** — one MC question a day on the homepage, rotates automatically.
-- **Resources** — downloadable reference sheets.
-- **Subnet practice** — interactive subnetting tool. Favorite part hands down
+- **Resources** — downloadable reference sheets (ports, subnetting, CLI commands cheat sheet).
+- **Subnet practice** — interactive subnetting tool linked from Course 2. Favorite part hands down
+- **CLI practice** — type-the-command terminal game linked from Course 3. 5 random questions per round from a shuffled pool.
 
 ## Courses
 

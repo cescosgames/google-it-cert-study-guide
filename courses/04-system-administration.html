@@ -1209,6 +1209,93 @@ mail: jane@example.com</pre>
       </div>
     </div>
 
+    <!-- ─── MODULE 7 ──────────────────────────────────────────────────────── -->
+    <div class="topic-section" id="s7">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>7 &nbsp;·&nbsp; What Actually Matters &mdash; Key Takeaways</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c04-s7" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">The admin mindset — power requires discipline</p>
+            <ul class="concept-list">
+              <li><strong>Never test in production.</strong> This is the one rule that, if broken once badly enough, ends careers. Production is what users depend on right now. Every change goes through a test environment that mirrors production — then rolls out with a documented rollback plan.</li>
+              <li><strong>Session logging is habit, not overhead.</strong> <code>script session.log</code> on Linux, <code>Start-Transcript</code> on PowerShell. If something breaks after your session and there's no log, you're reconstructing from memory. Log everything elevated.</li>
+              <li><strong>Change management is how multi-person teams stay sane.</strong> A change record isn't bureaucracy — it's the rollback plan, the affected systems, and the person to call at 2 am written down in advance. Organizations that skip it spend more time fighting fires than the paperwork would have taken.</li>
+              <li><strong>Reproduction case first, fix second.</strong> Reproduce the issue on a test instance. Document the steps, the unexpected result, the expected result. Then act. Acting first and investigating second is how you create a second problem.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Infrastructure services — the glue layer</p>
+            <ul class="concept-list">
+              <li><strong>DNS, DHCP, and NTP are invisible until they break</strong> — then everything breaks at once. These three services underpin almost everything else. Know what each does and what symptoms their failure produces (names not resolving, IP conflicts, authentication failures from clock skew).</li>
+              <li><strong>Disk imaging is how sysadmins scale.</strong> Manual setup doesn't survive headcount growth. A golden image — OS + standard software + company baselines — turns an hour of per-machine work into a PXE boot. At 50 machines it's a nice-to-have. At 500 it's mandatory.</li>
+              <li><strong>Cloud service model decision tree:</strong> If you just need software — SaaS. If you need a runtime for your code — PaaS. If you need raw compute you control — IaaS. Most orgs end up with a mix. Understand what each layer shifts from your team to the provider.</li>
+            </ul>
+            <div class="ref-table" style="margin-top:0.65rem">
+              <table>
+                <thead><tr><th>Model</th><th>You manage</th><th>Provider manages</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>IaaS</strong></td><td>OS, runtime, apps, data</td><td>Physical hardware, networking, virtualization</td></tr>
+                  <tr><td><strong>PaaS</strong></td><td>App code and data only</td><td>Everything below the app layer</td></tr>
+                  <tr><td><strong>SaaS</strong></td><td>Configuration and user data</td><td>Everything — you're a tenant</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Email &amp; web services — the protocols that matter</p>
+            <ul class="concept-list">
+              <li><strong>Email direction is the thing to memorize:</strong> SMTP sends (always). POP3 receives and removes from server. IMAP receives and keeps a copy on the server — use IMAP for any multi-device setup.</li>
+              <li><strong>SPF, DKIM, DMARC are a chain.</strong> SPF says who's allowed to send. DKIM cryptographically proves the message wasn't tampered with. DMARC ties them together and tells the receiving server what to do on failure. All three are DNS records — set them before your domain sends mail or you'll land in spam.</li>
+              <li><strong>HTTP status codes: client vs. server.</strong> 4xx = the request was wrong (client's fault). 5xx = the server failed on a valid request (your problem). Knowing this tells you immediately which side to investigate. 401 = not authenticated. 403 = authenticated but not authorized. 404 = resource not found. 503 = server overwhelmed or down.</li>
+              <li><strong>TLS certificates are non-negotiable for any service accepting credentials.</strong> Let's Encrypt makes this free. There is no legitimate reason to run HTTP for a login page in 2025.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Directory services — identity is the control plane</p>
+            <ul class="concept-list">
+              <li><strong>Active Directory (Windows) and LDAP (open standard) solve the same problem:</strong> one place to define who exists, what they can access, and what policies apply to their machine. Without a directory, every service has its own user list and every change must be made in every system individually.</li>
+              <li><strong>GPOs are your policy automation.</strong> Group Policy Objects let you enforce settings (password complexity, screensaver timeout, software restrictions, drive mappings) across thousands of machines from one place. The right GPO structure — Organizational Units scoped tightly — means a new hire gets the right environment automatically at first login.</li>
+              <li><strong>RBAC: assign permissions to roles, not individuals.</strong> When an employee changes job functions, you change their role — not 47 individual permission entries. When they leave, you disable one account and all access is revoked simultaneously.</li>
+              <li><strong>Offboarding is as important as onboarding.</strong> A departed employee with an active AD account is an open door. Disable on the last day, not when someone notices.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Backups — the one thing you can't skip</p>
+            <ul class="concept-list">
+              <li><strong>RAID is not a backup.</strong> RAID protects against a single drive failure. It does nothing for accidental deletion, ransomware, or a site disaster — all the data lives together and can be destroyed together. RAID is a storage solution. Backups are a separate concern.</li>
+              <li><strong>The 3-2-1 rule is the baseline:</strong> 3 copies of data, on 2 different media types, with 1 copy off-site. On-site gives fast recovery. Off-site survives a local disaster. Different media protects against media-specific failure modes.</li>
+              <li><strong>RPO and RTO are the two numbers that drive backup design.</strong> RPO (how much data loss is acceptable) determines backup frequency. RTO (how quickly you must be back online) determines your DR site type — hot/warm/cold — and your infrastructure investment.</li>
+              <li><strong>An untested backup is not a backup.</strong> Test restores at least annually. The worst moment to discover your backup is corrupted is during the actual incident.</li>
+              <li><strong>Post-mortems are how teams improve.</strong> The goal is learning, not blame. A good post-mortem produces concrete action items that prevent recurrence — not a list of people who failed.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">The bigger picture</p>
+            <div class="note">
+              System Administration is the operational layer between raw infrastructure and the people who depend on it. Every decision in this course — change management, imaging, directory structure, backup policy — is ultimately about two things: <em>reliability</em> and <em>scale</em>. A setup that works for 10 people often collapses at 100. The techniques here are what let one or two sysadmins support hundreds of users without burning out. IT Security (Course 5) builds directly on this foundation — the hardest security problems are almost always organizational and operational ones, not technical ones.
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
+      </div><!-- /section-body -->
+    </div><!-- /s7 -->
+
   </div><!-- /section-list -->
 
 </main>

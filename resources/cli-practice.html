@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLI Practice - Type the Command</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .cli-game { max-width: 680px; margin: 0 auto; }
+
+    .cli-prompt-box {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem 1.1rem;
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+    .cli-prompt-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--accent-light);
+      background: var(--accent-dim);
+      padding: 0.2rem 0.45rem;
+      border-radius: 4px;
+      white-space: nowrap;
+      margin-top: 0.2rem;
+      flex-shrink: 0;
+    }
+    .cli-prompt-text {
+      flex: 1;
+      font-size: 0.95rem;
+      color: var(--text-0);
+      margin: 0;
+      line-height: 1.5;
+    }
+    .cli-progress-label {
+      font-size: 0.78rem;
+      color: var(--text-2);
+      white-space: nowrap;
+      align-self: center;
+    }
+
+    .cli-terminal {
+      background: #0d1117;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #30363d;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+    }
+    .cli-topbar {
+      background: #161b22;
+      padding: 0.5rem 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-bottom: 1px solid #30363d;
+    }
+    .cli-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .cli-dot-r { background: #ff5f56; }
+    .cli-dot-y { background: #ffbd2e; }
+    .cli-dot-g { background: #27c93f; }
+    .cli-topbar-title {
+      margin-left: auto;
+      font-size: 0.72rem;
+      color: #8b949e;
+    }
+
+    .cli-output {
+      padding: 0.75rem 1.1rem 0.2rem;
+      min-height: 3rem;
+      color: #e6edf3;
+      line-height: 1.9;
+    }
+    .cli-out-line  { display: block; }
+    .cli-out-cmd   { color: #e6edf3; }
+    .cli-out-ok    { color: #3fb950; }
+    .cli-out-err   { color: #f85149; }
+    .cli-out-hint  { color: #d29922; font-size: 0.85rem; }
+    .cli-out-muted { color: #8b949e; font-size: 0.82rem; }
+
+    .cli-input-row {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 1.1rem 0.75rem;
+      border-top: 1px solid #21262d;
+      gap: 0.4rem;
+    }
+    .cli-ps1 { color: #3fb950; font-weight: 700; user-select: none; }
+    .cli-input-field {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #e6edf3;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      caret-color: #3fb950;
+    }
+    .cli-input-field::placeholder { color: #484f58; }
+    .cli-input-field:disabled { opacity: 0; }
+
+    .cli-score-screen {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+    .cli-score-num {
+      font-size: 3.5rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--accent-light);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .cli-score-denom { font-size: 1.75rem; color: var(--text-2); }
+    .cli-score-msg {
+      color: var(--text-1);
+      margin: 0.6rem 0 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .hint-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.6rem;
+      font-size: 0.8rem;
+      color: var(--text-2);
+    }
+    .hint-bar kbd {
+      display: inline-block;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.1rem 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-1);
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">IT Cert Study</a>
+    <ul class="nav-links">
+      <li><a href="../courses/01-technical-support-fundamentals.html">Course 1</a></li>
+      <li><a href="../courses/02-bits-and-bytes-networking.html">Course 2</a></li>
+      <li><a href="../courses/03-operating-systems.html">Course 3</a></li>
+      <li><a href="../courses/04-system-administration.html">Course 4</a></li>
+      <li><a href="../courses/05-it-security.html">Course 5</a></li>
+      <li class="nav-sep" aria-hidden="true"></li>
+      <li><a href="../quiz.html">Rapid Fire</a></li>
+      <li><a href="../resources.html" class="active">Resources</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+  <header class="course-header">
+    <span class="course-badge">Practice</span>
+    <h1>CLI Practice &mdash; Type the Command</h1>
+    <p class="subtitle">OS &amp; Networking &middot; Course 3 &middot; Read the prompt, type the exact command, press Enter</p>
+    <nav class="course-tabs">
+      <a href="../courses/03-operating-systems.html" class="course-tab">Study Notes</a>
+      <a href="cli-practice.html" class="course-tab active">CLI Practice</a>
+    </nav>
+  </header>
+
+  <div class="cli-game" id="cli-game">
+
+    <!-- prompt box -->
+    <div class="cli-prompt-box" id="cg-prompt-box">
+      <span class="cli-prompt-label">Prompt</span>
+      <p class="cli-prompt-text" id="cg-prompt-text">Loading&hellip;</p>
+      <span class="cli-progress-label" id="cg-counter">1 / 5</span>
+    </div>
+
+    <!-- terminal -->
+    <div class="cli-terminal" id="cg-terminal">
+      <div class="cli-topbar">
+        <span class="cli-dot cli-dot-r"></span>
+        <span class="cli-dot cli-dot-y"></span>
+        <span class="cli-dot cli-dot-g"></span>
+        <span class="cli-topbar-title">bash</span>
+      </div>
+      <div class="cli-output" id="cg-output"></div>
+      <div class="cli-input-row">
+        <span class="cli-ps1">$&nbsp;</span>
+        <input type="text" id="cg-input" class="cli-input-field"
+               autocomplete="off" autocorrect="off" autocapitalize="none"
+               spellcheck="false" placeholder="type command here&hellip;">
+      </div>
+    </div>
+
+    <div class="hint-bar">
+      <span>Spelling &amp; flags must match exactly &mdash; case ignored, extra spaces ignored</span>
+      <span><kbd>Enter</kbd> to submit &nbsp;&middot;&nbsp; <kbd>Enter</kbd> again to advance</span>
+    </div>
+
+    <!-- score screen -->
+    <div class="cli-score-screen" id="cg-score" style="display:none">
+      <div class="cli-score-num">
+        <span id="cg-score-got">0</span><span class="cli-score-denom">&nbsp;/ 5</span>
+      </div>
+      <p class="cli-score-msg" id="cg-score-msg"></p>
+      <button class="btn-accent" onclick="cliRestart()">Try Again &mdash; new shuffle</button>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  Google IT Support Professional Certificate &mdash; CLI Practice
+</footer>
+
+<script>
+  const ALL_QUESTIONS = [
+    {
+      prompt: 'List all running processes with full details, including hidden ones (Linux)',
+      accepted: ['ps -ef', 'ps -fe'],
+      hint: 'ps -ef',
+    },
+    {
+      prompt: 'Terminate process 1234 gracefully on Linux (send the default signal)',
+      accepted: ['kill 1234', 'kill -15 1234', 'kill -term 1234', 'kill -sigterm 1234'],
+      hint: 'kill 1234',
+    },
+    {
+      prompt: 'Open the Windows Event Viewer from the Run box or command line',
+      accepted: ['eventvwr.msc', 'eventvwr'],
+      hint: 'eventvwr.msc',
+    },
+    {
+      prompt: 'Show disk space for all mounted filesystems in human-readable format (Linux)',
+      accepted: ['df -h'],
+      hint: 'df -h',
+    },
+    {
+      prompt: 'Force an immediate Group Policy update on Windows',
+      accepted: ['gpupdate /force'],
+      hint: 'gpupdate /force',
+    },
+  ];
+
+  const ROUND_SIZE = 5;
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function normalize(s) {
+    return s.trim().toLowerCase().replace(/\s+/g, ' ');
+  }
+
+  let questions = [];
+  let state = { index: 0, score: 0, phase: 'waiting' };
+
+  function appendLine(text, cls) {
+    const span = document.createElement('span');
+    span.className = 'cli-out-line' + (cls ? ' ' + cls : '');
+    span.textContent = text;
+    document.getElementById('cg-output').appendChild(span);
+  }
+
+  function loadQuestion() {
+    const q = questions[state.index];
+    document.getElementById('cg-prompt-text').textContent = q.prompt;
+    document.getElementById('cg-counter').textContent =
+      (state.index + 1) + ' / ' + questions.length;
+    document.getElementById('cg-output').innerHTML = '';
+    const inp = document.getElementById('cg-input');
+    inp.value = '';
+    inp.disabled = false;
+    inp.focus();
+    state.phase = 'waiting';
+  }
+
+  function judge() {
+    const inp = document.getElementById('cg-input');
+    const raw = inp.value;
+    const typed = normalize(raw);
+    const q = questions[state.index];
+    const correct = q.accepted.map(normalize).includes(typed);
+
+    appendLine('$ ' + raw, 'cli-out-cmd');
+    if (correct) {
+      appendLine('✓ Correct!', 'cli-out-ok');
+      state.score++;
+    } else {
+      appendLine('✗ Not quite.', 'cli-out-err');
+      appendLine('Answer: ' + q.hint, 'cli-out-hint');
+    }
+    appendLine('Press Enter to continue…', 'cli-out-muted');
+
+    inp.value = '';
+    inp.disabled = true;
+    state.phase = 'judged';
+  }
+
+  function advance() {
+    state.index++;
+    if (state.index >= questions.length) {
+      showScore();
+    } else {
+      loadQuestion();
+    }
+  }
+
+  function showScore() {
+    state.phase = 'done';
+    document.getElementById('cg-prompt-box').style.display = 'none';
+    document.getElementById('cg-terminal').style.display = 'none';
+    document.getElementById('cg-score').style.display = '';
+    document.getElementById('cg-score-got').textContent = state.score;
+    const pct = state.score / questions.length;
+    document.getElementById('cg-score-msg').textContent =
+      pct === 1   ? 'Perfect — five for five!' :
+      pct >= 0.8  ? 'Great work!' :
+      pct >= 0.6  ? 'Getting there — review the ones you missed.' :
+                    'Keep at it — repetition is how these stick.';
+  }
+
+  function cliRestart() {
+    questions = shuffle(ALL_QUESTIONS).slice(0, ROUND_SIZE);
+    state = { index: 0, score: 0, phase: 'waiting' };
+    document.getElementById('cg-score').style.display = 'none';
+    document.getElementById('cg-prompt-box').style.display = '';
+    document.getElementById('cg-terminal').style.display = '';
+    loadQuestion();
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    cliRestart();
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+      if (state.phase === 'waiting') {
+        const inp = document.getElementById('cg-input');
+        if (!inp || normalize(inp.value) === '') return;
+        e.preventDefault();
+        judge();
+      } else if (state.phase === 'judged') {
+        e.preventDefault();
+        advance();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subnet Cheat Sheet - Reference Sheet</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .subnet-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.845rem;
+      margin-top: 0.25rem;
+    }
+    .subnet-table th {
+      background: var(--bg-2);
+      color: var(--text-2);
+      font-weight: 600;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      padding: 0.45rem 0.75rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .subnet-table td {
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--border-muted);
+      color: var(--text-1);
+      vertical-align: middle;
+      line-height: 1.45;
+    }
+    .subnet-table tr:hover td { background: var(--bg-2); }
+
+    .mono {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--accent-light);
+      font-size: 0.875rem;
+    }
+    .muted { color: var(--text-2); font-style: italic; font-size: 0.8rem; }
+
+    .chart-section-heading {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--accent-light);
+      margin: 1.75rem 0 0.5rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--border-muted);
+    }
+
+    .print-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .print-bar p {
+      font-size: 0.83rem;
+      color: var(--text-2);
+    }
+
+    .callout {
+      background: var(--accent-dim);
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      margin: 0.25rem 0 1rem;
+      font-size: 0.875rem;
+      color: var(--text-1);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .flow-list {
+      margin: 0.25rem 0 0;
+      padding-left: 1.25rem;
+      font-size: 0.875rem;
+      color: var(--text-1);
+      line-height: 1.85;
+    }
+    .flow-list li strong { color: var(--accent-light); font-family: var(--font-mono); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 0.25rem;
+    }
+
+    .practice-card {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+    }
+    .practice-card .addr {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent-light);
+      margin-bottom: 0.6rem;
+    }
+    .practice-card table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+    .practice-card td {
+      padding: 0.28rem 0.4rem;
+      border-bottom: 1px solid var(--border-muted);
+      color: var(--text-1);
+      vertical-align: top;
+    }
+    .practice-card td:first-child {
+      color: var(--text-2);
+      width: 42%;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      padding-top: 0.33rem;
+    }
+    .practice-card tr:last-child td { border-bottom: none; }
+    .practice-card .answer { font-family: var(--font-mono); font-size: 0.82rem; }
+
+    .bit-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.845rem;
+      margin-top: 0.25rem;
+    }
+    .bit-table th {
+      background: var(--bg-2);
+      color: var(--text-2);
+      font-weight: 600;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      padding: 0.45rem 0.75rem;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+    .bit-table td {
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--border-muted);
+      color: var(--text-1);
+      vertical-align: middle;
+      text-align: center;
+      line-height: 1.45;
+    }
+    .bit-table .stolen {
+      background: rgba(234,179,8,.15);
+      color: var(--warning);
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+    .bit-table .free { color: var(--text-3); font-family: var(--font-mono); }
+
+    .mental-steps {
+      margin: 0.25rem 0 0;
+      padding-left: 0;
+      list-style: none;
+      font-size: 0.875rem;
+      color: var(--text-1);
+      counter-reset: step;
+    }
+    .mental-steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border-muted);
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    .mental-steps li:last-child { border-bottom: none; }
+    .mental-steps li::before {
+      content: counter(step);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      color: var(--accent-light);
+      font-size: 0.72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .mental-steps .step-label {
+      font-family: var(--font-mono);
+      color: var(--accent-light);
+      font-weight: 700;
+      min-width: 7.5rem;
+      flex-shrink: 0;
+    }
+    .mental-steps .step-rule { color: var(--text-1); }
+    .mental-steps .step-example { color: var(--text-2); font-style: italic; font-size: 0.8rem; }
+
+    .split-ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.845rem;
+      margin-top: 0.25rem;
+    }
+    .split-ref-table th {
+      background: var(--bg-2);
+      color: var(--text-2);
+      font-weight: 600;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      padding: 0.45rem 0.75rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .split-ref-table td {
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--border-muted);
+      color: var(--text-1);
+      vertical-align: middle;
+      line-height: 1.45;
+    }
+    .split-ref-table tr:hover td { background: var(--bg-2); }
+
+    .split-note {
+      display: inline-block;
+      background: var(--warning);
+      color: #000;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      border-radius: 3px;
+      padding: 0.1rem 0.35rem;
+      margin-left: 0.4rem;
+      vertical-align: middle;
+    }
+
+    @media (max-width: 640px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      .print-hide { display: none !important; }
+      .site-nav, .site-footer { display: none !important; }
+      body { background: #fff !important; color: #000 !important; }
+      .page-wrap { padding: 0.5rem 1rem !important; max-width: 100% !important; }
+      .course-header { padding: 1rem 0 0.75rem !important; }
+      .course-header h1, .course-header .subtitle { color: #000 !important; }
+      .course-badge { background: #eee !important; color: #333 !important; }
+      .chart-section-heading { color: #000 !important; border-color: #ccc !important; }
+      .subnet-table th { background: #f0f0f0 !important; color: #000 !important; border-color: #ccc !important; }
+      .subnet-table td { color: #111 !important; border-color: #ccc !important; }
+      .subnet-table tr:hover td { background: transparent !important; }
+      .mono { color: #000 !important; }
+      .muted { color: #444 !important; }
+      .callout { background: #f5f5f5 !important; border-color: #999 !important; }
+      .callout strong { color: #000 !important; }
+      .flow-list li strong { color: #000 !important; }
+      .practice-card { background: #fafafa !important; border-color: #ccc !important; }
+      .practice-card .addr { color: #000 !important; }
+      .split-note { background: #e0e0e0 !important; color: #000 !important; }
+      .bit-table th { background: #f0f0f0 !important; color: #000 !important; border-color: #ccc !important; }
+      .bit-table td { border-color: #ccc !important; }
+      .bit-table .stolen { background: #f5f5c0 !important; color: #000 !important; }
+      .bit-table .free { color: #aaa !important; }
+      .mental-steps li::before { background: #eee !important; color: #000 !important; }
+      .mental-steps .step-label { color: #000 !important; }
+      .mental-steps .step-example { color: #555 !important; }
+      .split-ref-table th { background: #f0f0f0 !important; color: #000 !important; border-color: #ccc !important; }
+      .split-ref-table td { color: #111 !important; border-color: #ccc !important; }
+      .split-ref-table tr:hover td { background: transparent !important; }
+      .two-col { grid-template-columns: 1fr 1fr; }
+      @page { margin: 1.5cm; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav print-hide">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">IT Cert Study</a>
+    <ul class="nav-links">
+      <li><a href="../courses/01-technical-support-fundamentals.html">Course 1</a></li>
+      <li><a href="../courses/02-bits-and-bytes-networking.html">Course 2</a></li>
+      <li><a href="../courses/03-operating-systems.html">Course 3</a></li>
+      <li><a href="../courses/04-system-administration.html">Course 4</a></li>
+      <li><a href="../courses/05-it-security.html">Course 5</a></li>
+      <li class="nav-sep" aria-hidden="true"></li>
+      <li><a href="../resources.html" class="active">Resources</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+  <header class="course-header">
+    <span class="course-badge">Reference Sheet</span>
+    <h1>Subnet Cheat Sheet</h1>
+    <p class="subtitle">Networking &middot; Google IT Cert Course 2 &middot; CIDR, netmasks, host ranges</p>
+  </header>
+
+  <div class="print-bar print-hide">
+    <button class="btn-accent" onclick="window.print()">&#128438;&nbsp; Print / Save as PDF</button>
+    <p>In Chrome: choose "Save as PDF" as the destination. Portrait orientation recommended.</p>
+  </div>
+
+  <!-- CORE PATTERN -->
+  <p class="chart-section-heading">The Core Pattern</p>
+  <table class="subnet-table">
+    <thead>
+      <tr>
+        <th style="width:10%">CIDR</th>
+        <th style="width:22%">Netmask</th>
+        <th style="width:30%">Network Part</th>
+        <th style="width:16%">Host Bits</th>
+        <th>Usable Hosts</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mono">/8</td>
+        <td class="mono">255.0.0.0</td>
+        <td><span class="mono">X</span> <span class="muted">. _ . _ . _</span></td>
+        <td>24 bits</td>
+        <td>~16,000,000</td>
+      </tr>
+      <tr>
+        <td class="mono">/16</td>
+        <td class="mono">255.255.0.0</td>
+        <td><span class="mono">X.X</span> <span class="muted">. _ . _</span></td>
+        <td>16 bits</td>
+        <td>~65,000</td>
+      </tr>
+      <tr>
+        <td class="mono">/24</td>
+        <td class="mono">255.255.255.0</td>
+        <td><span class="mono">X.X.X</span> <span class="muted">. _</span></td>
+        <td>8 bits</td>
+        <td>254</td>
+      </tr>
+      <tr>
+        <td class="mono">/25</td>
+        <td class="mono">255.255.255.128</td>
+        <td><span class="mono">X.X.X</span> <span class="muted">. _ (half)</span></td>
+        <td>7 bits</td>
+        <td>126 <span class="split-note">split octet</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- MENTAL SHORTCUT -->
+  <p class="chart-section-heading">Mental Shortcut</p>
+  <div class="callout">
+    <strong>The slash &divide; 8 = how many octets are locked.</strong><br>
+    /8 &rarr; 1 locked octet &rarr; <span style="font-family:var(--font-mono)">255.0.0.0</span><br>
+    /16 &rarr; 2 locked octets &rarr; <span style="font-family:var(--font-mono)">255.255.0.0</span><br>
+    /24 &rarr; 3 locked octets &rarr; <span style="font-family:var(--font-mono)">255.255.255.0</span>
+  </div>
+
+  <!-- BROADCAST & HOST RANGE -->
+  <p class="chart-section-heading">Broadcast &amp; Host Range &mdash; Always the Same Trick</p>
+  <table class="subnet-table">
+    <thead>
+      <tr>
+        <th style="width:32%">Address Type</th>
+        <th>Rule</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Network address</td>
+        <td>Last free octet = <span class="mono">0</span></td>
+      </tr>
+      <tr>
+        <td>Broadcast</td>
+        <td>Last free octet = <span class="mono">255</span></td>
+      </tr>
+      <tr>
+        <td>Host range</td>
+        <td>Everything in between &mdash; <span class="mono">.1</span> to <span class="mono">.254</span> across the free octets</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 5-QUESTION FLOW -->
+  <p class="chart-section-heading">The 5-Question Flow &mdash; Same Every Time</p>
+  <ol class="flow-list">
+    <li><strong>Netmask</strong> &nbsp;&rarr; how many octets are locked? (slash &divide; 8)</li>
+    <li><strong>Host bits</strong> &nbsp;&rarr; 32 minus the slash number</li>
+    <li><strong>Hosts</strong> &nbsp;&rarr; 2<sup>(host bits)</sup> &minus; 2</li>
+    <li><strong>Network addr</strong> &nbsp;&rarr; given address, last free octet = 0</li>
+    <li><strong>Broadcast</strong> &nbsp;&rarr; last free octet = 255</li>
+    <li><strong>Range</strong> &nbsp;&rarr; .1 to .254 across the free octets</li>
+  </ol>
+
+  <!-- SPLIT OCTETS -->
+  <p class="chart-section-heading">Split Octets &mdash; What Your Mind Should Do</p>
+
+  <div class="callout">
+    A <strong>split octet</strong> happens when the slash doesn&rsquo;t land on a multiple of 8. Some bits of the last octet are &ldquo;stolen&rdquo; for the network part &mdash; the rest stay as host bits. The stolen bits determine the netmask, block size, and broadcast.
+  </div>
+
+  <p style="font-size:0.8rem;color:var(--text-2);margin:0 0 0.4rem;">Octet bit values, left to right (always this order):</p>
+  <table class="bit-table">
+    <thead>
+      <tr>
+        <th>Bit 1</th><th>Bit 2</th><th>Bit 3</th><th>Bit 4</th>
+        <th>Bit 5</th><th>Bit 6</th><th>Bit 7</th><th>Bit 8</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="stolen">128</td>
+        <td class="stolen">64</td>
+        <td class="stolen">32</td>
+        <td class="stolen">16</td>
+        <td class="free">8</td>
+        <td class="free">4</td>
+        <td class="free">2</td>
+        <td class="free">1</td>
+      </tr>
+      <tr>
+        <td colspan="4" style="font-size:0.72rem;color:var(--warning);text-align:center;padding:0.3rem;">stolen (network) &uarr;</td>
+        <td colspan="4" style="font-size:0.72rem;color:var(--text-3);text-align:center;padding:0.3rem;">&uarr; free (host)</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.75rem;color:var(--text-2);margin:0.35rem 0 1rem;">Example above shows /28 &mdash; 4 bits stolen (28 &minus; 24 = 4). Yellow = locked, grey = free.</p>
+
+  <p style="font-size:0.8rem;font-weight:600;color:var(--text-1);margin:0 0 0.25rem;">The mental path &mdash; step by step for any split CIDR:</p>
+  <ul class="mental-steps">
+    <li>
+      <span class="step-label">Remainder</span>
+      <span class="step-rule">slash &divide; 8 &rarr; quotient = full locked octets, <strong>remainder = bits stolen</strong></span>
+      <span class="step-example">/25: 25&divide;8 = 3 R<strong>1</strong> &rarr; 1 bit stolen</span>
+    </li>
+    <li>
+      <span class="step-label">Stolen value</span>
+      <span class="step-rule">read the bit value from the table above (start at 128, count right)</span>
+      <span class="step-example">1 bit &rarr; 128 &nbsp;|&nbsp; 2 bits &rarr; 128+64=192 &nbsp;|&nbsp; 3 bits &rarr; 224</span>
+    </li>
+    <li>
+      <span class="step-label">Netmask</span>
+      <span class="step-rule">last octet = sum of stolen bit values; full octets before it = 255</span>
+      <span class="step-example">/25 &rarr; 255.255.255.<strong>128</strong></span>
+    </li>
+    <li>
+      <span class="step-label">Block size</span>
+      <span class="step-rule"><strong>256 &minus; last-octet netmask</strong> &nbsp;(or: value of the last stolen bit)</span>
+      <span class="step-example">256 &minus; 128 = <strong>128</strong> &nbsp;&rarr;&nbsp; subnets start at .0 and .128</span>
+    </li>
+    <li>
+      <span class="step-label">Network addr</span>
+      <span class="step-rule">round the 4th octet of your address <strong>down</strong> to the nearest multiple of block size</span>
+      <span class="step-example">192.168.1.50/25 &rarr; 50 rounds to 0 &rarr; network = 192.168.1.<strong>0</strong></span>
+    </li>
+    <li>
+      <span class="step-label">Broadcast</span>
+      <span class="step-rule">network 4th-octet + block &minus; 1</span>
+      <span class="step-example">0 + 128 &minus; 1 = <strong>127</strong> &rarr; broadcast = 192.168.1.127</span>
+    </li>
+    <li>
+      <span class="step-label">Host range</span>
+      <span class="step-rule">network+1 to broadcast&minus;1</span>
+      <span class="step-example">192.168.1.<strong>1</strong> &rarr; 192.168.1.<strong>126</strong></span>
+    </li>
+  </ul>
+
+  <p class="chart-section-heading" style="margin-top:1.5rem;">Split CIDR Quick-Reference</p>
+  <table class="split-ref-table">
+    <thead>
+      <tr>
+        <th style="width:10%">CIDR</th>
+        <th style="width:12%">Bits stolen</th>
+        <th style="width:22%">Netmask</th>
+        <th style="width:14%">Block size</th>
+        <th style="width:16%">Usable hosts</th>
+        <th>Subnet starts at&hellip;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mono">/25</td>
+        <td>1</td>
+        <td class="mono">255.255.255.128</td>
+        <td class="mono">128</td>
+        <td>126</td>
+        <td class="muted">.0 and .128</td>
+      </tr>
+      <tr>
+        <td class="mono">/26</td>
+        <td>2</td>
+        <td class="mono">255.255.255.192</td>
+        <td class="mono">64</td>
+        <td>62</td>
+        <td class="muted">.0, .64, .128, .192</td>
+      </tr>
+      <tr>
+        <td class="mono">/27</td>
+        <td>3</td>
+        <td class="mono">255.255.255.224</td>
+        <td class="mono">32</td>
+        <td>30</td>
+        <td class="muted">.0, .32, .64, .96 &hellip;</td>
+      </tr>
+      <tr>
+        <td class="mono">/28</td>
+        <td>4</td>
+        <td class="mono">255.255.255.240</td>
+        <td class="mono">16</td>
+        <td>14</td>
+        <td class="muted">.0, .16, .32, .48 &hellip;</td>
+      </tr>
+      <tr>
+        <td class="mono">/29</td>
+        <td>5</td>
+        <td class="mono">255.255.255.248</td>
+        <td class="mono">8</td>
+        <td>6</td>
+        <td class="muted">.0, .8, .16, .24 &hellip;</td>
+      </tr>
+      <tr>
+        <td class="mono">/30</td>
+        <td>6</td>
+        <td class="mono">255.255.255.252</td>
+        <td class="mono">4</td>
+        <td>2</td>
+        <td class="muted">.0, .4, .8, .12 &hellip; (point-to-point links)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- WORKED EXAMPLE -->
+  <p class="chart-section-heading">Worked Example &mdash; 192.168.10.0/24</p>
+  <table class="subnet-table">
+    <thead>
+      <tr>
+        <th style="width:32%">Question</th>
+        <th>Answer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Netmask</td>
+        <td class="mono">255.255.255.0</td>
+      </tr>
+      <tr>
+        <td>Host bits</td>
+        <td>32 &minus; 24 = <span class="mono">8</span></td>
+      </tr>
+      <tr>
+        <td>Usable hosts</td>
+        <td>2<sup>8</sup> &minus; 2 = <span class="mono">254</span></td>
+      </tr>
+      <tr>
+        <td>Network address</td>
+        <td class="mono">192.168.10.0</td>
+      </tr>
+      <tr>
+        <td>Broadcast</td>
+        <td class="mono">192.168.10.255</td>
+      </tr>
+      <tr>
+        <td>Host range</td>
+        <td class="mono">192.168.10.1 &rarr; 192.168.10.254</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PRACTICE PROBLEMS -->
+  <p class="chart-section-heading">Practice Problems</p>
+  <div class="two-col">
+
+    <div class="practice-card">
+      <div class="addr">10.50.0.0/8</div>
+      <table>
+        <tr><td>Netmask</td><td class="answer">255.0.0.0</td></tr>
+        <tr><td>Usable hosts</td><td class="answer">~16,000,000</td></tr>
+        <tr><td>Network addr</td><td class="answer">10.0.0.0</td></tr>
+        <tr><td>Broadcast</td><td class="answer">10.255.255.255</td></tr>
+        <tr><td>Host range</td><td class="answer">10.0.0.1 &rarr; 10.255.255.254</td></tr>
+      </table>
+    </div>
+
+    <div class="practice-card">
+      <div class="addr">172.20.0.0/16</div>
+      <table>
+        <tr><td>Netmask</td><td class="answer">255.255.0.0</td></tr>
+        <tr><td>Usable hosts</td><td class="answer">~65,000</td></tr>
+        <tr><td>Network addr</td><td class="answer">172.20.0.0</td></tr>
+        <tr><td>Broadcast</td><td class="answer">172.20.255.255</td></tr>
+        <tr><td>Host range</td><td class="answer">172.20.0.1 &rarr; 172.20.255.254</td></tr>
+      </table>
+    </div>
+
+    <div class="practice-card">
+      <div class="addr">192.168.100.0/24</div>
+      <table>
+        <tr><td>Netmask</td><td class="answer">255.255.255.0</td></tr>
+        <tr><td>Usable hosts</td><td class="answer">254</td></tr>
+        <tr><td>Network addr</td><td class="answer">192.168.100.0</td></tr>
+        <tr><td>Broadcast</td><td class="answer">192.168.100.255</td></tr>
+        <tr><td>Host range</td><td class="answer">192.168.100.1 &rarr; 192.168.100.254</td></tr>
+      </table>
+    </div>
+
+    <div class="practice-card">
+      <div class="addr">192.168.1.0/25 <span class="split-note">split octet</span></div>
+      <table>
+        <tr><td>Netmask</td><td class="answer">255.255.255.128</td></tr>
+        <tr><td>Usable hosts</td><td class="answer">126</td></tr>
+        <tr><td>Network addr</td><td class="answer">192.168.1.0</td></tr>
+        <tr><td>Broadcast</td><td class="answer">192.168.1.127</td></tr>
+        <tr><td>Host range</td><td class="answer">192.168.1.1 &rarr; 192.168.1.126</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="site-footer print-hide">
+  Google IT Support Professional Certificate &mdash; Subnet Cheat Sheet
+</footer>
+
+</body>
+</html>

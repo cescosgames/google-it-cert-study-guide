@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLI Commands Cheat Sheet - Reference Sheet</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .cmd-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.845rem;
+      margin-top: 0.25rem;
+    }
+    .cmd-table th {
+      background: var(--bg-2);
+      color: var(--text-2);
+      font-weight: 600;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      padding: 0.45rem 0.75rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .cmd-table td {
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--border-muted);
+      color: var(--text-1);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .cmd-table tr:hover td { background: var(--bg-2); }
+    .cmd-table td:first-child { width: 36%; }
+
+    .mono {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--accent-light);
+      font-size: 0.855rem;
+    }
+    .mono-sm {
+      font-family: var(--font-mono);
+      color: var(--accent-light);
+      font-size: 0.78rem;
+    }
+    .muted { color: var(--text-2); font-style: italic; font-size: 0.8rem; }
+    .flag { color: var(--text-2); font-family: var(--font-mono); font-size: 0.78rem; }
+
+    .chart-section-heading {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--accent-light);
+      margin: 1.75rem 0 0.5rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--border-muted);
+    }
+
+    .os-badge {
+      display: inline-block;
+      font-size: 0.63rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      border-radius: 3px;
+      padding: 0.1rem 0.38rem;
+      vertical-align: middle;
+      margin-right: 0.25rem;
+    }
+    .win  { background: rgba(59,130,246,.18); color: #93c5fd; }
+    .lin  { background: rgba(234,179,8,.15);  color: var(--warning); }
+    .both { background: rgba(16,185,129,.15); color: #6ee7b7; }
+
+    .print-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .print-bar p { font-size: 0.83rem; color: var(--text-2); }
+
+    .callout {
+      background: var(--accent-dim);
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      margin: 0.25rem 0 1rem;
+      font-size: 0.875rem;
+      color: var(--text-1);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .legend {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: var(--text-2);
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+    .legend span { display: flex; align-items: center; gap: 0.35rem; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 0.25rem;
+    }
+
+    .tip-card {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+    }
+    .tip-card h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--text-2);
+      margin: 0 0 0.6rem;
+    }
+    .tip-card ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      font-size: 0.845rem;
+      color: var(--text-1);
+      line-height: 1.8;
+    }
+    .tip-card ul li strong { font-family: var(--font-mono); color: var(--accent-light); }
+
+    @media (max-width: 640px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      .print-hide { display: none !important; }
+      .site-nav, .site-footer { display: none !important; }
+      body { background: #fff !important; color: #000 !important; }
+      .page-wrap { padding: 0.5rem 1rem !important; max-width: 100% !important; }
+      .course-header { padding: 1rem 0 0.75rem !important; }
+      .course-header h1, .course-header .subtitle { color: #000 !important; }
+      .course-badge { background: #eee !important; color: #333 !important; }
+      .chart-section-heading { color: #000 !important; border-color: #ccc !important; }
+      .cmd-table th { background: #f0f0f0 !important; color: #000 !important; border-color: #ccc !important; }
+      .cmd-table td { color: #111 !important; border-color: #ccc !important; }
+      .cmd-table tr:hover td { background: transparent !important; }
+      .mono { color: #000 !important; }
+      .mono-sm { color: #333 !important; }
+      .muted { color: #555 !important; }
+      .flag { color: #555 !important; }
+      .win  { background: #dbeafe !important; color: #1e40af !important; }
+      .lin  { background: #fef9c3 !important; color: #854d0e !important; }
+      .both { background: #d1fae5 !important; color: #065f46 !important; }
+      .callout { background: #f5f5f5 !important; border-color: #999 !important; }
+      .callout strong { color: #000 !important; }
+      .tip-card { background: #fafafa !important; border-color: #ccc !important; }
+      .two-col { grid-template-columns: 1fr 1fr; }
+      @page { margin: 1.5cm; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav print-hide">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">IT Cert Study</a>
+    <ul class="nav-links">
+      <li><a href="../courses/01-technical-support-fundamentals.html">Course 1</a></li>
+      <li><a href="../courses/02-bits-and-bytes-networking.html">Course 2</a></li>
+      <li><a href="../courses/03-operating-systems.html">Course 3</a></li>
+      <li><a href="../courses/04-system-administration.html">Course 4</a></li>
+      <li><a href="../courses/05-it-security.html">Course 5</a></li>
+      <li class="nav-sep" aria-hidden="true"></li>
+      <li><a href="../resources.html" class="active">Resources</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page-wrap">
+
+  <header class="course-header">
+    <span class="course-badge">Reference Sheet</span>
+    <h1>CLI Commands Cheat Sheet</h1>
+    <p class="subtitle">OS &amp; Networking &middot; Google IT Cert &middot; Windows CMD / PowerShell &amp; Linux Bash</p>
+  </header>
+
+  <div class="print-bar print-hide">
+    <button class="btn-accent" onclick="window.print()">&#128438;&nbsp; Print / Save as PDF</button>
+    <p>In Chrome: choose "Save as PDF" as the destination. Portrait orientation recommended.</p>
+  </div>
+
+  <div class="legend">
+    <span><span class="os-badge win">WIN</span> Windows CMD</span>
+    <span><span class="os-badge lin">LIN</span> Linux / macOS Bash</span>
+    <span><span class="os-badge both">BOTH</span> Works on both (or close equivalent)</span>
+  </div>
+
+  <!-- NETWORK DIAGNOSTICS -->
+  <p class="chart-section-heading">Network Diagnostics</p>
+  <table class="cmd-table">
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>What it does</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="mono">ipconfig</span> <span class="os-badge win">WIN</span></td>
+        <td>Show IP address, subnet mask, and default gateway for all adapters</td>
+      </tr>
+      <tr>
+        <td><span class="mono">ipconfig /all</span> <span class="os-badge win">WIN</span></td>
+        <td>Full details — MAC address, DHCP server, DNS servers, lease times</td>
+      </tr>
+      <tr>
+        <td><span class="mono">ipconfig /release</span> <span class="os-badge win">WIN</span><br><span class="mono">ipconfig /renew</span></td>
+        <td>Drop and re-request a DHCP lease — fixes "wrong IP" problems</td>
+      </tr>
+      <tr>
+        <td><span class="mono">ipconfig /flushdns</span> <span class="os-badge win">WIN</span></td>
+        <td>Clear the DNS resolver cache — forces fresh lookups on next request</td>
+      </tr>
+      <tr>
+        <td><span class="mono">ip addr</span> <span class="os-badge lin">LIN</span><br><span class="muted">older: ifconfig</span></td>
+        <td>Show IP addresses and network interface details</td>
+      </tr>
+      <tr>
+        <td><span class="mono">ping &lt;host&gt;</span> <span class="os-badge both">BOTH</span></td>
+        <td>Test basic reachability — sends ICMP echo requests. <span class="flag">-t</span> (Win) or <span class="flag">-c N</span> (Lin) to control count</td>
+      </tr>
+      <tr>
+        <td><span class="mono">tracert &lt;host&gt;</span> <span class="os-badge win">WIN</span><br><span class="mono">traceroute &lt;host&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Show each router hop to the destination — pinpoint where packets stop</td>
+      </tr>
+      <tr>
+        <td><span class="mono">pathping &lt;host&gt;</span> <span class="os-badge win">WIN</span></td>
+        <td>Combines ping + tracert — shows packet loss at each hop over time</td>
+      </tr>
+      <tr>
+        <td><span class="mono">nslookup &lt;domain&gt;</span> <span class="os-badge both">BOTH</span></td>
+        <td>Query DNS — check what IP a hostname resolves to, or which server answered</td>
+      </tr>
+      <tr>
+        <td><span class="mono">netstat -an</span> <span class="os-badge both">BOTH</span></td>
+        <td>List all active connections and listening ports with addresses. <span class="flag">-b</span> (Win) adds the process name</td>
+      </tr>
+      <tr>
+        <td><span class="mono">ssh user@host</span> <span class="os-badge both">BOTH</span></td>
+        <td>Open an encrypted remote shell session. Port 22. Win also has PuTTY (<span class="mono-sm">putty.exe -ssh user@ip</span>)</td>
+      </tr>
+      <tr>
+        <td><span class="mono">scp file user@host:/path</span> <span class="os-badge lin">LIN</span></td>
+        <td>Securely copy a file over SSH. Windows equivalent: <span class="mono-sm">pscp.exe</span> (PuTTY SCP)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PROCESS MANAGEMENT -->
+  <p class="chart-section-heading">Process Management</p>
+  <table class="cmd-table">
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>What it does</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="mono">tasklist</span> <span class="os-badge win">WIN</span></td>
+        <td>List all running processes with PID, memory usage, and session name</td>
+      </tr>
+      <tr>
+        <td><span class="mono">taskkill /PID &lt;id&gt;</span> <span class="os-badge win">WIN</span></td>
+        <td>Terminate a process by PID. Add <span class="flag">/F</span> to force-kill without cleanup</td>
+      </tr>
+      <tr>
+        <td><span class="mono">Get-Process</span> <span class="os-badge win">WIN</span><br><span class="muted">PowerShell</span></td>
+        <td>List processes in PowerShell. Pipe to <span class="mono-sm">Stop-Process -Id &lt;id&gt;</span> to kill</td>
+      </tr>
+      <tr>
+        <td><span class="mono">ps</span> <span class="os-badge lin">LIN</span></td>
+        <td>Snapshot of current processes. <span class="flag">-ef</span> shows all processes with full details including hidden ones</td>
+      </tr>
+      <tr>
+        <td><span class="mono">ps -ef | grep &lt;name&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Find a specific process by name in the full process list</td>
+      </tr>
+      <tr>
+        <td><span class="mono">top</span> <span class="os-badge lin">LIN</span></td>
+        <td>Live view of top CPU/memory consuming processes — <span class="flag">%CPU</span> and <span class="flag">%MEM</span> are key columns</td>
+      </tr>
+      <tr>
+        <td><span class="mono">kill &lt;PID&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Send SIGTERM — lets the process clean up before exiting</td>
+      </tr>
+      <tr>
+        <td><span class="mono">kill -KILL &lt;PID&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Send SIGKILL — instant forced termination, no cleanup. Last resort</td>
+      </tr>
+      <tr>
+        <td><span class="mono">kill -TSTP &lt;PID&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Suspend (pause) a process. Resume it with <span class="mono-sm">kill -CONT &lt;PID&gt;</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">lsof</span> <span class="os-badge lin">LIN</span></td>
+        <td>List open files and which processes hold them — useful when a file "can't be deleted"</td>
+      </tr>
+      <tr>
+        <td><span class="mono">uptime</span> <span class="os-badge lin">LIN</span></td>
+        <td>Show how long the system has been running + average CPU load over 1/5/15 min</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- FILE SYSTEM -->
+  <p class="chart-section-heading">File System Navigation &amp; Operations</p>
+  <table class="cmd-table">
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>What it does</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="mono">dir</span> <span class="os-badge win">WIN</span><br><span class="mono">ls -la</span> <span class="os-badge lin">LIN</span></td>
+        <td>List directory contents. <span class="flag">-la</span> shows hidden files and permissions</td>
+      </tr>
+      <tr>
+        <td><span class="mono">cd &lt;path&gt;</span> <span class="os-badge both">BOTH</span></td>
+        <td>Change directory. <span class="mono-sm">cd ..</span> goes up one level. <span class="mono-sm">cd /</span> (Lin) or <span class="mono-sm">cd \</span> (Win) goes to root</td>
+      </tr>
+      <tr>
+        <td><span class="mono">mkdir &lt;name&gt;</span> <span class="os-badge both">BOTH</span></td>
+        <td>Create a new directory</td>
+      </tr>
+      <tr>
+        <td><span class="mono">del &lt;file&gt;</span> <span class="os-badge win">WIN</span><br><span class="mono">rm &lt;file&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Delete a file. Linux: <span class="flag">-r</span> deletes a directory recursively, <span class="flag">-f</span> skips confirmation</td>
+      </tr>
+      <tr>
+        <td><span class="mono">copy</span> / <span class="mono">xcopy</span> <span class="os-badge win">WIN</span><br><span class="mono">cp</span> <span class="os-badge lin">LIN</span></td>
+        <td>Copy files. <span class="mono-sm">xcopy</span> handles directories. <span class="mono-sm">robocopy</span> is the modern Win equivalent with resume support</td>
+      </tr>
+      <tr>
+        <td><span class="mono">move</span> <span class="os-badge win">WIN</span><br><span class="mono">mv</span> <span class="os-badge lin">LIN</span></td>
+        <td>Move or rename a file or directory</td>
+      </tr>
+      <tr>
+        <td><span class="mono">type &lt;file&gt;</span> <span class="os-badge win">WIN</span><br><span class="mono">cat &lt;file&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Print a file's contents to the terminal</td>
+      </tr>
+      <tr>
+        <td><span class="mono">grep &lt;pattern&gt; &lt;file&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Search for a text pattern in files. <span class="flag">-r</span> searches recursively in directories</td>
+      </tr>
+      <tr>
+        <td><span class="mono">find &lt;path&gt; -name "*.txt"</span> <span class="os-badge lin">LIN</span></td>
+        <td>Find files by name, type, or other attributes</td>
+      </tr>
+      <tr>
+        <td><span class="mono">tail -f &lt;file&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Stream the end of a file in real time — essential for watching live log output</td>
+      </tr>
+      <tr>
+        <td><span class="mono">chmod &lt;mode&gt; &lt;file&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Set file permissions. <span class="mono-sm">chmod 755</span> = owner rwx, group/other rx. <span class="mono-sm">chmod +x</span> makes executable</td>
+      </tr>
+      <tr>
+        <td><span class="mono">chown user:group &lt;file&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Change file owner and group. Usually run with <span class="mono-sm">sudo</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">attrib</span> <span class="os-badge win">WIN</span></td>
+        <td>View or set file attributes (Read-only, Hidden, System, Archive). <span class="mono-sm">attrib +h file</span> hides a file</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SYSTEM INFO -->
+  <p class="chart-section-heading">System Information &amp; Configuration</p>
+  <table class="cmd-table">
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>What it does</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="mono">systeminfo</span> <span class="os-badge win">WIN</span></td>
+        <td>Detailed system info — OS version, RAM, hotfixes, network config, domain</td>
+      </tr>
+      <tr>
+        <td><span class="mono">uname -a</span> <span class="os-badge lin">LIN</span></td>
+        <td>Kernel version, hostname, architecture, OS name all in one line</td>
+      </tr>
+      <tr>
+        <td><span class="mono">hostname</span> <span class="os-badge both">BOTH</span></td>
+        <td>Print the computer's hostname</td>
+      </tr>
+      <tr>
+        <td><span class="mono">whoami</span> <span class="os-badge both">BOTH</span></td>
+        <td>Print the current logged-in username (and domain on Windows)</td>
+      </tr>
+      <tr>
+        <td><span class="mono">msconfig</span> <span class="os-badge win">WIN</span></td>
+        <td>System Configuration — manage startup programs, boot options, and services (GUI)</td>
+      </tr>
+      <tr>
+        <td><span class="mono">regedit</span> <span class="os-badge win">WIN</span></td>
+        <td>Registry Editor GUI — view and edit Windows registry keys. Use with caution</td>
+      </tr>
+      <tr>
+        <td><span class="mono">eventvwr.msc</span> <span class="os-badge win">WIN</span></td>
+        <td>Event Viewer — browse Windows logs (Application, System, Security)</td>
+      </tr>
+      <tr>
+        <td><span class="mono">devmgmt.msc</span> <span class="os-badge win">WIN</span></td>
+        <td>Device Manager — view hardware, update/rollback drivers, disable devices</td>
+      </tr>
+      <tr>
+        <td><span class="mono">services.msc</span> <span class="os-badge win">WIN</span></td>
+        <td>Services panel — start, stop, and set startup type for Windows services</td>
+      </tr>
+      <tr>
+        <td><span class="mono">gpupdate /force</span> <span class="os-badge win">WIN</span></td>
+        <td>Force an immediate Group Policy refresh — apply new GPO settings without reboot</td>
+      </tr>
+      <tr>
+        <td><span class="mono">shutdown /r /t 0</span> <span class="os-badge win">WIN</span></td>
+        <td>Restart immediately. <span class="flag">/s</span> shuts down, <span class="flag">/t N</span> sets delay in seconds</td>
+      </tr>
+      <tr>
+        <td><span class="mono">systemctl status &lt;svc&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Check whether a service is running. Replace <span class="mono-sm">status</span> with <span class="mono-sm">start</span>, <span class="mono-sm">stop</span>, or <span class="mono-sm">enable</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">journalctl -u &lt;svc&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>View systemd logs for a specific service. <span class="flag">-f</span> follows in real time</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- DISK & STORAGE -->
+  <p class="chart-section-heading">Disk &amp; Storage</p>
+  <table class="cmd-table">
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>What it does</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="mono">chkdsk C: /f</span> <span class="os-badge win">WIN</span></td>
+        <td>Check and fix filesystem errors on a drive. <span class="flag">/r</span> also locates bad sectors (requires reboot on system drive)</td>
+      </tr>
+      <tr>
+        <td><span class="mono">sfc /scannow</span> <span class="os-badge win">WIN</span></td>
+        <td>System File Checker — scan for and restore corrupted Windows system files. Run as admin</td>
+      </tr>
+      <tr>
+        <td><span class="mono">diskpart</span> <span class="os-badge win">WIN</span></td>
+        <td>Interactive disk partitioning tool. Type <span class="mono-sm">list disk</span>, <span class="mono-sm">select disk N</span>, <span class="mono-sm">list partition</span> inside it</td>
+      </tr>
+      <tr>
+        <td><span class="mono">df -h</span> <span class="os-badge lin">LIN</span></td>
+        <td>Show disk space usage for all mounted filesystems in human-readable sizes</td>
+      </tr>
+      <tr>
+        <td><span class="mono">du -sh &lt;path&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Show total size of a directory. Useful for finding what's eating disk space</td>
+      </tr>
+      <tr>
+        <td><span class="mono">free -h</span> <span class="os-badge lin">LIN</span></td>
+        <td>Show total/used/free RAM and swap in human-readable form</td>
+      </tr>
+      <tr>
+        <td><span class="mono">dd if=&lt;src&gt; of=&lt;dst&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Low-level disk clone / image tool. Copies block-for-block — can clone drives or create ISOs</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- USER MANAGEMENT -->
+  <p class="chart-section-heading">User &amp; Permission Management</p>
+  <table class="cmd-table">
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>What it does</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="mono">net user</span> <span class="os-badge win">WIN</span></td>
+        <td>List all local user accounts. <span class="mono-sm">net user &lt;name&gt;</span> shows details for one user</td>
+      </tr>
+      <tr>
+        <td><span class="mono">net user &lt;name&gt; &lt;pass&gt; /add</span> <span class="os-badge win">WIN</span></td>
+        <td>Create a new local user account</td>
+      </tr>
+      <tr>
+        <td><span class="mono">net localgroup administrators &lt;name&gt; /add</span> <span class="os-badge win">WIN</span></td>
+        <td>Add a user to the local Administrators group</td>
+      </tr>
+      <tr>
+        <td><span class="mono">sudo &lt;command&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Run a command as root (superuser). Required for system-level operations</td>
+      </tr>
+      <tr>
+        <td><span class="mono">su &lt;user&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Switch to another user account in the current terminal session</td>
+      </tr>
+      <tr>
+        <td><span class="mono">useradd &lt;name&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Create a new user account. Use <span class="mono-sm">-m</span> to create a home directory</td>
+      </tr>
+      <tr>
+        <td><span class="mono">passwd &lt;user&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Set or change a user's password</td>
+      </tr>
+      <tr>
+        <td><span class="mono">userdel &lt;name&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Delete a user account. Add <span class="flag">-r</span> to also remove the home directory</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PACKAGE MANAGEMENT -->
+  <p class="chart-section-heading">Package &amp; Software Management</p>
+  <table class="cmd-table">
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>What it does</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="mono">apt update</span> <span class="os-badge lin">LIN</span><br><span class="mono">apt upgrade</span></td>
+        <td>Refresh package list, then install all pending updates (Debian/Ubuntu)</td>
+      </tr>
+      <tr>
+        <td><span class="mono">apt install &lt;pkg&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Install a package. <span class="mono-sm">apt remove &lt;pkg&gt;</span> removes it. Prefix with <span class="mono-sm">sudo</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">yum install &lt;pkg&gt;</span> <span class="os-badge lin">LIN</span></td>
+        <td>Install a package on RHEL/CentOS. Modern systems use <span class="mono-sm">dnf</span> instead</td>
+      </tr>
+      <tr>
+        <td><span class="mono">winget install &lt;id&gt;</span> <span class="os-badge win">WIN</span></td>
+        <td>Windows Package Manager — install apps from the command line (Windows 10+)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- REMOTE DESKTOP -->
+  <p class="chart-section-heading">Remote Access</p>
+  <table class="cmd-table">
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>What it does</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="mono">mstsc</span> <span class="os-badge win">WIN</span></td>
+        <td>Launch Remote Desktop Connection (RDP client, port 3389). <span class="mono-sm">mstsc /v:host</span> connects directly</td>
+      </tr>
+      <tr>
+        <td><span class="mono">mstsc /admin</span> <span class="os-badge win">WIN</span></td>
+        <td>Connect to the console session of a remote server (bypasses session limits)</td>
+      </tr>
+      <tr>
+        <td><span class="mono">ssh -L 8080:target:80 user@jump</span> <span class="os-badge both">BOTH</span></td>
+        <td>SSH local port forwarding — tunnel traffic through a jump host</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- QUICK TIPS -->
+  <p class="chart-section-heading">Quick Tips &amp; Exam Shortcuts</p>
+  <div class="two-col">
+
+    <div class="tip-card">
+      <h3>Windows .msc Shortcuts</h3>
+      <ul>
+        <li><strong>devmgmt.msc</strong> &mdash; Device Manager</li>
+        <li><strong>diskmgmt.msc</strong> &mdash; Disk Management</li>
+        <li><strong>eventvwr.msc</strong> &mdash; Event Viewer</li>
+        <li><strong>services.msc</strong> &mdash; Services</li>
+        <li><strong>compmgmt.msc</strong> &mdash; Computer Management</li>
+        <li><strong>lusrmgr.msc</strong> &mdash; Local Users &amp; Groups</li>
+        <li><strong>gpedit.msc</strong> &mdash; Group Policy Editor</li>
+        <li><strong>taskmgr</strong> &mdash; Task Manager</li>
+        <li><strong>regedit</strong> &mdash; Registry Editor</li>
+        <li><strong>msconfig</strong> &mdash; System Configuration</li>
+        <li><strong>msinfo32</strong> &mdash; System Information</li>
+      </ul>
+    </div>
+
+    <div class="tip-card">
+      <h3>Linux Log Locations</h3>
+      <ul>
+        <li><strong>/var/log/syslog</strong> &mdash; general system log (everything)</li>
+        <li><strong>/var/log/auth.log</strong> &mdash; logins, sudo, SSH auth</li>
+        <li><strong>/var/log/kern.log</strong> &mdash; kernel messages</li>
+        <li><strong>/var/log/dmesg</strong> &mdash; boot and hardware messages</li>
+        <li><strong>/var/log/apt/</strong> &mdash; package install history</li>
+        <li><strong>journalctl -xe</strong> &mdash; systemd logs, most recent errors</li>
+      </ul>
+      <h3 style="margin-top:0.85rem;">Signal Quick-Ref</h3>
+      <ul>
+        <li><strong>SIGTERM</strong> &mdash; graceful quit (kill default)</li>
+        <li><strong>SIGKILL</strong> &mdash; instant terminate, no cleanup</li>
+        <li><strong>SIGINT</strong> &mdash; Ctrl+C interrupt</li>
+        <li><strong>SIGTSTP</strong> &mdash; Ctrl+Z suspend</li>
+        <li><strong>SIGCONT</strong> &mdash; resume a suspended process</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="callout" style="margin-top:1.25rem;">
+    <strong>Pipe ( | ) &amp; Redirect ( &gt; )</strong> work on both platforms.<br>
+    <span style="font-family:var(--font-mono);font-size:0.84rem;">ps -ef | grep nginx</span> &mdash; filter output through grep<br>
+    <span style="font-family:var(--font-mono);font-size:0.84rem;">ipconfig /all &gt; info.txt</span> &mdash; save output to a file<br>
+    <span style="font-family:var(--font-mono);font-size:0.84rem;">tasklist | findstr notepad</span> &mdash; Windows equivalent of grep
+  </div>
+
+</main>
+
+<footer class="site-footer print-hide">
+  Google IT Support Professional Certificate &mdash; CLI Commands Cheat Sheet
+</footer>
+
+</body>
+</html>
