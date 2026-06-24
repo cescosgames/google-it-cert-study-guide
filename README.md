@@ -34,3 +34,7 @@ Stack: vanilla HTML, CSS, and JS. Built by vibe coding with Claude off my own co
 ---
 
 Side thought — is vanilla HTML/CSS/JS the move now with AI? Feels like you can get static sites up so fast with no framework bloat. Idk, just a thought.
+
+### To Do
+- Separate inline JS to own JS files
+- Generally clean up this project structure 
