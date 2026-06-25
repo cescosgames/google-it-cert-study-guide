@@ -1326,5 +1326,275 @@ const QUESTIONS = [
     answer: 1,
     explanation: "A post-mortem documents: (1) Brief summary, (2) Detailed timeline, (3) Root cause, (4) Resolution & recovery steps, (5) Action items to prevent recurrence. The goal is learning — not blame.",
     course: 4
+  },
+
+  /* ── Course 5 · IT Security ─────────────────────────────── */
+
+  {
+    q: "What does the 'I' in the CIA Triad stand for, and what does it mean?",
+    options: [
+      "Identity — confirming who a user is before granting access",
+      "Integrity — keeping data accurate and untampered with",
+      "Isolation — separating sensitive data from public systems",
+      "Interoperability — ensuring systems can communicate securely"
+    ],
+    answer: 1,
+    explanation: "The CIA Triad is Confidentiality, Integrity, and Availability. Integrity means data stays accurate and hasn't been modified without authorization — a file that's been secretly altered has lost its integrity.",
+    course: 5
+  },
+  {
+    q: "What distinguishes a worm from a virus?",
+    options: [
+      "A worm only targets Windows; a virus is cross-platform",
+      "A virus encrypts files; a worm only deletes them",
+      "A worm can self-replicate and spread through networks without needing a host program",
+      "A worm requires user interaction to activate; a virus does not"
+    ],
+    answer: 2,
+    explanation: "A virus attaches to an executable and needs that program to run before spreading. A worm is self-contained and can propagate across networks on its own without human interaction or a host file.",
+    course: 5
+  },
+  {
+    q: "Which type of malware disguises itself as legitimate software but performs malicious actions once installed?",
+    options: [
+      "Worm",
+      "Ransomware",
+      "Trojan",
+      "Rootkit"
+    ],
+    answer: 2,
+    explanation: "A Trojan (Trojan Horse) appears to be a useful program — a game, utility, etc. — but secretly carries a malicious payload. Unlike viruses, Trojans don't self-replicate.",
+    course: 5
+  },
+  {
+    q: "What is a rootkit, and what makes it particularly dangerous?",
+    options: [
+      "Malware that only affects the boot sector of a hard drive",
+      "A collection of tools that operate at the root/admin level, hiding processes from detection",
+      "Software that locks files and demands a ransom to restore access",
+      "A type of spyware that captures only network traffic"
+    ],
+    answer: 1,
+    explanation: "A rootkit gains elevated (root) privileges on a system and hides its own processes, files, and activity from the OS and security tools — making it very hard to detect with normal scans.",
+    course: 5
+  },
+  {
+    q: "A hacker sends SYN packets to a server but never completes the TCP handshake. What type of attack is this?",
+    options: [
+      "Ping of Death",
+      "DNS Cache Poisoning",
+      "SYN Flood",
+      "Man-in-the-Middle"
+    ],
+    answer: 2,
+    explanation: "A SYN Flood overwhelms a server by sending many TCP SYN requests without ever sending the final ACK, leaving connections half-open. The server runs out of resources waiting for completions that never come.",
+    course: 5
+  },
+  {
+    q: "An attacker poisons a DNS server so that requests for a legitimate website resolve to a malicious IP. What attack is this?",
+    options: [
+      "Evil Twin",
+      "DNS Cache Poisoning",
+      "Rogue Access Point",
+      "ARP Spoofing"
+    ],
+    answer: 1,
+    explanation: "DNS Cache Poisoning injects a fake DNS record into a resolver's cache. When users look up the legitimate domain, they receive the attacker's IP and are sent to a compromised server instead.",
+    course: 5
+  },
+  {
+    q: "What is the difference between a DoS attack and a DDoS attack?",
+    options: [
+      "DoS targets the network layer; DDoS targets the application layer",
+      "DoS uses one source; DDoS uses many distributed sources (often a botnet)",
+      "DDoS only affects wireless networks; DoS works on wired networks",
+      "DoS is always permanent; DDoS only disrupts temporarily"
+    ],
+    answer: 1,
+    explanation: "A Denial-of-Service attack comes from a single machine. A Distributed DoS uses a botnet — many compromised machines attacking simultaneously — making it much harder to block by IP.",
+    course: 5
+  },
+  {
+    q: "Which attack intercepts and potentially alters communication between two parties without their knowledge?",
+    options: [
+      "SQL Injection",
+      "Brute Force",
+      "Man-in-the-Middle (MITM)",
+      "Tailgating"
+    ],
+    answer: 2,
+    explanation: "A MITM attack places the attacker between two communicating parties. They can read, modify, or inject data — for example, intercepting login credentials on an unencrypted Wi-Fi connection.",
+    course: 5
+  },
+  {
+    q: "What best describes a phishing attack?",
+    options: [
+      "Guessing passwords by brute force until one works",
+      "Installing malware on a device by leaving a USB drive where it will be found",
+      "A fraudulent message (usually email) impersonating a trusted source to steal credentials or install malware",
+      "Physically following an authorized person into a restricted area"
+    ],
+    answer: 2,
+    explanation: "Phishing is the most common social engineering attack. The attacker impersonates a trusted entity (bank, IT department, etc.) to trick the victim into clicking a malicious link or revealing credentials.",
+    course: 5
+  },
+  {
+    q: "A targeted phishing campaign is aimed specifically at the CFO of a company. What is this called?",
+    options: [
+      "Whaling / Spear Phishing",
+      "Vishing",
+      "Baiting",
+      "Pretexting"
+    ],
+    answer: 0,
+    explanation: "Spear Phishing (or 'whaling' when targeting high-level executives) customizes the attack to a specific individual or group using personal details, making it far more convincing than generic phishing.",
+    course: 5
+  },
+  {
+    q: "Which password attack tries common dictionary words rather than every possible character combination?",
+    options: [
+      "Brute Force",
+      "Rainbow Table Attack",
+      "Dictionary Attack",
+      "Credential Stuffing"
+    ],
+    answer: 2,
+    explanation: "A dictionary attack is more efficient than brute force — it tests a pre-built list of common words, phrases, and passwords. It works because many users choose simple, guessable passwords.",
+    course: 5
+  },
+  {
+    q: "A website accepts user input in a search field and passes it directly to its SQL database. What vulnerability does this create?",
+    options: [
+      "Cross-Site Scripting (XSS)",
+      "SQL Injection",
+      "DNS Cache Poisoning",
+      "Buffer Overflow"
+    ],
+    answer: 1,
+    explanation: "SQL Injection occurs when unsanitized user input is passed directly to a SQL query. An attacker can input SQL commands to dump the database, bypass authentication, or delete records. Always sanitize and parameterize inputs.",
+    course: 5
+  },
+
+  /* ── Mixed · Additional Questions ───────────────────────── */
+
+  {
+    q: "A CPU is listed as having 6 cores and 12 threads. What technology enables two threads per core?",
+    options: [
+      "Turbo Boost",
+      "Hyper-Threading (SMT)",
+      "Out-of-order execution",
+      "Overclocking"
+    ],
+    answer: 1,
+    explanation: "Hyper-Threading (Intel) / SMT (AMD) allows each physical core to present itself as two logical processors. The OS can schedule two threads simultaneously per core, improving throughput for parallel workloads.",
+    course: 1
+  },
+  {
+    q: "What is the key advantage of UEFI over legacy BIOS?",
+    options: [
+      "UEFI uses less power during the boot process",
+      "UEFI supports drives larger than 2 TB, faster boot times, and Secure Boot",
+      "UEFI allows the OS to load without a bootloader",
+      "UEFI replaces RAM with firmware-based memory during POST"
+    ],
+    answer: 1,
+    explanation: "Legacy BIOS uses MBR, which caps bootable drive size at 2 TB and has no security features. UEFI uses GPT (no size limit), boots faster, and supports Secure Boot — which verifies that bootloader code hasn't been tampered with.",
+    course: 1
+  },
+  {
+    q: "A host has IP 192.168.10.50/26. What is the network address of its subnet?",
+    options: [
+      "192.168.10.0",
+      "192.168.10.32",
+      "192.168.10.48",
+      "192.168.10.64"
+    ],
+    answer: 1,
+    explanation: "/26 = 255.255.255.192, giving blocks of 64: .0, .64, .128, .192. The host .50 falls in the .32 block (32–63). So the network address is 192.168.10.32 and the broadcast is 192.168.10.63.",
+    course: 2
+  },
+  {
+    q: "Why would you choose UDP over TCP for a live video stream?",
+    options: [
+      "UDP guarantees delivery order, which prevents frame tearing",
+      "UDP has built-in congestion control that adapts to bandwidth",
+      "UDP has lower overhead — dropped packets are preferable to the delay of retransmission",
+      "UDP encrypts data by default, whereas TCP does not"
+    ],
+    answer: 2,
+    explanation: "TCP retransmits lost packets, introducing latency — the worst outcome for real-time media. UDP skips retransmission; a dropped frame causes a brief glitch but the stream keeps flowing. Applications like video conferencing handle recovery at the app layer.",
+    course: 2
+  },
+  {
+    q: "What does the ARP protocol do, and at which OSI layer does it operate?",
+    options: [
+      "Translates domain names to IP addresses; Layer 7",
+      "Maps IP addresses to MAC addresses so frames can be delivered on a local network; Layer 2/3 boundary",
+      "Assigns IP addresses automatically to devices on a network; Layer 3",
+      "Encrypts traffic between two hosts on the same subnet; Layer 4"
+    ],
+    answer: 1,
+    explanation: "ARP (Address Resolution Protocol) resolves a known IP address to the MAC address needed to build an Ethernet frame. It sits at the Layer 2/3 boundary — it uses IP addresses as input but produces a Layer 2 MAC address as output.",
+    course: 2
+  },
+  {
+    q: "A Linux file shows permissions -rwxr-x---. Who can execute this file?",
+    options: [
+      "Everyone on the system",
+      "The owner and members of the file's group",
+      "Only the owner",
+      "The owner and all others, but not the group"
+    ],
+    answer: 1,
+    explanation: "Permissions break into owner (rwx), group (r-x), others (---). The owner can read/write/execute; the group can read/execute; others have no access. So both the owner and group members can execute it.",
+    course: 3
+  },
+  {
+    q: "What is the Windows Registry and what is it used for?",
+    options: [
+      "A log file that tracks all login attempts and system errors",
+      "A hierarchical database storing OS and application configuration settings",
+      "A list of all installed software packages managed by Windows Update",
+      "A backup of the MBR and boot sector created during OS installation"
+    ],
+    answer: 1,
+    explanation: "The Windows Registry is a centralized hierarchical database (HKEY_* hives) that stores configuration for the OS, hardware, and applications. Settings like startup programs, file associations, and user preferences all live here.",
+    course: 3
+  },
+  {
+    q: "What are the four steps of the DHCP lease process in order?",
+    options: [
+      "Discover → Offer → Request → Acknowledge",
+      "Request → Offer → Discover → Acknowledge",
+      "Offer → Discover → Acknowledge → Request",
+      "Discover → Request → Offer → Acknowledge"
+    ],
+    answer: 0,
+    explanation: "DORA: the client broadcasts a Discover; the server responds with an Offer; the client sends a Request for that offer; the server sends an Acknowledge confirming the lease. The client now has a valid IP for the lease duration.",
+    course: 4
+  },
+  {
+    q: "A server uses RAID 5 across 4 drives of 2 TB each. How much usable storage is available?",
+    options: [
+      "8 TB",
+      "6 TB",
+      "4 TB",
+      "2 TB"
+    ],
+    answer: 1,
+    explanation: "RAID 5 uses one drive's worth of space for distributed parity regardless of the number of drives. With 4 × 2 TB = 8 TB raw, 2 TB is reserved for parity, leaving 6 TB usable. It can survive one drive failure.",
+    course: 4
+  },
+  {
+    q: "An attacker sets up a Wi-Fi network named 'CoffeeShop_Free' that mimics the real café network. Users connect and their traffic is intercepted. What two attack types are in play?",
+    options: [
+      "Rogue AP and DNS Cache Poisoning",
+      "Evil Twin and Man-in-the-Middle",
+      "SYN Flood and Phishing",
+      "Tailgating and Spear Phishing"
+    ],
+    answer: 1,
+    explanation: "The fake network mimicking a legitimate one is an Evil Twin attack. Once users connect, the attacker can intercept all traffic — a Man-in-the-Middle attack. These two are commonly combined: the evil twin creates the position; MITM is what the attacker does with it.",
+    course: 5
   }
 ];

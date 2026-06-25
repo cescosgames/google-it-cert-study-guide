@@ -363,5 +363,66 @@ window.RAPID_FIRE_BANK = (function () {
     ])
   );
 
-  return [].concat(c1, c2, c3, c4);
+  var c5 = [].concat(
+    section('C5 · CIA & Core Concepts', [
+      { q: 'What are the three pillars of the CIA Triad and what does each mean?',
+        a: 'Confidentiality — keeping information hidden from unauthorized parties. Integrity — keeping data accurate and untampered with. Availability — ensuring information is accessible to those who should have it.' },
+      { q: 'What is the difference between a vulnerability, an exploit, and a threat?',
+        a: 'Vulnerability: a flaw in a system that can be exploited. Exploit: software or code used to take advantage of that flaw. Threat: the possibility of danger that could leverage the vulnerability.' },
+      { q: 'What is a 0-day vulnerability?',
+        a: 'A vulnerability unknown to the software developer but known (and often already exploited) by attackers — so there are zero days between discovery and active exploitation.' },
+      { q: 'What is the difference between black hat and white hat hackers?',
+        a: 'Black hat hackers break into systems maliciously and without authorization. White hat hackers are authorized security professionals who test and improve security defenses.' },
+    ]),
+    section('C5 · Malware', [
+      { q: 'How does a virus spread, and how does it differ from a worm?',
+        a: 'A virus attaches to an executable and spreads when that program runs. A worm is self-contained and spreads through networks on its own — no host program or user action needed.' },
+      { q: 'What is ransomware and what is the recommended response?',
+        a: 'Ransomware encrypts your files or locks your system, demanding payment for restoration. Response: quarantine the device immediately (disconnect from network), disable auto-backups, then run an offline malware scan.' },
+      { q: 'What is a rootkit and why is it hard to detect?',
+        a: 'A collection of tools running at root/admin level that hide their own processes, files, and activity from the OS — making standard scans ineffective.' },
+      { q: 'What is a botnet and how is it related to malware?',
+        a: 'A botnet is a network of malware-infected machines controlled by an attacker. They are typically used together for DDoS attacks, spam campaigns, or other large-scale malicious operations.' },
+      { q: 'What is a logic bomb?',
+        a: 'Malware that is intentionally installed and lies dormant until a specific trigger condition is met (a date, a login, an action), then activates its payload.' },
+      { q: 'What are three signs that a computer may be infected with malware?',
+        a: 'Running slower than normal, restarting unexpectedly, using abnormally high CPU or memory. Check the resource/task manager for unfamiliar processes consuming resources.' },
+      { q: 'What steps should you take when you first detect malware on a device?',
+        a: '1) Quarantine: disconnect from the internet (both Wi-Fi and Ethernet). 2) Disable auto-backups to prevent spreading the infection. 3) Run an offline malware scan to remove it.' },
+    ]),
+    section('C5 · Network Attacks', [
+      { q: 'How does a SYN flood attack work?',
+        a: 'The attacker sends many TCP SYN packets but never sends the ACK to complete the handshake. The server holds half-open connections waiting for a response that never comes, exhausting its connection table.' },
+      { q: 'What is the difference between a Rogue AP and an Evil Twin?',
+        a: 'Rogue AP: an unauthorized access point installed on a network without admin knowledge. Evil Twin: a fake AP that mimics a legitimate network name to intercept traffic from users who connect.' },
+      { q: 'How does DNS Cache Poisoning work?',
+        a: 'An attacker tricks a DNS resolver into accepting a fake record, so future lookups for a legitimate domain return the attacker\'s malicious IP address instead.' },
+      { q: 'What is a Man-in-the-Middle attack?',
+        a: 'The attacker inserts themselves between two communicating parties, intercepting and potentially altering traffic — such as capturing login credentials on an unsecured Wi-Fi network.' },
+      { q: 'What is a Ping of Death?',
+        a: 'A DoS technique that sends a malformed, oversized ICMP ping packet. The target\'s OS cannot handle the packet correctly, causing a buffer overflow and crashing the system.' },
+      { q: 'What is the difference between DoS and DDoS?',
+        a: 'DoS originates from a single attacker machine. DDoS is distributed — a botnet of many machines attacks simultaneously, making it much harder to block by source IP.' },
+    ]),
+    section('C5 · Social Engineering & Other Attacks', [
+      { q: 'Why is social engineering considered especially dangerous?',
+        a: 'It targets humans rather than technology — and humans are typically the weakest link. Even technically secure systems can be compromised if an employee is tricked into handing over credentials.' },
+      { q: 'What is the difference between phishing and spear phishing?',
+        a: 'Phishing is a broad, generic attack sent to many targets (e.g., fake bank email). Spear phishing is targeted — customized to a specific individual or group using personal details to be more convincing.' },
+      { q: 'What is email spoofing?',
+        a: 'Forging the "From" address of an email to make it appear to come from a trusted or legitimate source, often used in phishing attacks.' },
+      { q: 'What is baiting in a security context?',
+        a: 'A physical social engineering attack — leaving a malware-infected USB drive in a public place, hoping a curious person will plug it into their computer.' },
+      { q: 'What is tailgating?',
+        a: 'A physical security attack where an unauthorized person follows closely behind an authorized person through a secure entrance to gain access without credentials.' },
+      { q: 'What is a SQL injection attack and how is it prevented?',
+        a: 'An attacker enters SQL commands into an input field (login, search) that the backend passes directly to the database. Prevented by sanitizing all inputs and using parameterized queries.' },
+      { q: 'What is Cross-Site Scripting (XSS)?',
+        a: 'An injection attack where malicious scripts are inserted into a legitimate website\'s pages, targeting users of that service — for example, stealing session cookies from visitors.' },
+      { q: 'What is the difference between a brute force and a dictionary password attack?',
+        a: 'Brute force tries every possible character combination. Dictionary attack only tries common words and phrases — faster but limited to predictable passwords. CAPTCHA is one defense against brute force.' },
+    ])
+  );
+
+  return [].concat(c1, c2, c3, c4, c5);
 })();

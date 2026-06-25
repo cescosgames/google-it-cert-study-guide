@@ -47,10 +47,89 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: malware types (virus, worm, trojan, ransomware, spyware, rootkit), social engineering (phishing, spear phishing, vishing, pretexting), SQL injection, XSS, MITM, DoS/DDoS, password attacks (brute force, rainbow table, dictionary), insider threats.</p>
+
+          <div class="subsection">
+            <p class="subsection-title">Core Concepts &amp; CIA Triad</p>
+            <ul class="concept-list">
+              <li><strong>CIA Triad</strong> — guiding model for information security policies: Confidentiality, Integrity, Availability</li>
+              <li><strong>Confidentiality</strong> — keeping information hidden from unauthorized parties</li>
+              <li><strong>Integrity</strong> — keeping data accurate and untampered with</li>
+              <li><strong>Availability</strong> — information is readily accessible to those who should have it</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+              <tbody>
+                <tr><td>Risk</td><td>Possibility of suffering loss in the event of an attack</td></tr>
+                <tr><td>Vulnerability</td><td>A flaw in a system that can be exploited</td></tr>
+                <tr><td>0-Day Vulnerability</td><td>Unknown to the software developer, but known to an attacker</td></tr>
+                <tr><td>Exploit</td><td>Software used to take advantage of a security bug or vulnerability</td></tr>
+                <tr><td>Threat</td><td>Possibility of danger that could exploit a vulnerability</td></tr>
+                <tr><td>Attack</td><td>An actual attempt at causing harm to a system</td></tr>
+                <tr><td>Hacker</td><td>Someone who attempts to break into a system (black hat = malicious, white hat = authorized)</td></tr>
+              </tbody>
+            </table>
           </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Malware Types</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Virus</span><span class="term-val">Attaches to an executable; spreads when the program runs, infecting touched files</span></div>
+              <div class="term-row"><span class="term-key">Worm</span><span class="term-val">Like a virus but self-contained; spreads through networks without needing a host program</span></div>
+              <div class="term-row"><span class="term-key">Adware</span><span class="term-val">Displays ads and collects data; sometimes legitimately downloaded, sometimes not</span></div>
+              <div class="term-row"><span class="term-key">Trojan</span><span class="term-val">Disguises itself as something legitimate but performs malicious actions</span></div>
+              <div class="term-row"><span class="term-key">Spyware</span><span class="term-val">Spies on the user — records keystrokes, accesses webcam, etc.</span></div>
+              <div class="term-row"><span class="term-key">Keylogger</span><span class="term-val">Common spyware that records all keystrokes</span></div>
+              <div class="term-row"><span class="term-key">Ransomware</span><span class="term-val">Holds data or system hostage until a payment is made</span></div>
+              <div class="term-row"><span class="term-key">Botnet</span><span class="term-val">Network of infected computers used together to perform some process (e.g. DDoS)</span></div>
+              <div class="term-row"><span class="term-key">Backdoor</span><span class="term-val">An alternative, hidden way to access a system</span></div>
+              <div class="term-row"><span class="term-key">Rootkit</span><span class="term-val">Collection of tools that run at the root/admin level, hiding processes from detection</span></div>
+              <div class="term-row"><span class="term-key">Logic Bomb</span><span class="term-val">Intentionally installed malware that activates under specific conditions</span></div>
+            </div>
+            <div class="note">
+              <strong>Signs of infection:</strong> computer slower than normal, unexpected restarts, abnormally high memory/CPU usage. Check the resource manager for unfamiliar programs.<br><br>
+              <strong>Response steps:</strong> quarantine by disconnecting from internet → disable auto-backups → run an offline malware scan.<br><br>
+              <strong>Proactive measures:</strong> keep OS updated, use a non-admin account, verify links/downloads/email attachments, ignore pop-ups, limit file sharing, use antivirus.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Network Attacks</p>
+            <table class="ref-table">
+              <thead><tr><th>Attack</th><th>How It Works</th></tr></thead>
+              <tbody>
+                <tr><td>DNS Cache Poisoning</td><td>Tricks a DNS server into accepting a fake DNS record, redirecting users to a compromised server</td></tr>
+                <tr><td>Man-in-the-Middle (MITM)</td><td>Attacker inserts themselves between two communicating parties to intercept or alter data</td></tr>
+                <tr><td>Rogue Access Point</td><td>Unauthorized AP installed on the network without the admin's knowledge</td></tr>
+                <tr><td>Evil Twin</td><td>Fake AP that mimics a legitimate network to redirect and intercept traffic</td></tr>
+                <tr><td>DoS</td><td>Overwhelms a server/network to prevent legitimate access</td></tr>
+                <tr><td>Ping of Death</td><td>Sends a malformed oversized ping, causing a buffer overflow and crashing the system</td></tr>
+                <tr><td>Ping Flood</td><td>Overwhelms a target with ICMP echo requests</td></tr>
+                <tr><td>SYN Flood</td><td>Sends many SYN packets without sending ACK, leaving TCP connections half-open and exhausting resources</td></tr>
+                <tr><td>DDoS</td><td>Distributed DoS — uses a botnet to overwhelm a target from many sources simultaneously</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Other Attacks</p>
+            <ul class="concept-list">
+              <li><strong>Injection Attack</strong> — inserts malicious code into a legitimate website or input field; mitigated by sanitizing inputs</li>
+              <li><strong>XSS (Cross-Site Scripting)</strong> — injection attack targeting users of a service by inserting malicious scripts</li>
+              <li><strong>SQL Injection</strong> — sends SQL commands as input to a site using a SQL database to manipulate or dump data</li>
+              <li><strong>Brute Force</strong> — tries every possible password combination; CAPTCHA helps prevent this</li>
+              <li><strong>Dictionary Attack</strong> — tries commonly used words and phrases rather than all combinations</li>
+            </ul>
+            <p class="subsection-title" style="margin-top:1rem;">Social Engineering</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Social Engineering</span><span class="term-val">Attacks that exploit human behavior — humans are typically the weakest link</span></div>
+              <div class="term-row"><span class="term-key">Phishing</span><span class="term-val">Most common: fake emails prompting users to click links or reset credentials</span></div>
+              <div class="term-row"><span class="term-key">Spear Phishing</span><span class="term-val">Targeted phishing aimed at a specific individual or group</span></div>
+              <div class="term-row"><span class="term-key">Email Spoofing</span><span class="term-val">Sender address is forged to appear as a trusted source</span></div>
+              <div class="term-row"><span class="term-key">Baiting</span><span class="term-val">Leaving a malware-infected USB somewhere hoping someone plugs it in</span></div>
+              <div class="term-row"><span class="term-key">Tailgating</span><span class="term-val">Physically following an authorized person through a secure entrance</span></div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
