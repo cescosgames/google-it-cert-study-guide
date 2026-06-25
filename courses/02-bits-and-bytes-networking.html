@@ -177,6 +177,45 @@
             </div>
           </div>
 
+          <div class="subsection">
+            <p class="subsection-title">TCP/IP Five-Layer Model (used in this course)</p>
+            <p style="font-size:.875rem;color:var(--text-1);margin-bottom:.7rem;line-height:1.6;">The Google IT cert uses a <strong>5-layer TCP/IP model</strong> — the standard 4-layer model with the Physical layer added as its own layer. It maps directly to real hardware and protocols.</p>
+            <table class="layer-table">
+              <thead>
+                <tr><th>#</th><th>Layer</th><th>Role</th><th>Examples</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="layer-num">5</td><td>Application</td><td>User-facing services</td><td>HTTP, DNS, SMTP, SSH</td></tr>
+                <tr><td class="layer-num">4</td><td>Transport</td><td>End-to-end delivery, ports</td><td>TCP, UDP</td></tr>
+                <tr><td class="layer-num">3</td><td>Network</td><td>Logical addressing &amp; routing</td><td>IP, ICMP, ARP</td></tr>
+                <tr><td class="layer-num">2</td><td>Data Link</td><td>MAC addressing &amp; framing</td><td>Ethernet, Wi-Fi (802.11)</td></tr>
+                <tr><td class="layer-num">1</td><td>Physical</td><td>Raw bit transmission over a medium</td><td>Cables, hubs, NICs, repeaters</td></tr>
+              </tbody>
+            </table>
+            <div class="note">The 5-layer model = the 4-layer TCP/IP model with Physical split out from the Link layer. Know all three (OSI 7, TCP/IP 4, TCP/IP 5) but use this 5-layer version for this cert.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Physical Layer - Cables &amp; Hardware</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Twisted pair</span><span class="term-val">Most common LAN cabling. Wire pairs twisted to reduce crosstalk. <strong>Cat5e</strong>: 1 Gbps · <strong>Cat6</strong>: 10 Gbps short runs · <strong>Cat6a</strong>: 10 Gbps up to 100m.</span></div>
+              <div class="term-row"><span class="term-key">Fiber optic</span><span class="term-val">Transmits light pulses — immune to EMI, supports long distances. <strong>Single-mode</strong>: one light path, long distance (WAN links). <strong>Multi-mode</strong>: multiple paths, shorter distance (buildings/data centers).</span></div>
+              <div class="term-row"><span class="term-key">Coaxial</span><span class="term-val">Center copper conductor surrounded by shielding. Legacy for LAN; still used in cable internet (DOCSIS standard).</span></div>
+              <div class="term-row"><span class="term-key">Straight-through</span><span class="term-val">Standard patch cable — same pin order on both ends. Connects <em>unlike</em> devices (PC → switch, switch → router).</span></div>
+              <div class="term-row"><span class="term-key">Crossover</span><span class="term-val">Tx and Rx pairs swapped — connects <em>like</em> devices (PC → PC, switch → switch). Modern switches use <strong>Auto-MDIX</strong> to detect this automatically, so crossover cables are rarely needed today.</span></div>
+              <div class="term-row"><span class="term-key">Half duplex</span><span class="term-val">One direction at a time — like a walkie-talkie. Used with hubs; CSMA/CD handles collisions.</span></div>
+              <div class="term-row"><span class="term-key">Full duplex</span><span class="term-val">Simultaneous send and receive. Used with switches — no collisions possible per port.</span></div>
+              <div class="term-row"><span class="term-key">Patch panel</span><span class="term-val">Passive termination board in a rack. Wall jacks run to it; short patch cables connect to the switch. Keeps structured cabling organized and easy to reconfigure.</span></div>
+            </div>
+            <p class="subsection-title" style="margin-top:1rem;">Common Cabling Tools</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Crimping tool</span><span class="term-val">Attaches RJ-45 connectors to the ends of twisted-pair cable</span></div>
+              <div class="term-row"><span class="term-key">Cable tester</span><span class="term-val">Verifies pin-to-pin continuity — catches miswiring, opens, and shorts</span></div>
+              <div class="term-row"><span class="term-key">Punch-down tool</span><span class="term-val">Seats wires into patch panel or keystone jack (wall plate) terminals</span></div>
+              <div class="term-row"><span class="term-key">Cable stripper</span><span class="term-val">Removes the outer jacket without nicking the inner conductors</span></div>
+            </div>
+          </div>
+
           <!-- Practice -->
           <div class="practice-section">
             <button class="practice-btn" onclick="togglePractice(this)">
@@ -440,6 +479,36 @@
             </ul>
           </div>
 
+          <div class="subsection">
+            <p class="subsection-title">IPv4 Datagram Header - Key Fields</p>
+            <table class="ref-table">
+              <thead>
+                <tr><th>Field</th><th>Size</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Version</td><td>4 bits</td><td>Always 4 for IPv4</td></tr>
+                <tr><td>IHL (Header Length)</td><td>4 bits</td><td>Length in 32-bit words; minimum = 5 (= 20 bytes)</td></tr>
+                <tr><td>Total Length</td><td>16 bits</td><td>Entire datagram size (header + data); max 65,535 bytes</td></tr>
+                <tr><td>TTL</td><td>8 bits</td><td>Decremented at each router hop; packet dropped at 0</td></tr>
+                <tr><td>Protocol</td><td>8 bits</td><td>Upper-layer protocol: <code>1</code>=ICMP · <code>6</code>=TCP · <code>17</code>=UDP</td></tr>
+                <tr><td>Header Checksum</td><td>16 bits</td><td>Error detection for the header only (not payload)</td></tr>
+                <tr><td>Source IP</td><td>32 bits</td><td>Sender's IP address</td></tr>
+                <tr><td>Destination IP</td><td>32 bits</td><td>Recipient's IP address</td></tr>
+                <tr><td>Flags &amp; Fragment Offset</td><td>3+13 bits</td><td>Controls fragmentation when a packet must be split to fit an MTU</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Routing - IGPs, EGPs &amp; Autonomous Systems</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Autonomous System</span><span class="term-val">A collection of IP networks under a single organization's routing policy. Each AS is assigned an <strong>ASN</strong> (Autonomous System Number) by IANA or a regional registry (ARIN, RIPE, APNIC).</span></div>
+              <div class="term-row"><span class="term-key">IGP</span><span class="term-val">Interior Gateway Protocol — routes traffic <em>within</em> an AS. Examples: <strong>OSPF</strong> (link-state, most common), <strong>RIP</strong> (distance-vector, legacy), <strong>EIGRP</strong> (Cisco proprietary).</span></div>
+              <div class="term-row"><span class="term-key">EGP</span><span class="term-val">Exterior Gateway Protocol — routes traffic <em>between</em> autonomous systems. <strong>BGP</strong> is the only EGP in use today — it's what holds the internet together.</span></div>
+              <div class="term-row"><span class="term-key">IANA</span><span class="term-val">Internet Assigned Numbers Authority — manages global IP address allocation, AS numbers, port/protocol registries, and TLD root zones. Delegates regional IP allocation to RIRs.</span></div>
+            </div>
+          </div>
+
           <!-- Practice -->
           <div class="practice-section">
             <button class="practice-btn" onclick="togglePractice(this)">
@@ -558,6 +627,15 @@
             </ul>
           </div>
 
+          <div class="subsection">
+            <p class="subsection-title">Unicast, Multicast &amp; Broadcast</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Unicast</span><span class="term-val">One sender → one specific receiver. Standard for most traffic (web requests, SSH sessions). Uses a specific destination MAC and IP address.</span></div>
+              <div class="term-row"><span class="term-key">Multicast</span><span class="term-val">One sender → a specific <em>group</em> of receivers that have opted in. Multicast MAC range: <code>01:00:5E:xx:xx:xx</code>. Used for streaming and routing protocol updates (e.g., OSPF uses <code>224.0.0.5</code>).</span></div>
+              <div class="term-row"><span class="term-key">Broadcast</span><span class="term-val">One sender → <em>all</em> devices on the local segment. Destination MAC is <code>FF:FF:FF:FF:FF:FF</code>. Used by ARP requests and DHCP discovery. Does not cross routers.</span></div>
+            </div>
+          </div>
+
           <!-- Practice -->
           <div class="practice-section">
             <button class="practice-btn" onclick="togglePractice(this)">
@@ -650,6 +728,21 @@
               <div class="term-row"><span class="term-key">PSH</span><span class="term-val">Push - send buffered data immediately to the application</span></div>
               <div class="term-row"><span class="term-key">URG</span><span class="term-val">Urgent - data should be prioritized</span></div>
             </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">TCP Socket States</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">LISTEN</span><span class="term-val">Server is waiting for incoming connections on a port</span></div>
+              <div class="term-row"><span class="term-key">SYN_SENT</span><span class="term-val">Client sent SYN, waiting for SYN-ACK from the server</span></div>
+              <div class="term-row"><span class="term-key">SYN_RECEIVED</span><span class="term-val">Server received SYN and replied SYN-ACK, waiting for the final ACK</span></div>
+              <div class="term-row"><span class="term-key">ESTABLISHED</span><span class="term-val">Three-way handshake complete — connection is active and data can flow</span></div>
+              <div class="term-row"><span class="term-key">FIN_WAIT</span><span class="term-val">This side sent FIN to start closing; waiting for acknowledgment from the other end</span></div>
+              <div class="term-row"><span class="term-key">CLOSE_WAIT</span><span class="term-val">Remote side has closed; local application needs to finish and also close</span></div>
+              <div class="term-row"><span class="term-key">TIME_WAIT</span><span class="term-val">Connection is closed but the socket stays open briefly to catch any delayed packets still in transit (typically 60–120 s)</span></div>
+              <div class="term-row"><span class="term-key">CLOSED</span><span class="term-val">No active connection</span></div>
+            </div>
+            <div class="note">Socket states are visible in <code>netstat</code> or <code>ss</code> output. A large number of CLOSE_WAIT states usually means the application isn't closing connections properly.</div>
           </div>
 
           <div class="subsection">
@@ -786,6 +879,29 @@
               <span class="label">6. Resolver → authoritative NS</span><span class="val">Returns the actual A/AAAA record</span><br>
               <span class="label">7. Resolver caches + replies</span><span class="val">Client gets the IP, answer cached per TTL</span>
             </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Anatomy of a Domain Name</p>
+            <div class="math-block">
+              <span class="label">Full example</span>     <span class="val">mail.example.com.</span><br>
+              <span class="label">Root</span>             <span class="val">. &nbsp;(trailing dot — implied, managed by ICANN)</span><br>
+              <span class="label">TLD</span>              <span class="val">com &nbsp;(top-level domain — .com, .org, .net, country codes)</span><br>
+              <span class="label">Domain (SLD)</span>     <span class="val">example &nbsp;(registered with a domain registrar)</span><br>
+              <span class="label">Subdomain</span>        <span class="val">mail &nbsp;(configured by the domain owner in DNS)</span><br>
+              <span class="label">FQDN</span>             <span class="val">mail.example.com. &nbsp;(fully qualified — includes root dot)</span>
+            </div>
+            <div class="note">A <strong>registrar</strong> (e.g., Namecheap, Google Domains) is where you purchase a domain. Domains expire if not renewed — losing one can mean losing email and web traffic. <strong>ICANN</strong> oversees TLDs and accredits registrars.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">DNS Zones</p>
+            <ul class="concept-list">
+              <li>A <strong>DNS zone</strong> is the portion of the namespace that a particular nameserver is authoritative for (e.g., <code>example.com</code> and all its records).</li>
+              <li>Zone data lives in a <strong>zone file</strong> — a text file containing all DNS records for that domain, plus an <strong>SOA</strong> (Start of Authority) record at the top.</li>
+              <li>The <strong>SOA record</strong> holds the primary nameserver name, admin email, serial number, and refresh/retry/expire timers for secondary servers.</li>
+              <li><strong>Zone transfer</strong>: secondary nameservers copy zone data from the primary. <strong>AXFR</strong> = full transfer; <strong>IXFR</strong> = incremental. Both use TCP port 53.</li>
+            </ul>
           </div>
 
           <!-- DHCP -->
@@ -1018,6 +1134,59 @@
               <li>Authentication failures: wrong passphrase, expired certificate (WPA2-Enterprise), or mismatch in security standard.</li>
               <li>Check <strong>DHCP exhaustion</strong> if new devices can't get an IP - the pool may be full.</li>
             </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Broadband &amp; WAN Connections</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">DSL</span><span class="term-val">Digital Subscriber Line — broadband over phone lines. <strong>ADSL</strong> is asymmetric (faster download than upload), common for homes. Speed degrades with distance from the exchange.</span></div>
+              <div class="term-row"><span class="term-key">Cable broadband</span><span class="term-val">Runs over coaxial TV infrastructure (DOCSIS standard). Shared bandwidth in a neighborhood — speeds vary with local congestion.</span></div>
+              <div class="term-row"><span class="term-key">Fiber</span><span class="term-val">Light-based — highest speeds, lowest latency. <strong>FTTH/FTTP</strong>: fiber all the way to the building. <strong>FTTC</strong>: fiber to the curb, copper for the last stretch.</span></div>
+              <div class="term-row"><span class="term-key">T-carrier lines</span><span class="term-val"><strong>T1</strong>: 24 multiplexed channels, 1.544 Mbps. <strong>T3</strong>: 28 T1s bundled, ~45 Mbps. Business-grade dedicated lines; largely replaced by fiber and MPLS today.</span></div>
+              <div class="term-row"><span class="term-key">WAN / MPLS</span><span class="term-val">Wide Area Networks connect geographically separated sites. <strong>MPLS</strong> (Multiprotocol Label Switching) is a managed WAN service that routes by label rather than IP — predictable performance, but expensive.</span></div>
+              <div class="term-row"><span class="term-key">Point-to-point VPN</span><span class="term-val">Replaces dedicated WAN links with an encrypted tunnel over the public internet. Lower cost, but reliability depends on both ISPs.</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Wireless Networking</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Infrastructure mode</span><span class="term-val">Devices connect through a central <strong>access point (AP)</strong> — standard for home/office. The AP bridges wireless clients to the wired network.</span></div>
+              <div class="term-row"><span class="term-key">Ad-hoc mode</span><span class="term-val">Devices connect directly to each other — no AP needed. Useful for quick file transfers; no central management.</span></div>
+              <div class="term-row"><span class="term-key">Mesh</span><span class="term-val">Multiple APs communicate with each other to extend coverage. Eliminates dead zones without running long cables. Common in modern home Wi-Fi systems.</span></div>
+              <div class="term-row"><span class="term-key">Wi-Fi 6 (802.11ax)</span><span class="term-val">Current mainstream standard. Key improvements over Wi-Fi 5: <strong>OFDMA</strong> (multiple clients share one channel simultaneously), <strong>MU-MIMO</strong> uplink and downlink, <strong>BSS Coloring</strong> (reduces interference in dense environments). Up to ~9.6 Gbps theoretical.</span></div>
+              <div class="term-row"><span class="term-key">Cellular (4G/5G)</span><span class="term-val"><strong>4G LTE</strong>: typical 10–100 Mbps, widely available. <strong>5G</strong>: multi-Gbps theoretical, low latency; important for IoT. Devices connect via SIM card tied to a carrier account.</span></div>
+            </div>
+            <p class="subsection-title" style="margin-top:1rem;">Wireless Security Standards</p>
+            <table class="ref-table">
+              <thead><tr><th>Standard</th><th>Status</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td>WEP</td><td style="color:var(--danger);font-weight:600;">Broken</td><td>40-bit key, easily cracked in minutes — never use</td></tr>
+                <tr><td>WPA</td><td style="color:var(--warning);font-weight:600;">Deprecated</td><td>TKIP encryption, known vulnerabilities — avoid</td></tr>
+                <tr><td>WPA2</td><td style="color:var(--success);font-weight:600;">Acceptable</td><td>AES-CCMP encryption. <strong>Personal</strong> (pre-shared key) or <strong>Enterprise</strong> (802.1X/RADIUS auth)</td></tr>
+                <tr><td>WPA3</td><td style="color:var(--success);font-weight:600;">Current</td><td>SAE replaces PSK (resists offline dictionary attacks). Mandatory for Wi-Fi 6 certification.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Cloud Computing</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">IaaS</span><span class="term-val">Infrastructure as a Service — rent raw compute, storage, and networking. You manage OS and above. Examples: AWS EC2, Azure VMs, Google Compute Engine.</span></div>
+              <div class="term-row"><span class="term-key">PaaS</span><span class="term-val">Platform as a Service — provider manages the infrastructure; you deploy your app/code. Examples: Heroku, Google App Engine, Azure App Service.</span></div>
+              <div class="term-row"><span class="term-key">SaaS</span><span class="term-val">Software as a Service — fully managed application, accessed via browser. You just use it. Examples: Gmail, Salesforce, Microsoft 365.</span></div>
+              <div class="term-row"><span class="term-key">Cloud storage</span><span class="term-val">Object storage accessible over the internet. Data is replicated for durability. Examples: Google Drive, AWS S3, iCloud.</span></div>
+            </div>
+            <div class="note">Quick mental model: <strong>IaaS</strong> = you manage most · <strong>PaaS</strong> = you manage the app · <strong>SaaS</strong> = you just log in.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">IPv4 / IPv6 Coexistence</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Dual stack</span><span class="term-val">A device or network runs <em>both</em> IPv4 and IPv6 simultaneously. The dominant real-world transition strategy — the device uses whichever protocol the destination supports.</span></div>
+              <div class="term-row"><span class="term-key">Tunneling (6in4)</span><span class="term-val">IPv6 packets are encapsulated inside IPv4 packets to cross an IPv4-only network. Used when two IPv6 networks are separated by IPv4 infrastructure.</span></div>
+              <div class="term-row"><span class="term-key">NAT64</span><span class="term-val">Gateway translates between IPv6 and IPv4 — allows IPv6-only clients to reach IPv4-only servers.</span></div>
+            </div>
           </div>
 
           <!-- Practice -->
