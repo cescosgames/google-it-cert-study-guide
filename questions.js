@@ -807,18 +807,6 @@ const QUESTIONS = [
     course: 3
   },
   {
-    q: "What is the difference between a Type 1 and Type 2 hypervisor?",
-    options: [
-      "Type 1 runs on top of an existing OS; Type 2 runs directly on bare metal",
-      "Type 1 runs directly on bare metal hardware; Type 2 runs on top of an existing OS",
-      "Type 1 is for Linux VMs; Type 2 is for Windows VMs",
-      "Type 1 supports more VMs; Type 2 is limited to one at a time"
-    ],
-    answer: 1,
-    explanation: "Type 1 (bare-metal) hypervisors like VMware ESXi or Hyper-V run directly on hardware — faster and used in production. Type 2 hypervisors like VirtualBox run as apps inside an existing OS — easier to set up for personal use.",
-    course: 3
-  },
-  {
     q: "What does the /etc/passwd file store in Linux?",
     options: [
       "Encrypted user passwords",
@@ -1475,6 +1463,69 @@ const QUESTIONS = [
     course: 5
   },
 
+  /* ── Course 5 · Cryptography (Module 2) ────────────────── */
+
+  {
+    q: "According to Kerckhoffs's principle, what must remain secret for a cryptographic system to be secure?",
+    options: [
+      "The encryption algorithm used",
+      "Only the key — the system should be secure even if everything else is public knowledge",
+      "The cipher type (block vs stream)",
+      "The length of the plaintext message"
+    ],
+    answer: 1,
+    explanation: "Kerckhoffs's principle: a crypto system should remain secure even if everything about it is public, except the key. This directly opposes 'Security Through Obscurity,' which is considered a flawed design philosophy.",
+    course: 5
+  },
+  {
+    q: "Why is a random salt added to a password before hashing it?",
+    options: [
+      "Salting speeds up the hashing process for faster logins",
+      "Salting extends the output hash to make it longer",
+      "Salting makes each hash unique, rendering precomputed rainbow tables useless",
+      "Salting allows the original password to be recovered if forgotten"
+    ],
+    answer: 2,
+    explanation: "A salt is random data appended to the password before hashing. Two users with identical passwords get different hashes because their salts differ. This invalidates rainbow tables, which rely on precomputed hash → password mappings.",
+    course: 5
+  },
+  {
+    q: "During a TLS handshake, why does the protocol switch from asymmetric to symmetric encryption for the actual data transfer?",
+    options: [
+      "Asymmetric encryption is not secure enough for bulk data transfer",
+      "Symmetric ciphers are far faster — asymmetric is only used to securely exchange the session key",
+      "TLS certificates expire after the handshake phase completes",
+      "Symmetric encryption provides stronger server authentication than asymmetric"
+    ],
+    answer: 1,
+    explanation: "Asymmetric encryption (RSA/ECDH) is computationally expensive — ideal for securely exchanging a small session key but too slow for streaming data. Once the handshake establishes a shared secret, the connection switches to fast symmetric encryption (AES-GCM) for bulk transfer.",
+    course: 5
+  },
+  {
+    q: "What is the primary purpose of a digital certificate (e.g., an SSL/TLS server certificate)?",
+    options: [
+      "To encrypt the data sent between a client and server",
+      "To prove that an entity owns a specific public key, verified by a trusted Certificate Authority",
+      "To store the server's private key for use during the TLS handshake",
+      "To define which cipher suite the web server will use"
+    ],
+    answer: 1,
+    explanation: "A digital certificate binds a public key to an identity (domain name, organization) and is signed by a trusted CA. When your browser visits an HTTPS site, the certificate proves you're talking to the real server — not an imposter.",
+    course: 5
+  },
+  {
+    q: "Which hashing algorithm is currently recommended for security-sensitive use?",
+    options: [
+      "MD5 — fastest and most widely supported",
+      "SHA-1 — the standard replacement for MD5",
+      "SHA-256 (SHA-2 family) — current NIST recommendation",
+      "DES — used when both hashing and encryption are needed"
+    ],
+    answer: 2,
+    explanation: "MD5 and SHA-1 are both deprecated — susceptible to collision attacks. SHA-2 (SHA-256, SHA-512) and SHA-3 are the current standards recommended since 2010. DES is a symmetric encryption algorithm, not a hash function.",
+    course: 5
+  },
+
   /* ── Mixed · Additional Questions ───────────────────────── */
 
   {
@@ -1509,20 +1560,8 @@ const QUESTIONS = [
       "192.168.10.48",
       "192.168.10.64"
     ],
-    answer: 1,
-    explanation: "/26 = 255.255.255.192, giving blocks of 64: .0, .64, .128, .192. The host .50 falls in the .32 block (32–63). So the network address is 192.168.10.32 and the broadcast is 192.168.10.63.",
-    course: 2
-  },
-  {
-    q: "Why would you choose UDP over TCP for a live video stream?",
-    options: [
-      "UDP guarantees delivery order, which prevents frame tearing",
-      "UDP has built-in congestion control that adapts to bandwidth",
-      "UDP has lower overhead — dropped packets are preferable to the delay of retransmission",
-      "UDP encrypts data by default, whereas TCP does not"
-    ],
-    answer: 2,
-    explanation: "TCP retransmits lost packets, introducing latency — the worst outcome for real-time media. UDP skips retransmission; a dropped frame causes a brief glitch but the stream keeps flowing. Applications like video conferencing handle recovery at the app layer.",
+    answer: 0,
+    explanation: "/26 = 255.255.255.192, giving blocks of 64: .0, .64, .128, .192. Host .50 falls in the .0–.63 block, so the network address is 192.168.10.0 and the broadcast is 192.168.10.63.",
     course: 2
   },
   {
@@ -1596,5 +1635,68 @@ const QUESTIONS = [
     answer: 1,
     explanation: "The fake network mimicking a legitimate one is an Evil Twin attack. Once users connect, the attacker can intercept all traffic — a Man-in-the-Middle attack. These two are commonly combined: the evil twin creates the position; MITM is what the attacker does with it.",
     course: 5
+  },
+
+  /* ── A+ / Mixed · Hardware, Networking & OS ─────────────── */
+
+  {
+    q: "What is the key difference between single-mode and multi-mode fiber optic cable?",
+    options: [
+      "Single-mode uses electrical signals; multi-mode uses light pulses",
+      "Single-mode has a smaller core (~9 µm) and supports much longer runs; multi-mode has a larger core and is used inside buildings",
+      "Multi-mode supports 10 Gbps maximum; single-mode tops out at 1 Gbps",
+      "Single-mode uses copper at its core; multi-mode is pure glass"
+    ],
+    answer: 1,
+    explanation: "Single-mode fiber (SMF) carries one light ray down its tiny ~9 µm core, reaching tens of kilometers — used for WAN and inter-building links. Multi-mode (MMF) has a larger ~50–62.5 µm core for up to ~550m and is common inside data centers and office buildings.",
+    course: 2
+  },
+  {
+    q: "What IEEE standard defines Wi-Fi 6, and what is its primary improvement over Wi-Fi 5 in dense environments?",
+    options: [
+      "802.11ac; Wi-Fi 6 doubles range by using lower frequencies",
+      "802.11ax; Wi-Fi 6 uses OFDMA to split channels and serve multiple clients simultaneously",
+      "802.11n; Wi-Fi 6 adds MU-MIMO but drops backward compatibility",
+      "802.11ad; Wi-Fi 6 operates exclusively on the 60 GHz band"
+    ],
+    answer: 1,
+    explanation: "Wi-Fi 6 = 802.11ax (Wi-Fi 5 = 802.11ac). OFDMA (Orthogonal Frequency Division Multiple Access) subdivides a channel into smaller sub-channels, letting one transmission serve multiple devices at once — a major efficiency gain in offices, stadiums, and apartments.",
+    course: 2
+  },
+  {
+    q: "You need maximum read/write speed for video editing scratch disks and are not concerned about data redundancy. Which RAID level is most appropriate?",
+    options: [
+      "RAID 1 — mirroring provides the fastest write speeds",
+      "RAID 5 — parity protection maximizes throughput on reads",
+      "RAID 0 — striping splits data across all drives for maximum speed with zero overhead",
+      "RAID 6 — dual parity enables the fastest rebuilds after failure"
+    ],
+    answer: 2,
+    explanation: "RAID 0 stripes data across all drives — reads and writes are split simultaneously, maximizing throughput. The trade-off: zero redundancy. If any drive fails, all data is lost. Chosen purely for speed when data is ephemeral or backed up elsewhere.",
+    course: 4
+  },
+  {
+    q: "What is the purpose of QoS (Quality of Service) on a network?",
+    options: [
+      "To encrypt sensitive traffic and give it a dedicated tunnel",
+      "To prioritize latency-sensitive traffic (e.g., VoIP, video) so it gets bandwidth and low latency even under congestion",
+      "To monitor all traffic and alert administrators to unusual patterns",
+      "To balance load evenly across all connected devices regardless of traffic type"
+    ],
+    answer: 1,
+    explanation: "QoS marks and prioritizes traffic classes. VoIP and video conferencing are latency-sensitive — even 200ms of jitter makes calls degrade. QoS ensures those packets skip the queue under congestion while bulk downloads can wait, improving user experience without adding bandwidth.",
+    course: 2
+  },
+  {
+    q: "A Windows machine crashes and displays a blue screen with a stop code like PAGE_FAULT_IN_NONPAGED_AREA. What does this indicate?",
+    options: [
+      "A POST failure — the hardware check at startup found a critical error before the OS loaded",
+      "A BSOD (Stop Error) — the Windows kernel hit an unrecoverable error and halted to prevent data corruption",
+      "A kernel panic — exclusive to Linux systems running Windows apps in compatibility mode",
+      "A memory dump only — Windows automatically restarts immediately with no lasting effect"
+    ],
+    answer: 1,
+    explanation: "A BSOD (Blue Screen of Death / Stop Error) means the Windows kernel encountered a critical, unrecoverable error — usually a faulty driver, hardware failure, or memory corruption. The system halts immediately. The stop code identifies the root cause for troubleshooting.",
+    course: 3
   }
 ];

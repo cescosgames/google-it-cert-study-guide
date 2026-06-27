@@ -147,10 +147,156 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: symmetric (AES, DES, 3DES) vs asymmetric (RSA, ECC) encryption, key exchange, PKI, digital certificates (X.509), CA hierarchy, hashing (MD5, SHA-1, SHA-256), digital signatures, TLS/SSL handshake, HTTPS.</p>
+
+          <div class="subsection">
+            <p class="subsection-title">Core Concepts &amp; Principles</p>
+            <ul class="concept-list">
+              <li><strong>Encryption</strong> — taking plaintext, applying a <em>cipher</em> (algorithm), and producing unreadable ciphertext; decryption is the inverse</li>
+              <li><strong>Key</strong> — determines the specific output of an encryption algorithm; key length defines maximum potential strength (longer = harder to brute force)</li>
+              <li><strong>Security Through Obscurity</strong> — flawed assumption that secrecy of the algorithm itself provides security</li>
+              <li><strong>Kerckhoffs's Principle</strong> — a cryptographic system should remain secure even if everything about the system is public knowledge, except the key</li>
+              <li><strong>Cryptanalysis</strong> — the practice of breaking/analyzing cryptographic systems (opposite of cryptography)</li>
+              <li><strong>Frequency Analysis</strong> — studying how often letters appear in ciphertext to deduce the key or plaintext</li>
+              <li><strong>Steganography</strong> — hiding information inside other data without encrypting it (security by obscurity at the data level)</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Cryptanalysis Attack</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td>Known-Plaintext (KPA)</td><td>Attacker has some plaintext/ciphertext pairs and uses them to derive the key</td></tr>
+                <tr><td>Chosen-Plaintext (CPA)</td><td>Attacker can choose arbitrary plaintexts and obtain the ciphertext</td></tr>
+                <tr><td>Ciphertext-Only (COA)</td><td>Attacker only has ciphertext and tries to deduce the key or plaintext</td></tr>
+                <tr><td>Adaptive Chosen-Plaintext (ACPA)</td><td>Like CPA but attacker can adapt future queries based on previous results</td></tr>
+                <tr><td>Meddler-in-the-Middle (MITM)</td><td>Attacker intercepts the key exchange to impersonate both parties</td></tr>
+              </tbody>
+            </table>
           </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Symmetric Encryption</p>
+            <ul class="concept-list">
+              <li><strong>Symmetric key algorithms</strong> use the <em>same key</em> to encrypt and decrypt</li>
+              <li><strong>Stream cipher</strong> — encrypts data one character/digit at a time; faster and simpler, but vulnerable to key-reuse attacks</li>
+              <li><strong>Block cipher</strong> — divides data into fixed-size blocks and encrypts each block as a unit; generally more secure</li>
+              <li><strong>Initialization Vector (IV)</strong> — random value combined with the key to produce a unique encryption key per message, preventing key-reuse vulnerabilities; sent in plaintext alongside ciphertext</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Algorithm</th><th>Key / Block Size</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Caesar Cipher</td><td>Shift value</td><td>Historical only; trivially broken by frequency analysis</td></tr>
+                <tr><td>ROT13</td><td>Fixed (13 positions)</td><td>Historical; not encryption, just obfuscation</td></tr>
+                <tr><td>DES</td><td>64-bit key (56 effective), 64-bit block</td><td>Deprecated — EFF cracked it in 56 hours in 1998</td></tr>
+                <tr><td>AES</td><td>128-bit block; 128 / 192 / 256-bit key</td><td>Current standard (adopted 2001); brute-force is theoretical</td></tr>
+                <tr><td>RC4</td><td>Variable (stream cipher)</td><td>Retired — was used in WEP, WPA, SSL; breakable</td></tr>
+              </tbody>
+            </table>
+            <div class="note">
+              <strong>AES-GCM vs. plain AES:</strong> GCM (Galois/Counter Mode) is a <em>mode of operation</em> that turns AES into a stream cipher with built-in authentication (AEAD — Authenticated Encryption with Associated Data). It simultaneously encrypts and produces an authentication tag, guaranteeing both confidentiality and integrity. TLS 1.2+ uses AES-GCM as the preferred cipher suite.<br><br>
+              <strong>CBC mode (Cipher Block Chaining):</strong> Each plaintext block is XOR'd with the previous ciphertext block before being encrypted. Requires an IV for the first block. Provides diffusion (a change in one block affects all subsequent blocks) but does <em>not</em> provide authentication on its own — that requires a separate MAC.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Asymmetric / Public Key Encryption</p>
+            <ul class="concept-list">
+              <li><strong>Asymmetric cryptography</strong> uses a <em>key pair</em>: a public key (shared freely) to encrypt and a private key (kept secret) to decrypt</li>
+              <li>Provides <strong>Confidentiality, Authenticity, and Non-repudiation</strong></li>
+              <li>More computationally expensive than symmetric — in practice, asymmetric is used to securely exchange a symmetric key, then symmetric takes over (TLS does exactly this)</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Algorithm</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td>RSA</td><td>One of the first widely adopted asymmetric algorithms; security based on difficulty of factoring large primes</td></tr>
+                <tr><td>Diffie-Hellman (DH)</td><td>Key exchange algorithm; allows two parties to derive a shared secret over an unsecured channel without ever transmitting the secret</td></tr>
+                <tr><td>ECC (Elliptic Curve Cryptography)</td><td>Uses algebraic curves instead of large prime numbers; a 256-bit ECC key ≈ a 3072-bit RSA key in strength — much more efficient</td></tr>
+              </tbody>
+            </table>
+            <p class="subsection-title" style="margin-top:1rem;">Message Authentication Codes (MACs)</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">MAC</span><span class="term-val">A bit of information that authenticates a message, confirming it came from the claimed sender</span></div>
+              <div class="term-row"><span class="term-key">HMAC</span><span class="term-val">Keyed-Hash MAC — uses a cryptographic hash function plus a secret key</span></div>
+              <div class="term-row"><span class="term-key">CMAC</span><span class="term-val">Cipher-Based MAC — uses a symmetric block cipher (e.g. AES) to generate the MAC</span></div>
+              <div class="term-row"><span class="term-key">CBC-MAC</span><span class="term-val">Uses a block cipher in CBC mode; each block's ciphertext feeds into the next, and the final block is the MAC — ensures integrity</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Hashing</p>
+            <ul class="concept-list">
+              <li><strong>Hash function</strong> — takes arbitrary input and produces a fixed-size output (digest/hash); designed to be one-way and deterministic</li>
+              <li><strong>Ideal hash properties:</strong> deterministic, fast to compute, one-way (pre-image resistant), avalanche effect (small input change → drastically different hash), collision resistant</li>
+              <li><strong>Hash collision</strong> — two different inputs producing the same hash digest; a serious flaw in any hash function</li>
+              <li><strong>MIC (Message Integrity Check)</strong> — a hash digest of a message used as a checksum to verify it hasn't been altered in transit</li>
+              <li><strong>Never store passwords in plaintext</strong> — always store the hash; but running hash thousands of times (key stretching) makes brute-force slower</li>
+              <li><strong>Rainbow table</strong> — precomputed table mapping passwords to their hashes; renders basic hashing of common passwords trivial to crack</li>
+              <li><strong>Password Salt</strong> — random data added to the password before hashing, making the output unique even for identical passwords, rendering rainbow tables useless</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Algorithm</th><th>Digest Size</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>MD5</td><td>128-bit</td><td>Deprecated (2010) — susceptible to collisions</td></tr>
+                <tr><td>SHA-1</td><td>160-bit</td><td>Deprecated — was used in TLS/SSL, IPsec, Git; replaced by SHA-2</td></tr>
+                <tr><td>SHA-2 (SHA-256, SHA-512)</td><td>256 / 512-bit</td><td>Current standard; recommended since 2010</td></tr>
+                <tr><td>SHA-3</td><td>Variable</td><td>Latest NIST standard; different internal design (Keccak sponge) from SHA-2</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">PKI &amp; Digital Certificates</p>
+            <ul class="concept-list">
+              <li><strong>PKI (Public Key Infrastructure)</strong> — system defining the creation, storage, and distribution of digital certificates</li>
+              <li><strong>Digital Certificate</strong> — file proving an entity owns a certain public key; contains: public key, registered owner info, digital signature from a CA</li>
+              <li><strong>CA (Certificate Authority)</strong> — trusted entity that signs certificates, vouching for the identity of the certificate holder</li>
+              <li><strong>RA (Registration Authority)</strong> — verifies the identity of entities requesting certificates from the CA</li>
+              <li><strong>Root CA</strong> — top of the CA hierarchy; its certificate is self-signed and trusted by operating systems/browsers</li>
+              <li><strong>End-entity / Leaf certificate</strong> — a certificate with no authority to sign other certificates (e.g., a web server certificate)</li>
+              <li><strong>Web of Trust</strong> — alternative to CA hierarchy where individuals sign each other's keys (used in PGP)</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>X.509 Certificate Field</th><th>Purpose</th></tr></thead>
+              <tbody>
+                <tr><td>Version</td><td>X.509 version (typically v3)</td></tr>
+                <tr><td>Serial Number</td><td>Unique identifier assigned by the CA</td></tr>
+                <tr><td>Certificate Signature Algorithm</td><td>Algorithm used to sign the certificate (e.g., SHA-256 with RSA)</td></tr>
+                <tr><td>Issuer Name</td><td>Name of the CA that issued/signed the cert</td></tr>
+                <tr><td>Validity (Not Before / Not After)</td><td>The date range during which the certificate is valid</td></tr>
+                <tr><td>Subject</td><td>The entity the certificate belongs to (e.g., domain name)</td></tr>
+                <tr><td>Subject Public Key Info</td><td>The public key and the algorithm it's used with</td></tr>
+                <tr><td>Certificate Signature Value</td><td>The CA's actual digital signature over the certificate data</td></tr>
+              </tbody>
+            </table>
+            <div class="note">
+              <strong>CRL (Certificate Revocation List)</strong> — a list published by a CA of certificates that have been revoked before their expiry date. Systems should check the CRL before trusting a certificate.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Cryptographic Protocols &amp; Applications</p>
+            <table class="ref-table">
+              <thead><tr><th>Protocol / Tool</th><th>How It Works</th></tr></thead>
+              <tbody>
+                <tr><td>TLS / HTTPS</td><td>TLS secures HTTP (HTTPS). Uses asymmetric encryption during the <strong>handshake</strong> to authenticate the server and exchange a symmetric session key, then switches to fast symmetric encryption (AES-GCM) for the data transfer. Provides: secure channel, mutual authentication, integrity. SSL 3.0 deprecated 2015.</td></tr>
+                <tr><td>Forward Secrecy</td><td>Property ensuring that even if the private key is later compromised, past session keys remain safe (achieved via ephemeral DH key exchange per session)</td></tr>
+                <tr><td>SSH</td><td>Secure network protocol using encryption to protect connections over untrusted networks; replaces Telnet/rlogin</td></tr>
+                <tr><td>PGP (Pretty Good Privacy)</td><td>Encryption application for email/data authentication; relies on asymmetric encryption and a web-of-trust model; keys must be ≥ 128 bits</td></tr>
+                <tr><td>IPsec</td><td>Encrypts IP packets; <strong>Transport mode</strong> encrypts only the payload; <strong>Tunnel mode</strong> encrypts the entire packet (used in VPNs)</td></tr>
+                <tr><td>L2TP / L2TP+IPsec</td><td>L2TP provides the tunnel (passes packets between networks); IPsec provides the secure channel (CIA); combined as L2TP/IPsec for VPNs</td></tr>
+                <tr><td>OpenVPN</td><td>Open-source VPN; can operate over TCP or UDP, typically on port 1194</td></tr>
+              </tbody>
+            </table>
+            <p class="subsection-title" style="margin-top:1rem;">Hardware Security</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">TPM</span><span class="term-val">Trusted Platform Module — hardware chip offering secure key generation, RNG, remote attestation, and data binding; unique RSA keys burned in at manufacturing; data only decryptable when TPM is in a specific state</span></div>
+              <div class="term-row"><span class="term-key">Secure Element</span><span class="term-val">Tamper-resistant chip (like a TPM for mobile devices) storing cryptographic keys and running sensitive operations in isolation</span></div>
+              <div class="term-row"><span class="term-key">TEE</span><span class="term-val">Trusted Execution Environment — isolated execution environment running alongside the OS; processes inside are protected from the main OS</span></div>
+              <div class="term-row"><span class="term-key">FDE</span><span class="term-val">Full Disk Encryption — encrypts the entire drive; examples: BitLocker (Windows), FileVault 2 (macOS), dm-crypt (Linux), PGP</span></div>
+            </div>
+            <div class="note">
+              <strong>SSL/TLS uses both symmetric AND asymmetric encryption</strong> — asymmetric (RSA/ECDH) during the handshake to authenticate and establish a shared secret, then symmetric (AES-GCM) for the bulk data transfer. This hybrid approach combines the security of asymmetric with the speed of symmetric.<br><br>
+              <strong>Randomness matters:</strong> if key generation isn't truly random, an attacker can predict patterns over time. Operating systems maintain an <em>entropy pool</em> seeded from hardware events (mouse movement, disk I/O) to generate cryptographically secure random numbers.
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
