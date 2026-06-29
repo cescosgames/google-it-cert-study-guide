@@ -21,8 +21,29 @@
       <li><a href="../quiz.html">Rapid Fire</a></li>
       <li><a href="../resources.html">Resources</a></li>
     </ul>
+    <button class="nav-burger" aria-label="Toggle menu" onclick="document.querySelector('.site-nav').classList.toggle('menu-open')">
+      <span class="nav-burger-icon"></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu">
+    <ul class="nav-mobile-links">
+      <li><a href="01-technical-support-fundamentals.html">Course 1 — Technical Support Fundamentals</a></li>
+      <li><a href="02-bits-and-bytes-networking.html">Course 2 — Bits &amp; Bytes of Networking</a></li>
+      <li><a href="03-operating-systems.html">Course 3 — Operating Systems</a></li>
+      <li><a href="04-system-administration.html">Course 4 — System Administration</a></li>
+      <li><a href="05-it-security.html">Course 5 — IT Security</a></li>
+      <li class="nav-mobile-sep"></li>
+      <li><a href="../quiz.html">Rapid Fire</a></li>
+      <li><a href="../resources.html">Resources</a></li>
+    </ul>
   </div>
 </nav>
+<script>
+  document.addEventListener('click', function(e) {
+    var nav = document.querySelector('.site-nav');
+    if (!nav.contains(e.target)) nav.classList.remove('menu-open');
+  });
+</script>
 
 <main class="page-wrap">
 
@@ -314,10 +335,136 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: authentication factors (something you know / have / are), MFA, RADIUS, TACACS+, Kerberos, LDAP/AD authentication, OAuth, SAML, RBAC vs DAC vs MAC, least privilege, Zero Trust, audit logging.</p>
+
+          <div class="subsection">
+            <p class="subsection-title">Authentication — Core Concepts</p>
+            <ul class="concept-list">
+              <li><strong>Identification</strong> — uniquely describing an entity (e.g., a username)</li>
+              <li><strong>Authentication (authn)</strong> — verifying identity: proving you are who you claim to be</li>
+              <li><strong>Authorization (authz)</strong> — controlling what an authenticated identity can access or do; always follows authentication</li>
+              <li><strong>Security vs. Usability trade-off</strong> — stronger security (longer passwords, MFA) reduces convenience; policies must balance both</li>
+              <li><strong>Password policies</strong> — enforce minimum length, complexity, rotation schedules, and history to prevent reuse; incorporating good password policies is key for safety</li>
+            </ul>
           </div>
+
+          <div class="subsection">
+            <p class="subsection-title">MFA — Multi-Factor Authentication</p>
+            <ul class="concept-list">
+              <li>MFA requires two or more verification factors from different categories, significantly reducing risk of compromise</li>
+              <li><strong>SMS-based OTPs are not recommended</strong> — SMS is unencrypted, not private, and susceptible to SIM-swapping; prefer authenticator apps or hardware tokens</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Factor Category</th><th>Also Called</th><th>Examples</th></tr></thead>
+              <tbody>
+                <tr><td>Something you know</td><td>Knowledge</td><td>Password, PIN, security question</td></tr>
+                <tr><td>Something you have</td><td>Possession</td><td>ATM/bank card, hardware token, phone authenticator app</td></tr>
+                <tr><td>Something you are</td><td>Inherence (biometric)</td><td>Fingerprint, retina scan, face recognition</td></tr>
+                <tr><td>Somewhere you are</td><td>Location</td><td>GPS location, IP geolocation</td></tr>
+                <tr><td>Something you do</td><td>Behavior</td><td>Gestures, CAPTCHA, typing cadence</td></tr>
+              </tbody>
+            </table>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">TOTP</span><span class="term-val">Time-Based OTP — generates codes from a seed value + current time; RSA SecureID is a common example; requires NTP (time sync) between client and server</span></div>
+              <div class="term-row"><span class="term-key">HOTP</span><span class="term-val">HMAC-Based / Counter-Based OTP — increments a counter each time an OTP is generated; code doesn't expire on a clock cycle, making it slightly more secure than TOTP</span></div>
+              <div class="term-row"><span class="term-key">U2F</span><span class="term-val">Universal 2nd Factor — hardware security key using a challenge-response mechanism; phishing-resistant because the key verifies the origin URL before responding</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Biometric Authentication</p>
+            <ul class="concept-list">
+              <li>Uses unique physiological characteristics (fingerprint, retina, voice, face) to verify identity</li>
+              <li>Biometric data should <strong>never be stored directly</strong> — a mathematical template is stored, not a raw image</li>
+              <li>More critical to protect than passwords: if compromised, biometrics <em>cannot be changed</em></li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Certificate-Based Authentication</p>
+            <ul class="concept-list">
+              <li>Uses digital certificates (X.509) to authenticate clients or devices instead of passwords</li>
+              <li>Common in VPNs, enterprise Wi-Fi (802.1X / EAP-TLS), and mutual TLS (mTLS)</li>
+              <li>Certificate validity is checked against <strong>Not Before / Not After</strong> dates and the CA's <strong>CRL (Certificate Revocation List)</strong></li>
+              <li>The seed value for token-based auth is registered with the authentication server; NTP must be synchronized for TOTP to work</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">AAA Protocols — RADIUS &amp; TACACS+</p>
+            <table class="ref-table">
+              <thead><tr><th>Protocol</th><th>Full Name</th><th>Use Case &amp; Key Notes</th></tr></thead>
+              <tbody>
+                <tr><td>RADIUS</td><td>Remote Authentication Dial-In User Service</td><td>AAA protocol for <strong>network users</strong> (Wi-Fi, VPN). Clients don't talk to RADIUS directly — they send credentials to a <strong>NAS (Network Access Server)</strong>, which forwards them. Server replies: Access-Accept, Access-Reject, or Access-Challenge. Only the password is encrypted.</td></tr>
+                <tr><td>TACACS+</td><td>Terminal Access Controller Access-Control System Plus</td><td>Cisco AAA protocol for <strong>device administration</strong> (authenticating admins to routers/switches). Separates authn, authz, and accounting into independent steps. Encrypts the <em>entire</em> packet — more secure than RADIUS for admin use.</td></tr>
+              </tbody>
+            </table>
+            <div class="note">
+              <strong>RADIUS vs TACACS+:</strong> RADIUS = network access (Wi-Fi users, VPN clients); TACACS+ = device administration (network admin CLI). TACACS+ encrypts the full payload; RADIUS only encrypts the password field.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Kerberos</p>
+            <ul class="concept-list">
+              <li>Authentication protocol using <strong>tickets</strong> to prove identity over potentially insecure channels</li>
+              <li>Uses <strong>symmetric encryption</strong>; supports AES with checksums</li>
+              <li>Tickets expire but support renewal; requires <strong>NTP</strong> — timestamps prevent replay attacks</li>
+              <li>One login → ticket granting → access to multiple services without re-entering credentials</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Step</th><th>What Happens</th></tr></thead>
+              <tbody>
+                <tr><td>1. Client → AS</td><td>Client derives a key from the password and sends an authentication request to the <strong>Authentication Server (AS)</strong></td></tr>
+                <tr><td>2. AS → Client</td><td>AS returns a <strong>Ticket-Granting Ticket (TGT)</strong> and session key, encrypted with the client's derived key</td></tr>
+                <tr><td>3. Client → TGS</td><td>Client presents the TGT to the <strong>Ticket-Granting Server (TGS)</strong> and requests a service ticket</td></tr>
+                <tr><td>4. TGS → Client</td><td>TGS issues a service ticket for the requested service</td></tr>
+                <tr><td>5. Client → Service</td><td>Client presents the service ticket to the target — no password transmitted!</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">SSO &amp; Identity Federation</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">SSO</span><span class="term-val">Single Sign-On — authenticate once, receive a token/cookie, and access all integrated services. Risk: stolen token bypasses all forms of auth since it grants access everywhere.</span></div>
+              <div class="term-row"><span class="term-key">OpenID</span><span class="term-val">Authentication delegation scheme — authentication is handled by a third-party identity provider (Google, GitHub). OpenID Connect (OIDC) is the modern version, built on OAuth 2.0.</span></div>
+              <div class="term-row"><span class="term-key">SAML</span><span class="term-val">Security Assertion Markup Language — XML-based enterprise SSO standard; exchanges authentication assertions between an identity provider (IdP) and service provider (SP). Common in corporate environments.</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Authorization</p>
+            <ul class="concept-list">
+              <li>Describes <em>what</em> an authenticated account has access to — permissions, resources, and allowed actions</li>
+            </ul>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">OAuth</span><span class="term-val">Open standard for authorization — lets users grant third-party apps access to their data without sharing credentials (e.g., "Allow this app to read your Google Calendar"). Can be exploited in phishing-style consent attacks.</span></div>
+              <div class="term-row"><span class="term-key">ACL</span><span class="term-val">Access Control List — specifies access rights for users or groups on specific resources. Also used in network firewalls to filter traffic based on IP, port, and protocol.</span></div>
+            </div>
+            <p class="subsection-title" style="margin-top:1rem;">Access Control Models</p>
+            <table class="ref-table">
+              <thead><tr><th>Model</th><th>Who Decides Access</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td>DAC — Discretionary AC</td><td>Resource owner</td><td>Owner controls permissions (Unix file permissions). Flexible but hard to manage at scale.</td></tr>
+                <tr><td>MAC — Mandatory AC</td><td>Central authority (policy)</td><td>Security labels set by admins; users cannot override. Common in government/military systems.</td></tr>
+                <tr><td>RBAC — Role-Based AC</td><td>Job role/group</td><td>Access tied to roles, not individuals. Most common in enterprise — scales well.</td></tr>
+              </tbody>
+            </table>
+            <div class="note">
+              <strong>Principle of Least Privilege</strong> — grant users and processes only the minimum access required to do their job. Limits the blast radius if an account or process is compromised.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Accounting &amp; Auditing</p>
+            <ul class="concept-list">
+              <li><strong>Accounting</strong> — tracking what resources and services users access, and what actions they perform on your systems</li>
+              <li><strong>Auditing</strong> — reviewing accounting records to ensure compliance, detect anomalies, and investigate incidents; a key component of the accounting pillar</li>
+              <li>Audit logs should record: who, what action, when, and from where</li>
+              <li>Protect logs from tampering — attackers often attempt to clear logs after a breach to cover their tracks</li>
+            </ul>
+          </div>
+
         </div>
       </div>
     </div>

@@ -24,8 +24,29 @@
         <li><a href="quiz.html">Rapid Fire</a></li>
         <li><a href="resources.html">Resources</a></li>
       </ul>
+      <button class="nav-burger" aria-label="Toggle menu" onclick="document.querySelector('.site-nav').classList.toggle('menu-open')">
+        <span class="nav-burger-icon"></span>
+      </button>
+    </div>
+    <div class="nav-mobile-menu">
+      <ul class="nav-mobile-links">
+        <li><a href="courses/01-technical-support-fundamentals.html">Course 1 — Technical Support Fundamentals</a></li>
+        <li><a href="courses/02-bits-and-bytes-networking.html">Course 2 — Bits &amp; Bytes of Networking</a></li>
+        <li><a href="courses/03-operating-systems.html">Course 3 — Operating Systems</a></li>
+        <li><a href="courses/04-system-administration.html">Course 4 — System Administration</a></li>
+        <li><a href="courses/05-it-security.html">Course 5 — IT Security</a></li>
+        <li class="nav-mobile-sep"></li>
+        <li><a href="quiz.html">Rapid Fire</a></li>
+        <li><a href="resources.html">Resources</a></li>
+      </ul>
     </div>
   </nav>
+  <script>
+    document.addEventListener('click', function(e) {
+      var nav = document.querySelector('.site-nav');
+      if (!nav.contains(e.target)) nav.classList.remove('menu-open');
+    });
+  </script>
 
   <main class="page-wrap">
 

@@ -1596,10 +1596,98 @@ pre.cmd-block .v { color: #56d364; }  /* value */
 .mc-next-btn:hover { opacity: .85; }
 
 /* =====================================================
+   MOBILE NAV — BURGER + DROPDOWN
+   ===================================================== */
+
+.nav-burger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.35rem;
+  margin-left: auto;
+  color: var(--text-1);
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-burger-icon {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  position: relative;
+  transition: background .2s;
+}
+.nav-burger-icon::before,
+.nav-burger-icon::after {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  position: absolute;
+  left: 0;
+  transition: transform .2s, top .2s;
+}
+.nav-burger-icon::before { top: -6px; }
+.nav-burger-icon::after  { top: 6px; }
+
+.site-nav.menu-open .nav-burger-icon          { background: transparent; }
+.site-nav.menu-open .nav-burger-icon::before  { transform: rotate(45deg); top: 0; }
+.site-nav.menu-open .nav-burger-icon::after   { transform: rotate(-45deg); top: 0; }
+
+.nav-mobile-menu {
+  display: none;
+  position: absolute;
+  top: var(--nav-h);
+  left: 0;
+  right: 0;
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem 1.25rem 0.9rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+
+.site-nav.menu-open .nav-mobile-menu { display: block; }
+
+.nav-mobile-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.nav-mobile-links a {
+  display: block;
+  padding: 0.6rem 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-1);
+  border-radius: var(--r);
+  transition: background .14s, color .14s;
+  border-bottom: 1px solid transparent;
+}
+.nav-mobile-links a:hover     { background: var(--bg-2); color: var(--text-0); text-decoration: none; }
+.nav-mobile-links a.active    { color: var(--accent-light); }
+
+.nav-mobile-sep {
+  height: 1px;
+  background: var(--border-muted);
+  margin: 0.4rem 0.5rem;
+  list-style: none;
+}
+
+/* =====================================================
    RESPONSIVE
    ===================================================== */
 
 @media (max-width: 700px) {
+  .nav-links  { display: none; }
+  .nav-burger { display: flex; }
+
   .course-grid { grid-template-columns: 1fr; }
 
   .term-row {

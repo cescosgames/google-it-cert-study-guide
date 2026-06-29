@@ -75,3 +75,13 @@ Each course page follows this repeating structure inside `.section-list`:
 ```
 
 Interactive tools (quizzes, calculators) go inside a `.subsection`. Their JS lives in the page-level `<script>` block at the bottom of the file, wrapped in an IIFE. Global handler functions (`onclick="…"`) are exposed via `window.fnName = function`.
+
+### Practice questions & Rapid Fire
+
+`quiz.html` is the Rapid Fire page — a timed MC/flashcard drill that pulls from a shared question pool defined in `questions.js` files per course/module. When adding a new module's HTML content, also add the corresponding MC questions batch so they appear in Rapid Fire.
+
+The `.practice-section` at the bottom of each `.section-inner` holds collapsible short-answer questions (`.practice-btn` → `.practice-body` → `.q-list` / `.a-list`). The flashcard modal (`.quiz-overlay` / `.quiz-modal`) is triggered by `.quiz-me-btn` buttons and renders term-definition pairs for that section.
+
+### Mobile nav
+
+The navbar uses a burger menu on mobile (≤700 px). The `<button class="nav-burger">` and `<div class="nav-mobile-menu">` are present in **all 8 HTML files** (5 course pages + `index.html`, `quiz.html`, `resources.html`). Toggle state is `.menu-open` on `.site-nav`; a close-on-outside-click `<script>` block lives right after `</nav>` on each page. If you add a new page or nav link, update all 8 files.
