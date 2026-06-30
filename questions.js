@@ -342,6 +342,19 @@ const QUESTIONS = [
     course: 1
   },
 
+  {
+    q: "A desktop PC powers on but immediately shuts off with no POST beeps. Which component is most likely to blame?",
+    options: [
+      "Faulty RAM — RAM errors cause a loop at POST",
+      "An underpowered or failing PSU unable to sustain power to all components",
+      "A corrupt OS bootloader preventing the BIOS from starting",
+      "A disconnected monitor preventing the GPU from outputting video"
+    ],
+    answer: 1,
+    explanation: "An immediate shutdown with no POST typically means the PSU cannot sustain the power draw after initial startup. RAM errors produce beep codes; a corrupt bootloader shows up after POST; a monitor has no effect on POST completion.",
+    course: 1
+  },
+
   /* ── Course 2 · Bits and Bytes of Networking ────────────── */
 
   {
@@ -647,6 +660,19 @@ const QUESTIONS = [
     ],
     answer: 1,
     explanation: "Lowering TTL (e.g., to 300s) before a migration means clients re-query sooner after the DNS record changes. If you cut over with a high TTL, stale records may be cached for hours.",
+    course: 2
+  },
+
+  {
+    q: "A network admin notices that two access points on the same floor are both configured for channel 6. What problem will this cause?",
+    options: [
+      "The APs will refuse to broadcast and require manual channel reassignment",
+      "Clients will be unable to obtain an IP address from DHCP",
+      "Co-channel interference — both APs share the same medium, reducing throughput for all clients on that channel",
+      "The APs will automatically negotiate to different channels using 802.11r"
+    ],
+    answer: 2,
+    explanation: "Two APs on the same channel in the same physical area create co-channel interference — they hear each other's transmissions and must take turns, reducing effective throughput. The fix is to configure them on non-overlapping channels (1, 6, or 11 on 2.4 GHz).",
     course: 2
   },
 
@@ -965,6 +991,19 @@ const QUESTIONS = [
     ],
     answer: 1,
     explanation: "man <command> opens the built-in manual page for that command. It is the authoritative reference for flags and behavior — faster than searching the web. Press q to quit, / to search within the page.",
+    course: 3
+  },
+
+  {
+    q: "A Linux admin wants to run a database backup script automatically every night at 2:00 AM. Which tool is the standard way to schedule this?",
+    options: [
+      "systemctl — create a service unit file set to run at 2:00 AM",
+      "cron — add an entry to crontab with the schedule '0 2 * * *'",
+      "nohup — use nohup to keep the script running in the background until 2:00 AM",
+      "at — submit the job to the at daemon for next-day execution"
+    ],
+    answer: 1,
+    explanation: "cron is the standard Unix/Linux scheduler for recurring tasks. The crontab entry '0 2 * * * /path/to/backup.sh' means: minute 0, hour 2, any day of month, any month, any day of week — i.e., 2:00 AM every day. The 'at' command is for one-time scheduled jobs, not recurring ones.",
     course: 3
   },
 
@@ -1316,6 +1355,19 @@ const QUESTIONS = [
     course: 4
   },
 
+  {
+    q: "What is the purpose of a Change Advisory Board (CAB) in IT Change Management?",
+    options: [
+      "To purchase hardware and approve IT budget requests",
+      "To review, approve, or reject proposed changes before they are implemented",
+      "To investigate root causes of major incidents after they occur",
+      "To manage onboarding of new IT staff and assign access privileges"
+    ],
+    answer: 1,
+    explanation: "A CAB is a group of stakeholders (technical leads, business reps, security) that evaluates proposed changes before implementation. They assess risk, scope, and scheduling — ensuring changes are planned, tested, and won't cause unexpected outages.",
+    course: 4
+  },
+
   /* ── Course 5 · IT Security ─────────────────────────────── */
 
   {
@@ -1523,6 +1575,69 @@ const QUESTIONS = [
     ],
     answer: 2,
     explanation: "MD5 and SHA-1 are both deprecated — susceptible to collision attacks. SHA-2 (SHA-256, SHA-512) and SHA-3 are the current standards recommended since 2010. DES is a symmetric encryption algorithm, not a hash function.",
+    course: 5
+  },
+
+  /* ── Course 5 · Defense in Depth (Module 5) ────────────── */
+
+  {
+    q: "A laptop is stolen from an employee. The attacker removes the drive and connects it to another machine. Which control ensures the data is unreadable?",
+    options: [
+      "A strong login password on the OS",
+      "Full Disk Encryption (FDE)",
+      "A host-based firewall",
+      "File-Based Encryption applied to the Documents folder only"
+    ],
+    answer: 1,
+    explanation: "FDE encrypts the entire drive — without the decryption key, the raw data is meaningless even when the drive is removed and connected to another machine. A login password protects only the OS login, not the underlying data. FBE only covers specific files.",
+    course: 5
+  },
+  {
+    q: "Which of the following best describes a bastion host?",
+    options: [
+      "A server running antivirus and IDS software to scan internal network traffic",
+      "A hardened, minimally configured host used as a controlled gateway to reach internal systems from an untrusted network",
+      "A backup domain controller used only when the primary is unavailable",
+      "A dedicated logging server that receives syslog data from all network devices"
+    ],
+    answer: 1,
+    explanation: "A bastion host is deliberately exposed to an untrusted network (internet-facing) but hardened — minimal software, only essential services, heavy monitoring. Admins SSH into the bastion first, then hop to internal hosts, so internal machines are never directly exposed.",
+    course: 5
+  },
+  {
+    q: "An organization's SIEM is receiving logs from firewalls, Linux servers, and Windows endpoints. The analyst cannot correlate events because timestamps and field names differ across sources. What process resolves this?",
+    options: [
+      "Log retention policy enforcement",
+      "Log normalization",
+      "Automated alerting rule configuration",
+      "Port mirroring to the SIEM appliance"
+    ],
+    answer: 1,
+    explanation: "Log normalization standardizes log formats from diverse sources into a common schema so events can be meaningfully compared and correlated. Without it, a firewall block event and a failed login event from the same attacker IP cannot be matched across sources.",
+    course: 5
+  },
+  {
+    q: "A company wants the strongest possible control over which software can run on its endpoints. Which approach implements implicit deny at the application layer?",
+    options: [
+      "Antivirus blacklisting — blocking all known malware signatures",
+      "Network-level IPS rules blocking suspicious traffic patterns",
+      "Application whitelisting — only explicitly approved applications are permitted to execute",
+      "Group Policy restricting administrator-level installs to IT staff only"
+    ],
+    answer: 2,
+    explanation: "Application whitelisting blocks everything not on the approved list — implicit deny at the application layer. Antivirus blacklisting allows everything except known threats, meaning new or unknown malware runs freely until signatures are updated.",
+    course: 5
+  },
+  {
+    q: "Secure Boot is enabled on a workstation that also uses Full Disk Encryption. What additional threat does Secure Boot protect against that FDE alone does not?",
+    options: [
+      "An attacker reading encrypted files after removing the drive",
+      "A malicious bootloader or rootkit loading before the OS and bypassing security controls",
+      "Brute-force attacks on the FDE passphrase",
+      "Unauthorized network access to the machine while it is powered off"
+    ],
+    answer: 1,
+    explanation: "FDE cannot encrypt the boot partition (the system must read it to start). Secure Boot uses firmware-level public key cryptography to verify that the bootloader and kernel have not been tampered with — blocking evil maid attacks and pre-OS rootkits that FDE cannot stop.",
     course: 5
   },
 

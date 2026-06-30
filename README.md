@@ -1,8 +1,8 @@
-# Google IT Support Cert — Study Guide
+# Google IT Support Cert: Study Guide
 
-![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Courses](https://img.shields.io/badge/courses-4%20of%205%20complete-blue) ![Questions](https://img.shields.io/badge/questions-150-cyan)
+![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Courses](https://img.shields.io/badge/courses-4%20of%205%20complete-blue) ![Questions](https://img.shields.io/badge/questions-159-cyan) ![Flashcards](https://img.shields.io/badge/flashcards-182-violet)
 
-A personal study site I'm building alongside the Google IT Support Professional Certificate. Notes, flashcards, and quizzes as I go through each course.
+A personal study site I'm vibe coding using my personal notes on the Google IT Support Professional Certificate. Notes, flashcards, and quizzes added as I go through each course.
 
 ## What's in here
 
@@ -38,4 +38,4 @@ Side thought — is vanilla HTML/CSS/JS the move now with AI? Feels like you can
 
 ### To Do
 - Separate inline JS to own JS files
-- Generally clean up this project structure 
+- Generally clean up this project structure and switch to data driven approach

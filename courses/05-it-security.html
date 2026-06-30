@@ -482,10 +482,192 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: firewalls (stateful vs stateless vs NGFW), IDS vs IPS, DMZ, network segmentation, WPA2 vs WPA3, 802.1X (EAP), VPN (reviewed in Course 2), port security, NAC, honeypots, network monitoring (SIEM).</p>
+
+          <div class="subsection">
+            <p class="subsection-title">Secure Network Architecture</p>
+            <ul class="concept-list">
+              <li><strong>Network hardening</strong> — reducing a network's attack surface through configuration changes and deliberate security steps</li>
+              <li><strong>Implicit deny</strong> — anything not explicitly permitted is denied; the safest default stance for firewall and ACL rules</li>
+              <li><strong>ACLs on firewalls</strong> — used to implement implicit deny; supports both whitelisting (allow specific traffic) and blacklisting (block known-bad traffic)</li>
+              <li><strong>Traffic monitoring &amp; log analysis</strong> — collecting logs from network and client devices and performing automated analysis against user-defined rules; establishes a baseline to detect anomalies</li>
+              <li><strong>Normalizing log data</strong> — standardizing logs from different devices/systems so they can be compared; critical because formats vary widely</li>
+              <li><strong>Correlation analysis</strong> — matching events across different systems/logs to identify attack patterns that span multiple sources</li>
+              <li><strong>Post-fail analysis</strong> — investigating how a compromise happened after the fact; informs future hardening</li>
+              <li><strong>Splunk</strong> — popular enterprise log analysis and SIEM platform</li>
+              <li><strong>Flood guards</strong> — detect common DoS/DDoS flood patterns and trigger blocking actions; <em>fail2ban</em> is a popular open-source tool that blocks IPs after repeated failures</li>
+            </ul>
+            <p class="subsection-title" style="margin-top:1rem;">Network Hardware Hardening</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Rogue DHCP Attack</span><span class="term-val">An attacker sets up a fake DHCP server on the network to hand out leases with malicious gateway/DNS settings</span></div>
+              <div class="term-row"><span class="term-key">DHCP Snooping</span><span class="term-val">Switch feature that monitors DHCP traffic, builds an IP-to-port binding table, and forwards DHCP requests only to a designated trusted DHCP server — blocks rogue DHCP</span></div>
+              <div class="term-row"><span class="term-key">Dynamic ARP Inspection (DAI)</span><span class="term-val">Uses the DHCP snooping table to validate ARP packets and drop unrecognized or spoofed ARP replies — protects against ARP poisoning/MITM</span></div>
+              <div class="term-row"><span class="term-key">IP Source Guard (IPSG)</span><span class="term-val">Uses the DHCP snooping table to create per-port ACLs, ensuring only traffic from the assigned IP/MAC is allowed out of that port</span></div>
+            </div>
           </div>
+
+          <div class="subsection">
+            <p class="subsection-title">802.1X &amp; EAP — Port-Based Network Access Control</p>
+            <ul class="concept-list">
+              <li><strong>IEEE 802.1X</strong> — standard for port-based network access control; allows clients to connect using modern authentication methods before gaining network access</li>
+              <li><strong>EAP (Extensible Authentication Protocol)</strong> — authentication framework used by 802.1X; encapsulated in 802.1X as <em>EAPoL (EAP over LAN)</em></li>
+              <li><strong>EAP-TLS</strong> — the most secure EAP type; provides <em>mutual authentication</em> of both client and authentication server using digital certificates; considered the gold standard for wireless security</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>802.1X Component</th><th>Role</th></tr></thead>
+              <tbody>
+                <tr><td>Supplicant</td><td>The client making the network access request</td></tr>
+                <tr><td>Authenticator</td><td>The network device (switch/AP) that receives the supplicant's request and forwards it to the auth server</td></tr>
+                <tr><td>Authentication Server</td><td>Holds the credential database (e.g., RADIUS); tells the authenticator to permit or deny access</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Firewalls &amp; Proxies</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Network-Based Firewall</span><span class="term-val">Sits at the network perimeter and regulates traffic between network segments — all major routers include one</span></div>
+              <div class="term-row"><span class="term-key">Host-Based Firewall</span><span class="term-val">Software firewall running on an individual machine, controlling traffic to/from that specific host — all major OSs include one</span></div>
+              <div class="term-row"><span class="term-key">Proxy</span><span class="term-val">Intermediary that makes requests on behalf of clients; can log, analyze, filter, and block web traffic; forward proxies serve clients, reverse proxies serve servers</span></div>
+            </div>
+            <div class="note">Both host-based and network-based firewalls are recommended — they provide defense in depth. Network firewalls protect the perimeter; host firewalls contain damage if an attacker is already inside the network.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Wireless Security — WEP → WPA → WPA2</p>
+            <table class="ref-table">
+              <thead><tr><th>Standard</th><th>Cipher / Protocol</th><th>Security Status</th></tr></thead>
+              <tbody>
+                <tr><td>WEP</td><td>RC4 stream cipher with static IV</td><td><strong>Broken</strong> — IV reuse allows key recovery in minutes (Aircrack-ng); never use</td></tr>
+                <tr><td>WPA</td><td>TKIP (RC4 + key mixing, 256-bit keys, sequence counter, 64-bit MIC)</td><td>Deprecated — was a firmware-compatible stopgap for WEP hardware; superseded by WPA2</td></tr>
+                <tr><td>WPA2</td><td>CCMP (AES in Counter Mode + CBC-MAC for integrity)</td><td>Current standard — strong encryption; vulnerable to offline brute-force of the 4-way handshake capture</td></tr>
+              </tbody>
+            </table>
+            <ul class="concept-list">
+              <li><strong>WPA2 4-Way Handshake</strong> — establishes a <em>Pairwise Transient Key (PTK)</em>: AP sends a nonce → client sends a nonce → AP sends the Group Transient Key (GTK) → client ACKs. The PTK (5 sub-keys for encryption, integrity, and data) is derived from these nonces + the pre-shared key</li>
+              <li><strong>Nonce</strong> — a unique, one-time-use random value generated for a specific cryptographic purpose</li>
+              <li><strong>WPS (Wi-Fi Protected Setup)</strong> — simplifies joining networks via PIN, NFC, or push-button; consumer feature with known vulnerabilities; <strong>disable in enterprise environments</strong>; use <em>Wash</em> to verify WPS is off</li>
+            </ul>
+            <div class="note">
+              <strong>Best current wireless security hierarchy:</strong><br>
+              1. 802.1X + EAP-TLS (requires RADIUS server &amp; PKI — most secure)<br>
+              2. WPA2-AES/CCMP with a long, complex passphrase + unique SSID<br><br>
+              To harden WPA2 against brute force: use a passphrase ≥ 20 characters, change the SSID from the default, and disable WPS.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Network Monitoring &amp; Packet Analysis</p>
+            <ul class="concept-list">
+              <li><strong>Packet sniffing (capture)</strong> — capturing and inspecting network packets; requires root privileges</li>
+              <li><strong>Promiscuous mode</strong> — NIC mode where the interface captures <em>all</em> packets on the segment, not just those addressed to it</li>
+              <li><strong>Port mirroring</strong> — switch feature that copies all traffic from a port or VLAN to a designated monitoring port</li>
+              <li><strong>Monitor mode</strong> (wireless) — allows scanning across channels to capture all wireless frames from any AP or client</li>
+              <li><strong>tcpdump</strong> — powerful CLI packet capture tool; can write captures to file for later analysis; uses <code>libpcap</code></li>
+              <li><strong>Wireshark</strong> — GUI packet analyzer built on <code>libpcap</code>; more powerful filtering and protocol dissection than tcpdump</li>
+            </ul>
+            <p class="subsection-title" style="margin-top:1rem;">IDS &amp; IPS</p>
+            <table class="ref-table">
+              <thead><tr><th>System</th><th>Function</th><th>Placement</th></tr></thead>
+              <tbody>
+                <tr><td>IDS (Intrusion Detection System)</td><td>Monitors and <em>alerts</em> on suspicious traffic; does not block</td><td>Network (NIDS) or host (HIDS); NIDS needs two NICs — one for monitoring, one for management</td></tr>
+                <tr><td>IPS (Intrusion Prevention System)</td><td>Monitors and <em>actively blocks</em> by adjusting firewall rules in real-time</td><td>Inline with traffic — must be network-based to intercept packets</td></tr>
+              </tbody>
+            </table>
+            <ul class="concept-list">
+              <li><strong>Signatures</strong> — unique characteristics of known malicious traffic used by IDS/IPS to identify threats</li>
+              <li>NIDS must be positioned in the network topology where it can see <em>all</em> traffic (e.g., after the router/firewall or on a mirrored port)</li>
+            </ul>
+            <p class="subsection-title" style="margin-top:1rem;">UTM — Unified Threat Management</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">UTM</span><span class="term-val">Combines multiple security tools (firewall, IDS, IPS, antivirus, proxy) under a single management interface — simplifies configuration and policy enforcement</span></div>
+              <div class="term-row"><span class="term-key">Stream-Based Inspection</span><span class="term-val">Inspects data samples from packets as they flow through — faster but less thorough</span></div>
+              <div class="term-row"><span class="term-key">Proxy-Based Inspection</span><span class="term-val">Reconstructs full files from captured packets before analysis — more thorough but slower</span></div>
+            </div>
+            <div class="note">
+              <strong>UTM trade-offs:</strong> cost-effective and offers centralized management, but can become a <em>single point of failure</em>. May also be overkill (wasted resources) for small networks with simple needs.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">tcpdump — Command Reference</p>
+            <table class="ref-table">
+              <thead><tr><th>Flag</th><th>What It Does</th></tr></thead>
+              <tbody>
+                <tr><td><code>-i &lt;iface&gt;</code></td><td>Specify interface (<code>eth0</code>, <code>wlan0</code>, <code>any</code>)</td></tr>
+                <tr><td><code>-n</code></td><td>Don't resolve IP addresses to hostnames (faster output)</td></tr>
+                <tr><td><code>-nn</code></td><td>Don't resolve IPs <em>or</em> port numbers to names</td></tr>
+                <tr><td><code>-v / -vv / -vvv</code></td><td>Increase verbosity — show more packet detail</td></tr>
+                <tr><td><code>-c &lt;N&gt;</code></td><td>Capture exactly N packets then stop</td></tr>
+                <tr><td><code>-w &lt;file&gt;</code></td><td>Write raw packets to a <code>.pcap</code> file for later analysis in Wireshark</td></tr>
+                <tr><td><code>-r &lt;file&gt;</code></td><td>Read and analyze a previously saved <code>.pcap</code> file</td></tr>
+                <tr><td><code>-X</code></td><td>Display packet payload in both hex and ASCII</td></tr>
+                <tr><td><code>-A</code></td><td>Display packet payload in ASCII only (useful for plaintext protocols like HTTP)</td></tr>
+                <tr><td><code>-e</code></td><td>Show Ethernet frame header (source and destination MAC addresses)</td></tr>
+                <tr><td><code>-s 0</code></td><td>Capture the full packet (default snaplen may truncate; 0 = unlimited)</td></tr>
+                <tr><td><code>-p</code></td><td>Disable promiscuous mode — only capture traffic addressed to this host</td></tr>
+              </tbody>
+            </table>
+            <p class="subsection-title" style="margin-top:1rem;">BPF Filter Expressions</p>
+            <div class="note" style="font-family:var(--font-mono);font-size:.85rem;line-height:1.8;">
+              <strong>Filters are passed as the last argument (quoted):</strong><br>
+              <code>tcpdump -i eth0 -nn &lt;filter&gt;</code><br><br>
+              <code>host 10.0.0.5</code> &nbsp;— traffic to or from a specific IP<br>
+              <code>src host 10.0.0.1</code> &nbsp;— only traffic originating from that IP<br>
+              <code>dst host 10.0.0.1</code> &nbsp;— only traffic destined for that IP<br>
+              <code>port 443</code> &nbsp;— traffic on a specific port (either direction)<br>
+              <code>tcp</code> / <code>udp</code> / <code>icmp</code> &nbsp;— filter by protocol<br>
+              <code>net 192.168.1.0/24</code> &nbsp;— traffic to/from an entire subnet<br>
+              <code>not port 22</code> &nbsp;— exclude SSH traffic<br><br>
+              <strong>Combining filters:</strong><br>
+              <code>tcp port 80 and src host 10.0.0.5</code><br>
+              <code>icmp or (tcp and port 443)</code><br><br>
+              <strong>Common one-liners:</strong><br>
+              <code>tcpdump -i any -nn -w capture.pcap</code> &nbsp;— capture all interfaces to file<br>
+              <code>tcpdump -i eth0 -nn -X 'tcp port 80'</code> &nbsp;— inspect HTTP payload<br>
+              <code>tcpdump -i eth0 -nn -c 100 'not port 22'</code> &nbsp;— first 100 non-SSH packets
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">NIDS in Production — Deployment &amp; Placement</p>
+            <ul class="concept-list">
+              <li><strong>Two-NIC rule</strong> — a NIDS host needs a dedicated <em>monitoring NIC</em> (no IP address, passively captures traffic) and a separate <em>management NIC</em> (for alerts, config, and SIEM forwarding); mixing them on one interface limits visibility and exposes the sensor</li>
+              <li><strong>Network TAP (Test Access Point)</strong> — a passive hardware device inserted inline between two network points; copies all traffic to the monitoring port without introducing latency or a failure point; preferred over SPAN in high-security environments because it cannot be disabled by a switch misconfiguration</li>
+              <li><strong>SPAN / Mirror port</strong> — cheaper alternative to a TAP; configured on a managed switch to copy traffic to the sensor port; may drop packets under high load and can be accidentally cleared during switch changes</li>
+              <li><strong>Placement matters</strong> — position the NIDS where it sees the traffic you care about: <em>outside the firewall</em> to see all inbound attempts, or <em>inside</em> to catch lateral movement once an attacker is in. Many deployments use both</li>
+              <li><strong>Common NIDS software</strong> — Snort (signature-based, widely used), Suricata (multi-threaded, IDS+IPS capable), Zeek/Bro (protocol analysis and logging focused)</li>
+              <li><strong>Signature tuning</strong> — out-of-the-box rule sets produce many false positives; tuning rules for your environment's traffic baseline is essential before trusting alerts</li>
+              <li><strong>SIEM integration</strong> — NIDS alerts should feed into a centralized SIEM (e.g., Splunk, Elastic SIEM) so events can be correlated with logs from other sources (firewall, auth, endpoint)</li>
+            </ul>
+            <div class="note">
+              <strong>Out-of-band vs inline:</strong> a NIDS is deployed <em>out-of-band</em> — it sees a copy of traffic (via TAP or SPAN) so a failure in the sensor does not affect network traffic. An IPS is deployed <em>inline</em> — all traffic flows through it, so a failure can bring down the network path (usually mitigated with a fail-open bypass).
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Firewall Types</p>
+            <table class="ref-table">
+              <thead><tr><th>Type</th><th>How It Works</th><th>Key Trade-off</th></tr></thead>
+              <tbody>
+                <tr><td>Stateless (Packet Filter)</td><td>Inspects each packet independently against ACL rules (IP, port, protocol). No memory of prior packets.</td><td>Fast and simple; cannot detect attacks that span multiple packets (e.g., fragmentation attacks)</td></tr>
+                <tr><td>Stateful</td><td>Tracks active connection state (SYN/ACK sequence). Only allows packets that belong to an established, legitimate connection.</td><td>Stops spoofed packets mid-stream; slight performance cost; industry default</td></tr>
+                <tr><td>NGFW (Next-Gen Firewall)</td><td>Combines stateful inspection with deep packet inspection (DPI), application awareness, user identity, SSL/TLS decryption, and integrated IPS.</td><td>Most capable; highest cost and processing overhead; can act as a single-box security stack</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Network Segmentation &amp; DMZ</p>
+            <ul class="concept-list">
+              <li><strong>Network segmentation</strong> — dividing a network into isolated segments so a breach in one zone cannot freely spread to others; limits the blast radius of an attack</li>
+              <li><strong>VLAN (Virtual LAN)</strong> — logical segmentation within a switch; traffic between VLANs must pass through a router or firewall, enforcing access control even on shared physical infrastructure</li>
+              <li><strong>DMZ (Demilitarized Zone)</strong> — a separate network segment between the internet and the internal LAN that hosts public-facing services (web servers, mail servers, DNS). Traffic from the DMZ to the internal network is tightly restricted — if a DMZ host is compromised, the attacker cannot freely reach internal systems</li>
+            </ul>
+            <div class="note">
+              <strong>Typical DMZ topology:</strong> Internet → border firewall → DMZ (web/mail/DNS servers) → internal firewall → internal LAN. Two firewalls from different vendors is ideal — a single vendor vulnerability won't compromise both layers.
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -494,7 +676,7 @@
       <div class="section-header" onclick="toggleSection(this)">
         <div class="section-title-row">
           <span class="chevron">▶</span>
-          <h2>5 &nbsp;·&nbsp; Security Policies &amp; Compliance</h2>
+          <h2>5 &nbsp;·&nbsp; Defense in Depth</h2>
         </div>
         <label class="complete-wrap" onclick="event.stopPropagation()">
           <input type="checkbox" class="complete-cb" data-section="c05-s5" onchange="saveProgress(this)">
@@ -503,9 +685,113 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">Defense in Depth — The Concept</p>
+            <ul class="concept-list">
+              <li><strong>Defense in depth</strong> — a layered security strategy where multiple overlapping systems of defense protect IT infrastructure; if one layer is bypassed, the next layer contains the damage</li>
+              <li>No single control is perfect — the goal is to make a successful attack require defeating multiple independent layers</li>
+              <li>Layers typically span: physical security → network perimeter → network internal → host → application → data</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">System Hardening — OS Level</p>
+            <ul class="concept-list">
+              <li><strong>Attack surface reduction</strong> — every running service, open port, and installed application is a potential entry point; remove or disable anything not needed</li>
+              <li><strong>Disable unnecessary services</strong> — stop and prevent startup of any service not required for the system's function (e.g., disable Telnet, FTP, unused scheduled tasks)</li>
+              <li><strong>Remove default accounts &amp; credentials</strong> — default usernames/passwords are publicly known; rename or delete default admin accounts and change all default passwords immediately</li>
+              <li><strong>Apply the principle of least privilege</strong> — every user account and process should have only the minimum permissions required to perform its function</li>
+              <li><strong>Patch management</strong> — keep the OS and all software up to date; unpatched vulnerabilities are one of the most common attack vectors; establish a regular patch cadence (e.g., test within 30 days of release, deploy within 60)</li>
+              <li><strong>Baselines &amp; configuration management</strong> — define a known-good, hardened configuration (baseline image) and enforce it; deviation from the baseline indicates potential compromise or misconfiguration</li>
+              <li><strong>Disable unnecessary hardware features</strong> — e.g., disable USB ports on machines that don't need them to prevent baiting/removable media attacks</li>
+              <li><strong>Bastion Host</strong> — a deliberately hardened host with minimal software and only essential services enabled; commonly used as a jump server / controlled gateway to internal systems, avoiding direct exposure of internal hosts; must be heavily monitored and logged</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Application Hardening</p>
+            <ul class="concept-list">
+              <li><strong>Keep applications patched</strong> — applications are a top attack vector; browser plugins (especially Flash, Java), office suites, and web servers must be kept current</li>
+              <li><strong>Disable unneeded features and plugins</strong> — every enabled feature is additional attack surface; disable browser extensions, unnecessary server modules, and unused APIs</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Approach</th><th>How It Works</th><th>Use Case</th></tr></thead>
+              <tbody>
+                <tr><td>Application Whitelisting</td><td>Only explicitly approved applications are allowed to run; everything else is blocked by default</td><td>High-security environments (POS terminals, kiosks, servers); more restrictive</td></tr>
+                <tr><td>Application Blacklisting</td><td>Explicitly listed applications are blocked; everything else is allowed</td><td>General enterprise use; easier to manage but weaker — unknown malware won't be on the list</td></tr>
+              </tbody>
+            </table>
+            <div class="note">Whitelisting is far stronger than blacklisting — it implements implicit deny at the application layer. The trade-off is administrative overhead: every legitimate new application must be explicitly approved.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">SIEM &amp; Log Management</p>
+            <ul class="concept-list">
+              <li><strong>SIEM (Security Information and Event Management)</strong> — centralized platform that collects, stores, and analyzes log data from across the environment; combines logging with real-time correlation, alerting, and dashboards</li>
+              <li><strong>Centralized logging</strong> — aggregating logs from all hosts, network devices, and applications into one place; makes investigation and correlation possible and keeps logs out of reach of an attacker who has compromised a single host</li>
+              <li><strong>Log normalization</strong> — standardizing log format from diverse sources (firewalls, servers, endpoints) so events can be meaningfully compared; usually configured in the SIEM ingestion pipeline</li>
+              <li><strong>Automated alerting</strong> — write rules (e.g., &gt;5 failed logins in 60 seconds from one IP, or any access to a production DB outside business hours) to trigger real-time alerts; reduces dependence on manual log review</li>
+              <li><strong>Traffic pattern analysis</strong> — establish a baseline of normal behavior (top talkers, request volumes, access patterns); deviations from baseline are high-value signals for detecting compromise</li>
+              <li><strong>Log retention</strong> — define how long logs must be kept; driven by compliance requirements (e.g., PCI-DSS: 1 year, HIPAA: 6 years) and operational needs; balance storage cost against investigation depth</li>
+              <li><strong>Protect the logs</strong> — attackers routinely target logs to cover their tracks; ship logs to a remote, append-only store immediately; restrict write/delete access to log storage</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Tool / Platform</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td>rsyslog</td><td>Open-source log daemon (Linux/Unix); collects and forwards syslog messages; lightweight, widely deployed, often feeds into a central SIEM</td></tr>
+                <tr><td>Splunk</td><td>Leading commercial SIEM; powerful search language (SPL), dashboards, and alerting; widely used in enterprise SOCs</td></tr>
+                <tr><td>IBM QRadar</td><td>Enterprise SIEM with built-in threat intelligence and behavioral analytics</td></tr>
+                <tr><td>RSA NetWitness</td><td>Enterprise platform combining SIEM, packet capture, and endpoint telemetry for full threat visibility</td></tr>
+                <tr><td>Microsoft 365 Defender</td><td>Enterprise-wide security suite covering endpoints, email, identity, and cloud apps; integrates with UAC (User Account Control) and Azure AD for unified threat detection across Microsoft environments</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Host-Based Security Controls</p>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">Host-Based Firewall</span><span class="term-val">Controls inbound and outbound traffic at the individual host level — last line of defense if network firewall is bypassed or attacker is already inside the network</span></div>
+              <div class="term-row"><span class="term-key">Antivirus / Anti-malware</span><span class="term-val">Scans files and processes for known malware signatures (blacklist model); modern solutions add heuristic and behavioral analysis. Limitation: dependent on the vendor publishing new signatures — emerging threats outpace updates. Binary whitelisting (the inverse) is stronger: only explicitly approved software runs, everything else is blocked by default.</span></div>
+              <div class="term-row"><span class="term-key">HIDS (Host-Based IDS)</span><span class="term-val">Monitors a single host for suspicious activity — file changes, unusual process behavior, unexpected logins; complements NIDS which can't see encrypted traffic or post-decryption behavior inside the host</span></div>
+              <div class="term-row"><span class="term-key">FDE (Full Disk Encryption)</span><span class="term-val">Encrypts the entire drive; data is meaningless without the key — strong protection against physical theft. All FDE setups have an unencrypted boot partition (required for startup); this partition is a potential attack surface but is difficult to exploit. Examples: BitLocker (Windows), FileVault 2 (macOS), dm-crypt/LUKS (Linux), PGP Disk.</span></div>
+              <div class="term-row"><span class="term-key">Key Escrow</span><span class="term-val">Backing up the FDE recovery key with a trusted third party or centralized key management system; critical because losing the FDE key means permanent data loss — treat key loss as a crisis and plan for recovery before it happens</span></div>
+              <div class="term-row"><span class="term-key">Secure Boot</span><span class="term-val">Uses public key cryptography (platform key stored in firmware) to verify the integrity of the bootloader and OS kernel before they execute; protects the unencrypted boot elements that FDE cannot cover; part of the UEFI firmware security model</span></div>
+              <div class="term-row"><span class="term-key">File-Based Encryption (FBE)</span><span class="term-val">Encrypts individual files or directories rather than the whole disk; guarantees confidentiality and integrity only for the specific files protected — not a replacement for FDE, but a complementary layer (e.g., encrypting sensitive documents on an otherwise unencrypted or shared drive)</span></div>
+              <div class="term-row"><span class="term-key">Software Updates</span><span class="term-val">Enable automatic updates where feasible; in enterprise, use a patch management system (e.g., WSUS, SCCM) to test and deploy patches centrally before pushing to endpoints</span></div>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Vulnerability Management</p>
+            <ul class="concept-list">
+              <li><strong>Vulnerability scanning</strong> — automated tools (e.g., Nessus, OpenVAS) probe systems for known CVEs, misconfigurations, and weak settings without exploiting them; should be run regularly</li>
+              <li><strong>Penetration testing</strong> — authorized simulated attack that actively exploits vulnerabilities to demonstrate real-world impact; goes beyond scanning to verify whether a flaw is actually exploitable</li>
+              <li><strong>CVE (Common Vulnerabilities and Exposures)</strong> — public database of known vulnerabilities; each entry has a CVE ID and a CVSS severity score (0–10)</li>
+              <li><strong>Patch prioritization</strong> — not all patches can be applied instantly; triage by CVSS score, exposure (internet-facing vs internal), and whether a working exploit exists in the wild</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-section" id="s6">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>6 &nbsp;·&nbsp; Creating a Company Culture for Security</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c05-s6" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
           <div class="stub-box">
             <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: security policies (AUP, password policy, data classification), compliance frameworks (HIPAA, PCI-DSS, SOC 2, ISO 27001, NIST), vulnerability management, patch cadence, incident response lifecycle (PICERL), risk assessment, physical security.</p>
+            <p>Placeholder - fill in while studying.<br>Topics: security awareness training, acceptable use policy (AUP), password &amp; data classification policies, BYOD, privacy policies, physical security, incident response lifecycle (PICERL), risk assessment, compliance frameworks (HIPAA, PCI-DSS, SOC 2, ISO 27001, NIST).</p>
           </div>
         </div>
       </div>
