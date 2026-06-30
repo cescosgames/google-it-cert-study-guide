@@ -7,8 +7,8 @@ A personal study site I'm vibe coding using my personal notes on the Google IT S
 ## What's in here
 
 - **Course notes** — each course gets its own page with organized, collapsible sections. Content gets added as I study, not all at once.
-- **Rapid fire flashcards** — 173 open-ended cards across all courses, shuffled every session.
-- **Multiple choice quiz** — 142 questions across all courses, shuffled. Good cert prep since the real thing is multiple choice.
+- **Rapid fire flashcards** — open-ended cards across all courses, shuffled every session.
+- **Multiple choice quiz** — questions across all courses, shuffled. Good cert prep since the real thing is multiple choice.
 - **Daily question** — one MC question a day on the homepage, rotates automatically.
 - **Resources** — downloadable reference sheets (ports, subnetting, CLI commands cheat sheet).
 - **Subnet practice** — interactive subnetting tool linked from Course 2. Favorite part hands down
