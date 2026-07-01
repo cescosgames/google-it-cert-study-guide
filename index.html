@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Google IT Support Cert - Study Guide</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0891b2">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
   <script src="questions.js"></script>
 </head>
 
@@ -182,7 +185,7 @@
 
   <footer class="site-footer">
     Google IT Support Professional Certificate - Personal Study Guide &nbsp;·&nbsp; Progress saved to browser
-    localStorage
+    localStorage &nbsp;·&nbsp; <span id="pwa-version">cache v…</span>
   </footer>
 
   <script>
@@ -331,6 +334,25 @@
         });
       });
     }());
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js');
+      });
+    }
+
+    // Show the sw.js CACHE_VERSION in the footer so it's obvious offline
+    // updates actually took effect after bumping the version.
+    fetch('sw.js', { cache: 'no-store' })
+      .then((res) => res.text())
+      .then((text) => {
+        const match = text.match(/CACHE_VERSION = '([^']+)'/);
+        const el = document.getElementById('pwa-version');
+        if (match && el) el.textContent = 'cache ' + match[1];
+      })
+      .catch(() => {});
   </script>
 
 </body>

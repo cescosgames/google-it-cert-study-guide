@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Common Ports &amp; Protocols - Reference Sheet</title>
   <link rel="stylesheet" href="../style.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#0891b2">
+  <link rel="apple-touch-icon" href="../icons/icon-192.png">
   <style>
     .port-chart-table {
       width: 100%;
@@ -334,6 +337,14 @@
 <footer class="site-footer print-hide">
   Google IT Support Professional Certificate &mdash; Ports &amp; Protocols Reference Sheet
 </footer>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('../sw.js');
+    });
+  }
+</script>
 
 </body>
 </html>

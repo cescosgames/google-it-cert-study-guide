@@ -85,3 +85,9 @@ The `.practice-section` at the bottom of each `.section-inner` holds collapsible
 ### Mobile nav
 
 The navbar uses a burger menu on mobile (≤700 px). The `<button class="nav-burger">` and `<div class="nav-mobile-menu">` are present in **all 8 HTML files** (5 course pages + `index.html`, `quiz.html`, `resources.html`). Toggle state is `.menu-open` on `.site-nav`; a close-on-outside-click `<script>` block lives right after `</nav>` on each page. If you add a new page or nav link, update all 8 files.
+
+### PWA / offline support
+
+The site is installable as a PWA (`manifest.json`, `sw.js`, icons in `icons/`) and hosted on Cloudflare Pages, so it's accessed offline on mobile via a home-screen install. `sw.js` precaches every HTML/CSS/JS asset by exact filename and uses a cache-first strategy.
+
+**Every time content changes (new module, edited HTML, updated JS/CSS, new page added to `PRECACHE_URLS`), bump `CACHE_VERSION` at the top of `sw.js`.** Without this, the service worker won't detect the update and phones will keep serving stale cached content indefinitely. If a new page is added, also add its path to `PRECACHE_URLS` in `sw.js` and add the manifest link + SW registration snippet to its `<head>`/end of `<body>` (see any existing page for the pattern).
