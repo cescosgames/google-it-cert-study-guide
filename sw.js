@@ -1,6 +1,6 @@
 // Bump this on every content change (new module, edited HTML, updated JS/CSS)
 // so the browser detects the file diff and installs a fresh cache.
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const CACHE_NAME = `itcert-${CACHE_VERSION}`;
 
 const PRECACHE_URLS = [
@@ -52,6 +52,18 @@ self.addEventListener('fetch', (event) => {
 
   event.respondWith(
     caches.match(event.request).then((cached) => {
+      // A cached response that was originally fetched via a redirect (e.g. "./"
+      // getting redirected to "./index.html" by the host) keeps `redirected: true`.
+      // Serving that flag for a navigation request throws "a redirected response
+      // was used for a request whose redirect mode is not follow", which blocks
+      // the PWA install prompt. Strip the flag by rebuilding a plain Response.
+      if (cached && cached.redirected) {
+        return cached.blob().then((body) => new Response(body, {
+          status: cached.status,
+          statusText: cached.statusText,
+          headers: cached.headers,
+        }));
+      }
       if (cached) return cached;
 
       return fetch(event.request).then((response) => {
