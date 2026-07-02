@@ -148,6 +148,68 @@ window.RAPID_FIRE_BANK = (function () {
         q: 'A Tier 1 tech is 30 minutes from breaching a P1 SLA. What should they do?',
         a: 'Escalate immediately — notify supervisor or on-call Tier 2/3 engineer. Never let a P1 SLA breach silently; proactive communication lets management reassign resources before the breach.'
       },
+    ]),
+    section('C1 · CompTIA A+ Extras', [
+      {
+        q: 'What are the three common motherboard form factors, and how do they differ?',
+        a: 'ATX (full size, most expansion slots), microATX/mATX (smaller, fewer slots, fits in ATX cases), and Mini-ITX (smallest, usually just one expansion slot, used in compact builds).'
+      },
+      {
+        q: 'What is the difference between an LGA and a PGA CPU socket?',
+        a: 'LGA (Land Grid Array) has pins on the motherboard socket and flat contact pads on the CPU — used by Intel. PGA (Pin Grid Array) has pins on the CPU itself that insert into socket holes — traditionally used by AMD.'
+      },
+      {
+        q: 'What are the six steps of the laser printer imaging process, in order?',
+        a: 'Processing, Charging, Exposing, Developing, Transferring, Fusing (mnemonic: "Process Charges Every Dumb Turtle Fast"). Processing builds the image in memory; charging preps the drum; exposing writes the image with a laser; developing applies toner; transferring moves toner to paper; fusing melts it on with heat and pressure.'
+      },
+      {
+        q: 'A laser printer produces streaks or smudges down the page. Which component is most likely at fault?',
+        a: 'The fuser assembly (if toner isn\'t melting/bonding properly) or the imaging drum (if it\'s scratched or worn) — streaks and smudges are classic symptoms of one of these two components failing.'
+      },
+      {
+        q: 'What is the difference between an inkjet and a thermal printer, and where is each commonly used?',
+        a: 'Inkjet sprays liquid ink through tiny nozzles onto paper — common for home/photo printing. Thermal printers use heat on specially coated paper with no ink or toner at all — common for receipt printers and shipping labels.'
+      },
+      {
+        q: 'What is the purpose of MSDS/SDS (Safety Data Sheets) in a workplace?',
+        a: 'They document the hazards, safe handling, and emergency procedures for chemicals and materials (e.g., toner, cleaning solvents, batteries). Technicians consult them before handling hazardous materials or in case of an accidental exposure/spill.'
+      },
+      {
+        q: 'What connector type does a standard Ethernet cable use, and how does it differ from RJ11?',
+        a: 'Ethernet uses RJ45 (8 pins/8 positions) for network cabling. RJ11 (4 or 6 pins) is the older, narrower connector used for telephone lines. RJ45 is visibly wider and won\'t fit into an RJ11 jack.'
+      },
+      {
+        q: 'What is a punch-down block used for, and what tool terminates wires onto it?',
+        a: 'A punch-down block (e.g., a patch panel or 66/110 block) terminates the individual copper wires of a network cable into a fixed connection point. A punch-down tool pushes each wire into its slot and trims the excess in one motion.'
+      },
+      {
+        q: 'What is the difference between mSATA and M.2 SSDs?',
+        a: 'mSATA is an older, smaller form factor that still uses the SATA interface/speed. M.2 is a newer, more flexible form-factor slot that can carry either SATA or much faster PCIe/NVMe signaling, depending on the drive and slot.'
+      },
+      {
+        q: 'What does TPM (Trusted Platform Module) do, and why does Windows 11 require it?',
+        a: 'TPM is a dedicated chip (or firmware equivalent) that securely generates and stores encryption keys, tied to the specific hardware. Windows 11 requires TPM 2.0 to support features like BitLocker drive encryption and hardware-backed identity protection.'
+      },
+      {
+        q: 'What is IMEI, and what is it used for on a mobile device?',
+        a: 'IMEI (International Mobile Equipment Identity) is a unique serial number assigned to a cellular device\'s radio. Carriers use it to identify, activate, or blacklist (block) a stolen or lost phone from their network.'
+      },
+      {
+        q: 'What is a digitizer on a mobile device, and how does it relate to the display?',
+        a: 'The digitizer is the touch-sensitive layer laminated over the screen that translates finger/stylus contact into input coordinates. It\'s a separate component from the LCD/OLED display panel underneath, though they\'re often replaced as a single fused assembly.'
+      },
+      {
+        q: 'What is the print spooler, and what is a common fix when print jobs get stuck in the queue?',
+        a: 'The print spooler is the Windows service/software that queues and manages print jobs sent to a printer. A common fix for stuck jobs is restarting the Print Spooler service (and clearing the spool folder) so the queue resets.'
+      },
+      {
+        q: 'What is the difference between a hub and a switch at the physical/data link layer?',
+        a: 'A hub is a dumb Layer 1 device — it repeats every incoming signal out to all ports, creating one shared collision domain. A switch is a smarter Layer 2 device — it reads MAC addresses and forwards frames only to the port the destination is on, giving each port its own collision domain.'
+      },
+      {
+        q: 'What is the recommended safe way to lift a heavy piece of equipment like a server or tower case?',
+        a: 'Bend at the knees (not the waist), keep the load close to the body, and lift with the legs rather than the back, to avoid back injury.'
+      },
     ])
   );
 

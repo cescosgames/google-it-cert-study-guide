@@ -1813,5 +1813,178 @@ const QUESTIONS = [
     answer: 1,
     explanation: "A BSOD (Blue Screen of Death / Stop Error) means the Windows kernel encountered a critical, unrecoverable error — usually a faulty driver, hardware failure, or memory corruption. The system halts immediately. The stop code identifies the root cause for troubleshooting.",
     course: 3
+  },
+
+  /* ── CompTIA A+ focused additions ─────────── */
+
+  {
+    q: "Which motherboard form factor is the smallest, typically offering just one expansion slot?",
+    options: ["ATX", "MicroATX", "Mini-ITX", "E-ATX"],
+    answer: 2,
+    explanation: "Mini-ITX is the smallest common form factor, built for compact builds. ATX is full-size with the most slots, and MicroATX sits in between.",
+    course: 1
+  },
+  {
+    q: "What distinguishes an LGA CPU socket from a PGA CPU socket?",
+    options: [
+      "LGA has pins on the CPU; PGA has pins on the motherboard",
+      "LGA has pins on the motherboard socket; PGA has pins on the CPU",
+      "LGA is used only for laptops; PGA is desktop-only",
+      "There is no physical difference, only naming"
+    ],
+    answer: 1,
+    explanation: "LGA (Land Grid Array) puts the pins in the socket on the motherboard, with flat contact pads on the CPU — the Intel approach. PGA (Pin Grid Array) puts the pins on the CPU itself, traditionally used by AMD.",
+    course: 1
+  },
+  {
+    q: "Put the laser printer imaging process in the correct order.",
+    options: [
+      "Charging, Processing, Developing, Exposing, Transferring, Fusing",
+      "Processing, Charging, Exposing, Developing, Transferring, Fusing",
+      "Processing, Exposing, Charging, Transferring, Developing, Fusing",
+      "Fusing, Transferring, Developing, Exposing, Charging, Processing"
+    ],
+    answer: 1,
+    explanation: "The correct order is Processing, Charging, Exposing, Developing, Transferring, Fusing — sometimes remembered with the mnemonic 'Process Charges Every Dumb Turtle Fast.'",
+    course: 1
+  },
+  {
+    q: "A laser printer's output has repeated smudges and streaks down every page. What should a technician check first?",
+    options: [
+      "The network cable to the printer",
+      "The fuser assembly or imaging drum",
+      "The printer's IP address configuration",
+      "The paper tray sensor"
+    ],
+    answer: 1,
+    explanation: "Streaking and smudging are classic symptoms of a failing fuser (not properly melting/bonding toner) or a scratched/worn imaging drum — not a network or configuration issue.",
+    course: 1
+  },
+  {
+    q: "Which printer type uses no ink or toner at all, relying on heat applied to specially coated paper?",
+    options: ["Inkjet", "Laser", "Thermal", "Impact"],
+    answer: 2,
+    explanation: "Thermal printers apply heat directly to heat-sensitive paper — common in receipt printers and shipping label printers. No ink or toner cartridge is involved.",
+    course: 1
+  },
+  {
+    q: "What is the primary purpose of a Safety Data Sheet (SDS/MSDS) in an IT workplace?",
+    options: [
+      "It tracks warranty status for hardware purchases",
+      "It documents hazards and safe handling procedures for chemicals and materials",
+      "It lists network security policies for employees",
+      "It records the serial numbers of all deployed devices"
+    ],
+    answer: 1,
+    explanation: "SDS (formerly MSDS) sheets describe the hazards, safe handling, storage, and emergency response for chemicals and materials like toner or cleaning solvents — required reading before handling them or in case of a spill/exposure.",
+    course: 1
+  },
+  {
+    q: "What is the key physical difference between an RJ45 and an RJ11 connector?",
+    options: [
+      "RJ45 is used for phone lines; RJ11 is used for Ethernet",
+      "RJ45 is wider with 8 positions for Ethernet; RJ11 is narrower with 4-6 positions for telephone lines",
+      "They are identical and interchangeable",
+      "RJ45 carries fiber optic signals; RJ11 carries copper signals"
+    ],
+    answer: 1,
+    explanation: "RJ45 (8P8C) is the standard 8-position connector used for Ethernet. RJ11 is the narrower, older connector used for telephone lines and won't physically fit an RJ45 jack.",
+    course: 1
+  },
+  {
+    q: "What is a punch-down block used for in network cabling?",
+    options: [
+      "Boosting Wi-Fi signal strength",
+      "Terminating individual copper wires into a fixed connection point, such as on a patch panel",
+      "Converting copper signals to fiber",
+      "Testing cable continuity"
+    ],
+    answer: 1,
+    explanation: "A punch-down block (like a patch panel or 66/110 block) is where individual wires from a cable are terminated using a punch-down tool, which seats each wire and trims the excess in one motion.",
+    course: 1
+  },
+  {
+    q: "How does an M.2 SSD differ from an mSATA SSD?",
+    options: [
+      "M.2 is strictly slower than mSATA",
+      "mSATA can use PCIe/NVMe speeds while M.2 is limited to SATA speeds",
+      "M.2 is a more flexible, newer form factor that can support SATA or much faster PCIe/NVMe signaling; mSATA is older and limited to SATA speeds",
+      "There is no functional difference, only connector shape"
+    ],
+    answer: 2,
+    explanation: "mSATA is an older, smaller form factor limited to SATA interface speeds. M.2 is newer and more flexible — depending on the drive and slot, it can run at SATA speeds or much faster PCIe/NVMe speeds.",
+    course: 1
+  },
+  {
+    q: "Why does Windows 11 require TPM 2.0?",
+    options: [
+      "To increase maximum supported RAM",
+      "To securely generate and store hardware-tied encryption keys for features like BitLocker",
+      "To enable overclocking support",
+      "To allow dual-booting with Linux"
+    ],
+    answer: 1,
+    explanation: "TPM (Trusted Platform Module) is a dedicated chip or firmware component that securely stores encryption keys tied to the specific hardware, enabling features like BitLocker and hardware-backed identity protection.",
+    course: 1
+  },
+  {
+    q: "What is the IMEI number on a mobile device used for?",
+    options: [
+      "Identifying the device's Wi-Fi MAC address",
+      "Uniquely identifying the device's cellular radio, used by carriers to activate or blacklist a device",
+      "Tracking installed app permissions",
+      "Encrypting the device's storage"
+    ],
+    answer: 1,
+    explanation: "IMEI (International Mobile Equipment Identity) uniquely identifies a device's cellular radio. Carriers use it to activate service or blacklist a device that's been reported lost or stolen.",
+    course: 1
+  },
+  {
+    q: "On a smartphone, what is the digitizer?",
+    options: [
+      "The battery management chip",
+      "The touch-sensitive layer over the screen that translates touch into input coordinates",
+      "The camera image sensor",
+      "The cellular radio antenna"
+    ],
+    answer: 1,
+    explanation: "The digitizer is the touch-sensitive layer laminated over the display that converts finger or stylus contact into input coordinates. It's a separate component from the display panel itself, though often replaced together.",
+    course: 1
+  },
+  {
+    q: "Print jobs are stuck in the Windows print queue and won't clear. What is the standard first fix?",
+    options: [
+      "Reinstall the operating system",
+      "Restart the Print Spooler service and clear the spool folder",
+      "Replace the printer's toner cartridge",
+      "Update the network adapter driver"
+    ],
+    answer: 1,
+    explanation: "The Print Spooler is the Windows service that manages the print queue. Restarting it (and clearing stuck files from the spool folder) is the standard fix for jobs stuck in queue.",
+    course: 1
+  },
+  {
+    q: "What is the fundamental difference between a network hub and a network switch?",
+    options: [
+      "A hub filters traffic by MAC address; a switch does not",
+      "A hub repeats incoming signals to all ports (one shared collision domain); a switch forwards frames only to the destination port using MAC addresses",
+      "A hub operates at Layer 3; a switch operates at Layer 1",
+      "There is no meaningful difference between them"
+    ],
+    answer: 1,
+    explanation: "A hub is a simple Layer 1 device that repeats all traffic out every port, creating a single shared collision domain. A switch is a Layer 2 device that reads MAC addresses and forwards frames only to the correct port, giving each port its own collision domain.",
+    course: 1
+  },
+  {
+    q: "What is the correct technique for safely lifting heavy equipment like a server chassis?",
+    options: [
+      "Bend at the waist and lift with your back for better leverage",
+      "Bend at the knees, keep the load close to the body, and lift with the legs",
+      "Lift as quickly as possible to minimize strain time",
+      "Always lift alone to avoid coordination errors"
+    ],
+    answer: 1,
+    explanation: "Proper lifting technique bends at the knees (not the waist), keeps the load close to the body, and uses the legs to lift — reducing the risk of back injury. Heavy or awkward loads should be lifted with a partner.",
+    course: 1
   }
 ];
