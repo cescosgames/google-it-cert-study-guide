@@ -1752,6 +1752,69 @@ const QUESTIONS = [
     course: 5
   },
 
+  /* ── Course 5 · Final Project & Key Takeaways ───────────── */
+
+  {
+    q: "A security design doc lists U2F keys for MFA but never mentions who manages the underlying user directory. What foundational piece is missing?",
+    options: [
+      "A CAPTCHA on the login page",
+      "A centralized identity system — a single source of truth for user accounts",
+      "A second VPN provider for redundancy",
+      "A rainbow table of approved passwords"
+    ],
+    answer: 1,
+    explanation: "MFA is only as strong as the identity system underneath it. Without a centralized identity source (a directory service), there's no single place to provision, authenticate against, or revoke accounts — MFA alone doesn't solve that.",
+    course: 5
+  },
+  {
+    q: "A design document says an e-commerce site will be 'audited for injection attacks and monitored for malicious traffic.' What two specifics should be named directly for a payment site?",
+    options: [
+      "TLS/HTTPS encryption and PCI-DSS compliance",
+      "ROT13 obfuscation and a static IP allowlist",
+      "WEP encryption and a shared admin password",
+      "Telnet access and FTP for file transfers"
+    ],
+    answer: 0,
+    explanation: "Vague language like 'audited' and 'monitored' should be backed by concrete requirements: TLS/HTTPS to encrypt traffic in transit, and PCI-DSS compliance since the site processes cardholder data.",
+    course: 5
+  },
+  {
+    q: "A wireless security recommendation calls for 'WPA2-AES with a strong passphrase' as the current best practice. What update and what missing detail should be added?",
+    options: [
+      "Recommend WPA3 instead, and separate guest Wi-Fi from the corporate network",
+      "Recommend WEP instead, and merge guest and corporate Wi-Fi for simplicity",
+      "Recommend disabling encryption entirely on guest networks",
+      "Recommend TKIP instead of AES for backward compatibility"
+    ],
+    answer: 0,
+    explanation: "WPA3 has superseded WPA2 as the current standard. A complete recommendation should also call out separating guest Wi-Fi from the corporate network so guest traffic can never reach internal systems.",
+    course: 5
+  },
+  {
+    q: "A laptop security section covers group-based permissions, password policy, and full disk encryption. What two host-level controls are still missing?",
+    options: [
+      "Endpoint protection (antivirus/EDR) and patch/update management",
+      "A second full disk encryption layer and a spare battery",
+      "A physical security guard and a visitor log",
+      "A second Wi-Fi adapter and a backup power supply"
+    ],
+    answer: 0,
+    explanation: "Endpoint protection (antivirus or EDR) and a defined patch/update management process are baseline host-level controls — without them, even an encrypted, permission-locked laptop can be compromised through unpatched software or undetected malware.",
+    course: 5
+  },
+  {
+    q: "A security and privacy policy section covers social engineering awareness and legal/compliance education. What two additions make it complete?",
+    options: [
+      "Data retention/handling rules and a documented incident response plan",
+      "A list of approved screen savers and a dress code policy",
+      "A company-wide holiday schedule and a parking policy",
+      "A list of approved fonts for internal documents"
+    ],
+    answer: 0,
+    explanation: "A complete security and privacy policy needs explicit data retention/handling rules (how long data is kept and how it's handled) and a documented incident response plan (what happens when — not if — an incident occurs).",
+    course: 5
+  },
+
   /* ── Mixed · Additional Questions ───────────────────────── */
 
   {

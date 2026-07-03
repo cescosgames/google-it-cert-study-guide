@@ -1,6 +1,6 @@
 # Google IT Support Cert: Study Guide
 
-![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Courses](https://img.shields.io/badge/courses-4%20of%205%20complete-blue) ![Questions](https://img.shields.io/badge/questions-174-cyan) ![Flashcards](https://img.shields.io/badge/flashcards-197-violet)
+![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Courses](https://img.shields.io/badge/courses-4%20of%205%20complete-blue) ![Questions](https://img.shields.io/badge/questions-188-cyan) ![Flashcards](https://img.shields.io/badge/flashcards-202-violet)
 
 A personal study site I'm vibe coding using my personal notes on the Google IT Support Professional Certificate. Notes, flashcards, and quizzes added as I go through each course.
 

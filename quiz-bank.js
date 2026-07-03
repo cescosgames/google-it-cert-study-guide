@@ -870,6 +870,28 @@ window.RAPID_FIRE_BANK = (function () {
         q: 'What is the difference between application whitelisting and blacklisting, and which is stronger?',
         a: 'Blacklisting blocks explicitly listed software — everything else runs. Whitelisting is the inverse: only explicitly approved applications run, everything else is blocked by default. Whitelisting is far stronger because unknown malware is blocked automatically. The trade-off is admin overhead of approving every legitimate application.'
       },
+    ]),
+    section('C5 · Company Culture & Incident Handling', [
+      {
+        q: 'What are the six broad objectives of PCI DSS?',
+        a: '1) Build and maintain a secure network and systems. 2) Protect cardholder data. 3) Maintain a vulnerability management program. 4) Implement strong access control measures. 5) Regularly monitor and test networks. 6) Maintain an information security policy.'
+      },
+      {
+        q: 'What are the three methods of data destruction, and when would you use each?',
+        a: 'Recycling (erase/wipe or reformat) keeps the device usable after data is destroyed. Physical destruction (drilling, shredding, degaussing, incinerating) ensures data cannot be recovered but destroys the device. Third-party destruction hands the process off to a specialist vendor.'
+      },
+      {
+        q: 'What are the main BYOD risks, and what policies mitigate them?',
+        a: 'Risks: device loss/theft, data loss, MITM attacks, malware, jailbreaking. Mitigations: a written BYOD policy, MDM/EMM software, required MFA, an acceptable use policy (AUP), restricted data access, staff education, and data backups.'
+      },
+      {
+        q: 'What five questions should a chain of custody document answer?',
+        a: 'Who collected the evidence? How was it collected and where was it located? Who seized and possessed it? How was it stored and protected? Who took it out of storage, and why?'
+      },
+      {
+        q: 'What is the key difference between RADIUS and TACACS+, and when would you use each?',
+        a: 'RADIUS is used for network access (Wi-Fi, VPN clients) — it only encrypts the password field and routes requests through a NAS. TACACS+ is used for device administration (admins managing routers/switches) — it encrypts the entire packet and separates authentication, authorization, and accounting into independent steps, making it the stronger choice for admin access.'
+      }
     ])
   );
 
