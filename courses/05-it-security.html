@@ -792,13 +792,383 @@
       </div>
       <div class="section-body">
         <div class="section-inner">
-          <div class="stub-box">
-            <p class="stub-icon">📝</p>
-            <p>Placeholder - fill in while studying.<br>Topics: security awareness training, acceptable use policy (AUP), password &amp; data classification policies, BYOD, privacy policies, physical security, incident response lifecycle (PICERL), risk assessment, compliance frameworks (HIPAA, PCI-DSS, SOC 2, ISO 27001, NIST).</p>
+
+          <div class="subsection">
+            <p class="subsection-title">Risk, Objectives &amp; Compliance</p>
+            <ul class="concept-list">
+              <li>Security is a <strong>delicate balance between security and productivity</strong> — before designing controls, define what the security architecture is actually meant to accomplish</li>
+              <li>Legal requirements shape the objective too — e.g. accepting credit card payments means <strong>PCI DSS</strong> (Payment Card Industry Data Security Standard) applies</li>
+              <li>Security work is fundamentally about <strong>determining risk/exposure</strong>, understanding the likelihood of attacks, and designing defenses that minimize impact</li>
+              <li><strong>Threat modeling</strong> is the starting point: identify likely threats and assign priorities. High-value data (user data, especially payment data) gets prioritized first</li>
+              <li><strong>Vulnerability scanner</strong> — a service that runs against your systems, discovers hosts on the network, probes what's listening, and compares findings against known/disclosed vulnerabilities in a report. Examples: <strong>Nessus, OpenVAS, Qualys</strong></li>
+              <li><strong>Penetration testing</strong> should happen regularly alongside scanning — actively trying to break into the system or network to surface vulnerabilities a passive scan would miss</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>PCI DSS Objective</th><th>What It Covers</th></tr></thead>
+              <tbody>
+                <tr><td>1. Secure network &amp; systems</td><td>Build and maintain a secure network architecture</td></tr>
+                <tr><td>2. Protect cardholder data</td><td>Safeguard stored and transmitted payment card data</td></tr>
+                <tr><td>3. Vulnerability management</td><td>Maintain an ongoing vulnerability management program</td></tr>
+                <tr><td>4. Access control</td><td>Implement strong access control measures</td></tr>
+                <tr><td>5. Monitor &amp; test</td><td>Regularly monitor and test networks</td></tr>
+                <tr><td>6. Information security policy</td><td>Maintain a formal information security policy</td></tr>
+              </tbody>
+            </table>
           </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Privacy, Data Handling &amp; Destruction</p>
+            <ul class="concept-list">
+              <li><strong>Privacy policies</strong> oversee access to and use of sensitive data — the default should be <em>no access</em>, and people must justify access specifically, within a limited timeframe</li>
+              <li><strong>Data handling policies</strong> define details of the data itself and set guidelines for how each type should be handled</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>Destruction Method</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td>Recycling</td><td>Device stays usable after data destruction — erase/wipe, low-level format, or standard format</td></tr>
+                <tr><td>Physical destruction</td><td>Ensures data cannot be recovered — drilling, shredding, degaussing, incinerating</td></tr>
+                <tr><td>Third-party destruction</td><td>Specialist vendors handle destruction on your behalf</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Users — The Weakest Link</p>
+            <ul class="concept-list">
+              <li>You can build the best security system in the world, but it won't protect you if users are unsafe</li>
+              <li><strong>Never upload confidential information to a third-party service</strong></li>
+              <li>Users are generally lazy about security — an overly complex password policy backfires: people write passwords down, which is less safe than a simpler but well-designed policy</li>
+              <li><strong>Phishing emails are effective</strong> — they remain one of the most successful attack vectors precisely because they target human behavior, not technical flaws</li>
+              <li><strong>Third-party vendor security</strong> — any vendor you use is trusted with your data by extension. Run a vendor security questionnaire and test their services for vulnerabilities before onboarding</li>
+              <li>A working environment where people <strong>speak up</strong> matters — a mailing list, a security risk form, an open channel for concerns</li>
+              <li><strong>Reinforce and reward good behaviors</strong>, and always justify <em>why</em> a behavior is good so it sticks instead of being ignored as red tape</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Incident Handling</p>
+            <ul class="concept-list">
+              <li><strong>Detection</strong> is the first step of handling any incident — you can't respond to what you haven't noticed</li>
+              <li><strong>Analysis</strong> comes next: determine the effects and extent of the damage</li>
+              <li>Once scope is determined, <strong>containment</strong> is the next step — and it's time-sensitive</li>
+              <li><strong>Severity</strong> depends on what and how many systems were compromised, and how the breach affects company functions</li>
+              <li><strong>Impact</strong> and <strong>recoverability</strong> (how complicated and time-consuming recovery will be) both factor into the response plan</li>
+              <li><strong>Data exfiltration</strong> — the unauthorized transfer of data off a compromised computer</li>
+              <li>The <strong>type of data</strong> involved changes how much care is required — government-regulated data (HIPAA/health, PCI/payment card, PII, FISMA, export administration regulations) needs extra handling</li>
+            </ul>
+            <div class="term-grid">
+              <div class="term-row"><span class="term-key">DRM</span><span class="term-val">Digital Rights Management — prevents piracy by restricting users, setting expiration dates, and limiting access to content</span></div>
+              <div class="term-row"><span class="term-key">EULA</span><span class="term-val">End User License Agreement — specifies rights and restrictions on software; only valid once the user agrees to it</span></div>
+              <div class="term-row"><span class="term-key">Chain of Custody</span><span class="term-val">Tracks evidence movement through its collection, safeguarding, and analysis lifecycle</span></div>
+            </div>
+            <div class="note">
+              <strong>A chain of custody document should answer:</strong> Who collected the evidence? How was it collected, and where was it located? Who seized and possessed it? How was it stored and protected in storage? Who took it out of storage, and why?<br><br>
+              <strong>Containment strategies</strong> vary by system — full shutdown or disconnecting from the network are common examples. Every incident should end with a documented <strong>post-mortem</strong>.
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Mobile Devices &amp; BYOD</p>
+            <ul class="concept-list">
+              <li>All mobile devices should have <strong>screen locks</strong> and <strong>storage encryption</strong> enabled</li>
+              <li><strong>BYOD (Bring Your Own Device)</strong> saves companies money on hardware but introduces new categories of threat</li>
+            </ul>
+            <table class="ref-table">
+              <thead><tr><th>BYOD Risk</th><th>Mitigation</th></tr></thead>
+              <tbody>
+                <tr><td>Loss or theft</td><td>Screen locks, remote wipe via MDM</td></tr>
+                <tr><td>Data loss / leakage</td><td>Data Leakage Prevention (DLP), restrict data access by role</td></tr>
+                <tr><td>Man-in-the-middle attacks</td><td>Require MFA, VPN for remote access</td></tr>
+                <tr><td>Malware / jailbreaking</td><td>Enterprise Mobile Management (EMM), acceptable use policy (AUP)</td></tr>
+              </tbody>
+            </table>
+            <div class="note">
+              <strong>Full solution set:</strong> write a BYOD policy, deploy MDM (Mobile Device Management) or EMM (Enterprise Mobile Management) software, require MFA, set an AUP, use NDAs where appropriate, restrict data access, educate staff, back up device data, and enforce DLP.
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
+
+    <div class="topic-section" id="s7">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>7 &nbsp;·&nbsp; Final Project — Security Design Document</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c05-s7" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">How to use this case study</p>
+            <ul class="concept-list">
+              <li>Read the <strong>company snapshot</strong> and the <strong>requirements list</strong> below — then try to sketch your own security design before revealing mine.</li>
+              <li>The write-up under each "My take" toggle is <strong>my own submission</strong>, written during the course. It isn't a model answer — your design will most likely differ, and that's fine. Lots of different approaches work.</li>
+              <li>Below each write-up is a <strong>Feedback</strong> note — gaps and specifics I missed the first time around, worth remembering for next time.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">The Org — Widget Co.</p>
+            <table class="ref-table">
+              <thead><tr><th>Factor</th><th>Current state</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Industry</strong></td><td>Online retailer of artisanal hand-crafted widgets</td></tr>
+                <tr><td><strong>Employees</strong></td><td>50, in one small office, growing</td></tr>
+                <tr><td><strong>Systems in scope</strong></td><td>External purchase website, internal intranet, remote CLI access for engineers, office wireless, company laptops</td></tr>
+                <tr><td><strong>Sensitive data</strong></td><td>Customer payment data (extra caution required) + proprietary engineering work</td></tr>
+                <tr><td><strong>Firewall &amp; wireless</strong></td><td>Needs reasonable, basic firewall rules and office-wide wireless coverage</td></tr>
+              </tbody>
+            </table>
+            <p class="subsection-title" style="margin-top:1.1rem">Requirements to incorporate</p>
+            <ul class="concept-list">
+              <li>Authentication system</li>
+              <li>External website security</li>
+              <li>Internal website security</li>
+              <li>Remote access solution (engineers need CLI access to their workstations)</li>
+              <li>Firewall and basic rules recommendations</li>
+              <li>Wireless security</li>
+              <li>VLAN configuration recommendations</li>
+              <li>Laptop security configuration</li>
+              <li>Application policy recommendations</li>
+              <li>Security and privacy policy recommendations</li>
+              <li>Intrusion detection or prevention for systems containing customer data</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Executive Summary</p>
+            <p style="font-size:0.9rem;line-height:1.7;color:var(--text-2);">
+              As a growing company that sells widgets directly to consumers, there are a few key assets we need to protect from both the consumer and the business perspective. Users enter confidential payment information for us to process, and our engineers work hard on proprietary widget designs we don't want to leak. We have an external website where purchases are processed, an internal intranet for employees, wireless coverage throughout the office, and company laptops issued to employees — all of which represent potential attack targets. Our engineers also require remote access to their workstations with command-line access. With these challenges in mind, here is what I'd recommend, in order of requested implementation.
+            </p>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Authentication System</p>
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <p style="font-size:0.9rem;line-height:1.7;">All employees will be required to authenticate into any work computer, device, or personal device used for work, to prevent bad actors from impersonating employees and gaining access to our systems. We can issue physical U2F keys to add MFA without risking attackers hijacking SMS-based OTPs. This shouldn't be too disruptive to employee work and is incredibly safe so long as employees don't lose their keys — something we should stress in our security policies.</p>
+            </div>
+            <div class="note"><strong>Feedback:</strong> missing a centralized identity system — a single identity source (directory service) should be the backbone that the U2F/MFA layer sits on top of.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">External Website Security</p>
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <p style="font-size:0.9rem;line-height:1.7;">Our website will definitely be a target, so we should work with our web developers (in-house or contracted) to implement best safety practices in their code. We should audit the site to make sure it isn't vulnerable to injection attacks, XSS, or SQL injection, and has proper CAPTCHA blocks to prevent bots from interfering. We'll monitor traffic for malicious activity and be ready to deny access to certain regions or IPs. By working with our developers and auditing their work, we can make our website close to bulletproof.</p>
+            </div>
+            <div class="note"><strong>Feedback:</strong> should name <strong>TLS/HTTPS encryption</strong> and <strong>PCI-DSS compliance</strong> directly rather than implying them. A web application firewall (WAF) and regular penetration testing would round this out.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Internal Website Security</p>
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <p style="font-size:0.9rem;line-height:1.7;">Similar to the external site, we should regularly monitor and analyze traffic through our intranet. If we see a sudden surge in requests from an employee's account or workstation, we can quarantine the machine and check logs to see what happened — remembering to image the disk first so an intruder can't erase traces of their presence. One of the most important parts of intranet security is segmenting the network so a breach in one zone can't reach others.</p>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Remote Access Solution</p>
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <p style="font-size:0.9rem;line-height:1.7;">Our engineers need to connect remotely, so we should set up secure, encrypted VPN access from their location to our servers. We can stand up a RADIUS server to authenticate remote access using the RADIUS protocol. Combined with MFA, we can be confident data stays secure over VPN connections, provided engineers follow our guidelines.</p>
+            </div>
+            <div class="note"><strong>Feedback:</strong> name a specific mechanism for the CLI access itself — e.g. routing engineers through a <strong>bastion host</strong> rather than exposing workstations directly, even behind the VPN.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Firewall &amp; Basic Rules Recommendations</p>
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <p style="font-size:0.9rem;line-height:1.7;">Proper firewall setup is critical. We should implement both network-based and host-based firewalls across the company — every employee device runs its host-based firewall to prevent damage from inside and outside the network. For our network-based firewall, I prefer a whitelisting approach: we know what services and sites the company needs, so let's review and allow them instead of blacklisting known bad actors. We'll regularly review and take requests for what needs whitelisting, and set our firewall ACLs to allow or deny traffic accordingly.</p>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Wireless Security</p>
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <p style="font-size:0.9rem;line-height:1.7;">The best current wireless security option is 802.1X + EAP-TLS, which requires a RADIUS server and a PKI. If the company keeps growing, this is well worth the investment — but at our current medium size, WPA2-AES/CCMP is also a reasonable option. We'll disable WPS regardless, since it's vulnerable and unnecessary at this level.</p>
+            </div>
+            <div class="note"><strong>Feedback:</strong> <strong>WPA3</strong> is the current standard, not WPA2 — should recommend it directly. Also missing: separate the <strong>guest Wi-Fi</strong> from the corporate network entirely.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">VLAN Configuration Recommendations</p>
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <p style="font-size:0.9rem;line-height:1.7;">We should segment our network using VLANs to prevent compromised devices from infecting or damaging uncompromised devices elsewhere on the network. VLAN traffic will all pass through our firewalls so we can limit the blast radius of an attack. We can also use port mirroring to monitor all traffic from our VLANs, improving our monitoring capability.</p>
+            </div>
+            <div class="note"><strong>Feedback:</strong> too thin — needs the PCI angle explicitly. <strong>PCI-DSS requires isolating systems that touch cardholder data</strong> into their own segment. Name an example scheme: e.g. a dedicated payment-processing VLAN, separate from engineering, sales, and guest VLANs.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Laptop Security Configuration</p>
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <p style="font-size:0.9rem;line-height:1.7;">We should give access and rights to users based on the groups they belong to — someone in marketing shouldn't be able to read/write/execute on the engineering server, since they don't need to and it only exposes us to more risk. Passwords are a must, with a sensible policy that doesn't lead to bad practices or frustrate employees. Biometric access (fingerprint or face scan) would be a beneficial extra layer if budget allows. We can't control employees, so we have to educate them on good practices — don't leave a laptop open at a coffee shop — and encourage good behavior with activities or leaderboards. Encrypting hard disks covers us if an employee forgets and leaves a laptop somewhere.</p>
+            </div>
+            <div class="note"><strong>Feedback:</strong> missing <strong>endpoint protection</strong> (antivirus / EDR) and a <strong>patch/update management</strong> process — both essential laptop-level controls that weren't mentioned.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Application Policy Recommendations</p>
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <p style="font-size:0.9rem;line-height:1.7;">Keep it straightforward: define what's acceptable to use (AUP), whitelist essential applications for the company (blacklist everything else), ensure only those who need access have access, and never store or input sensitive data into a non-authorized third-party service.</p>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Security &amp; Privacy Policy Recommendations</p>
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <p style="font-size:0.9rem;line-height:1.7;">This one matters most because our users can make mistakes they don't even realize are mistakes, so we need to educate them. Policies should be understandable at every level of the company — nothing too complicated to remember. We should inform employees about social-engineering attacks, common scams, and how to spot and report suspicious activity, plus the legal requirements around the data we handle — in our case, PCI (Payment Card Industry) data.</p>
+            </div>
+            <div class="note"><strong>Feedback:</strong> add explicit <strong>data retention/handling rules</strong> and a documented <strong>incident response plan</strong> — both were missing from the policy section.</div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Intrusion Detection / Prevention for Customer Data Systems</p>
+            <button class="ans-btn" onclick="toggleAnswers(this)">
+              <span class="arr">▶</span> My take (written during the course)
+            </button>
+            <div class="ans-body">
+              <p style="font-size:0.9rem;line-height:1.7;">These are essential systems for our network. Starting with intrusion detection, we'll place two NIDS/HIDS — one to monitor, one to manage. With IDS in place, we can monitor and get alerted to suspicious traffic, though it won't be blocked automatically. That's where IPS comes in: set up inline with our traffic, it intercepts packets and actively blocks by changing firewall rules in real time when it detects suspicious behavior.</p>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Conclusion</p>
+            <p style="font-size:0.9rem;line-height:1.7;color:var(--text-2);">
+              To layer our security strategy using the defense-in-depth concept, there's a lot of ground to cover. This overview walked through the main defense areas, what they do, and how to implement them at Widget Co. to keep our data safe. There's always more to add, but this is a strong starting point.
+            </p>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Overall feedback received</p>
+            <ul class="concept-list">
+              <li><strong>Google grader:</strong> didn't mention specifics enough (e.g. HTTPS, LDAP) — didn't need to over-explain, just needed to name the specific mechanism.</li>
+              <li><strong>General theme:</strong> the concepts were right throughout, but naming the exact protocol/standard (TLS, WPA3, bastion host, PCI-DSS segmentation) rather than describing it in generic terms is what separates a good design doc from a great one.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-section" id="s8">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title-row">
+          <span class="chevron">▶</span>
+          <h2>8 &nbsp;·&nbsp; What Actually Matters &mdash; Key Takeaways</h2>
+        </div>
+        <label class="complete-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="complete-cb" data-section="c05-s8" onchange="saveProgress(this)">
+          <span>Complete</span>
+        </label>
+      </div>
+
+      <div class="section-body">
+        <div class="section-inner">
+
+          <div class="subsection">
+            <p class="subsection-title">Threats — know what you're actually defending against</p>
+            <ul class="concept-list">
+              <li><strong>Humans are the weakest link, not the algorithms.</strong> Phishing works because it targets behavior, not encryption strength. A company can have flawless crypto and still get breached by one clicked link. Technical controls matter, but user education and a culture where people report suspicious activity matter just as much.</li>
+              <li><strong>Know your malware vocabulary — it drives your response.</strong> A worm spreading network-wide calls for network segmentation and containment; a rootkit hiding at the admin level means you can't trust the compromised host's own tools to detect or remove it — you rebuild from a known-good image instead.</li>
+              <li><strong>Implicit deny beats reactive blacklisting.</strong> Whether it's a firewall ACL, application whitelisting, or an access control list — deciding what's explicitly allowed and denying everything else is consistently the stronger default than trying to enumerate every bad actor.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Cryptography — the trust machinery underneath everything</p>
+            <ul class="concept-list">
+              <li><strong>Symmetric for speed, asymmetric for trust — and real systems use both.</strong> TLS is the textbook case: asymmetric encryption (RSA/ECDH) authenticates the server and exchanges a session key during the handshake, then fast symmetric encryption (AES-GCM) carries the actual data. Understanding this hybrid pattern explains most of modern secure communication.</li>
+              <li><strong>Never store a password — store a salted hash of it.</strong> Salting defeats rainbow tables by making every hash unique even for identical passwords. Key stretching (hashing thousands of times) slows brute force. If you ever see plaintext passwords in a database, that's the finding that matters most.</li>
+              <li><strong>Kerckhoffs's Principle: the algorithm can be public, only the key is secret.</strong> "Security through obscurity" — hiding how a system works instead of relying on a real secret — is a design smell, not a defense.</li>
+              <li><strong>PKI is how the internet knows who it's talking to.</strong> A certificate binds a public key to an identity and is vouched for by a CA. Check validity dates and the CRL before trusting one — an expired or revoked cert is a red flag, not a formality.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">AAA — authenticate, authorize, then account for everything</p>
+            <ul class="concept-list">
+              <li><strong>MFA means factors from different categories, not two passwords.</strong> Something you know + something you have (or are) is what actually reduces risk. SMS OTPs are the weakest "something you have" — SIM-swapping defeats them; prefer authenticator apps or hardware keys (U2F).</li>
+              <li><strong>RADIUS for network access, TACACS+ for device administration.</strong> RADIUS only encrypts the password field and is used for Wi-Fi/VPN clients through a NAS. TACACS+ encrypts the whole packet and is the stronger choice for admins managing routers and switches.</li>
+              <li><strong>Kerberos means a password is never sent over the wire more than once.</strong> One login gets a Ticket-Granting Ticket; every subsequent service request trades that ticket for access — no repeated credential transmission, and NTP-synced timestamps stop replay attacks.</li>
+              <li><strong>Principle of Least Privilege is the throughline of authorization.</strong> RBAC, DAC, and MAC are just different ways of answering "how little access can this account have and still do its job?" — the smaller the blast radius, the smaller the incident.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Securing networks — layers of control, not one big wall</p>
+            <ul class="concept-list">
+              <li><strong>Host-based and network-based firewalls are both required, not either/or.</strong> The network firewall stops what's coming from outside; the host firewall is the last line of defense once something is already inside the perimeter.</li>
+              <li><strong>IDS alerts, IPS blocks.</strong> An IDS needs a copy of traffic (via a TAP or SPAN port) and can only tell you something happened. An IPS sits inline and can actually stop it — at the cost of becoming a potential single point of failure if it goes down.</li>
+              <li><strong>Segmentation contains a breach instead of letting it spread.</strong> VLANs, a DMZ for public-facing services, and isolating anything that touches regulated data (PCI/HIPAA) into its own segment are the same idea applied at different scopes.</li>
+              <li><strong>802.1X + EAP-TLS is the gold standard for wireless; WPA2/WPA3-AES/CCMP is the practical minimum.</strong> Disable WPS everywhere, and always separate guest Wi-Fi from the corporate network.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Defense in depth — no single control is enough</p>
+            <ul class="concept-list">
+              <li><strong>Hardening is subtraction, not addition.</strong> Disable unused services, remove default accounts, shrink the attack surface — every open port or installed app you don't need is one more thing an attacker can try.</li>
+              <li><strong>Patch management is the highest-leverage recurring task in security.</strong> The majority of real-world breaches exploit known, already-patched vulnerabilities — the failure is operational (patching cadence), not a lack of available fixes.</li>
+              <li><strong>Centralized logging protects the evidence, not just the analysis.</strong> Ship logs off the host immediately — attackers routinely try to clear local logs to cover their tracks. A SIEM's real value is correlating events across sources, which requires normalized, centralized data in the first place.</li>
+              <li><strong>Vulnerability scanning finds the door; penetration testing proves it opens.</strong> Run both regularly — a scan tells you a flaw might exist, a pen test tells you whether it's actually exploitable.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">Culture &amp; policy — the layer that makes all the above stick</p>
+            <ul class="concept-list">
+              <li><strong>Define what the security architecture is for before designing controls.</strong> Threat modeling — what's the high-value data, who wants it, how likely is an attack — decides where you spend your limited security budget.</li>
+              <li><strong>Compliance requirements (PCI-DSS, HIPAA, FISMA) aren't paperwork — they're a pre-built threat model.</strong> If you handle a regulated data type, the standard has already done a lot of the "what do I need to protect against" thinking for you.</li>
+              <li><strong>Incident response is a sequence: detect → analyze → contain → recover → post-mortem.</strong> Chain of custody matters the moment you suspect a breach, not after — evidence collected sloppily is evidence you can't use.</li>
+              <li><strong>BYOD and mobile devices need policy before hardware.</strong> Write the AUP and MDM/EMM plan before employees start bringing devices, not after the first lost phone.</li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <p class="subsection-title">The bigger picture</p>
+            <div class="note">
+              IT Security is where every earlier course converges — networking (Course 2) explains what's actually being attacked on the wire, operating systems (Course 3) explains what hardening and privilege actually change, and system administration (Course 4) explains why the organizational controls (change management, directory services, backups) are themselves security controls. The final project makes this concrete: a real design document has to balance authentication, network architecture, policy, and monitoring into one coherent plan for one specific business — which is exactly what security work looks like outside a classroom. No single layer in the CIA triad, no single AAA protocol, no single firewall rule is ever "the fix." Defense in depth isn't a section title, it's the whole discipline.
+            </div>
+          </div>
+
+        </div><!-- /section-inner -->
+      </div><!-- /section-body -->
+    </div><!-- /s8 -->
 
   </div><!-- /section-list -->
 

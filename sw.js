@@ -1,6 +1,6 @@
 // Bump this on every content change (new module, edited HTML, updated JS/CSS)
 // so the browser detects the file diff and installs a fresh cache.
-const CACHE_VERSION = 'v3';
+const CACHE_VERSION = 'v5';
 const CACHE_NAME = `itcert-${CACHE_VERSION}`;
 
 const PRECACHE_URLS = [

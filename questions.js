@@ -1641,6 +1641,117 @@ const QUESTIONS = [
     course: 5
   },
 
+  /* ── Course 5 · Company Culture for Security (Module 6) ── */
+
+  {
+    q: "A company processes credit card payments. Which compliance standard's six objectives apply directly to how they must build and secure their systems?",
+    options: [
+      "HIPAA",
+      "PCI DSS",
+      "FISMA",
+      "GDPR"
+    ],
+    answer: 1,
+    explanation: "PCI DSS (Payment Card Industry Data Security Standard) applies to any organization that handles credit card payments. Its six objectives cover secure network architecture, protecting cardholder data, vulnerability management, access control, monitoring/testing, and an information security policy.",
+    course: 5
+  },
+  {
+    q: "A company enforces an extremely complex password policy. Employees respond by writing their passwords on sticky notes. What does this illustrate?",
+    options: [
+      "Users are always the strongest link in a security system",
+      "Complex password policies eliminate the need for physical security",
+      "Overly strict policies can backfire — users route around friction in ways that reduce actual security",
+      "Password complexity has no effect on brute-force resistance"
+    ],
+    answer: 2,
+    explanation: "Security policy has to balance protection with usability. If a policy is too disruptive, users find workarounds (like writing passwords down) that are often less secure than a simpler, well-designed policy would have been.",
+    course: 5
+  },
+  {
+    q: "What is the safest way to handle a hard drive that must be reused (not destroyed) after it held sensitive data?",
+    options: [
+      "Physical destruction (shredding or drilling)",
+      "Degaussing",
+      "Erase/wipe or low-level/standard formatting, then recycle the device",
+      "Third-party incineration"
+    ],
+    answer: 2,
+    explanation: "Recycling is the destruction method that keeps the device usable — erasing/wiping or reformatting the drive removes the sensitive data while the hardware stays in service. Physical destruction and degaussing are for drives that will not be reused.",
+    course: 5
+  },
+  {
+    q: "During incident handling, once the scope of a breach is understood, what is the next time-sensitive step?",
+    options: [
+      "Containment",
+      "Data destruction",
+      "Vendor notification",
+      "Employee performance review"
+    ],
+    answer: 0,
+    explanation: "The incident handling flow is: detect → analyze/determine scope → contain. Containment is time-sensitive because every additional minute increases the potential for further damage or data exfiltration.",
+    course: 5
+  },
+  {
+    q: "What is 'data exfiltration'?",
+    options: [
+      "Encrypting data so it can only be read by authorized users",
+      "The unauthorized transfer of data off a compromised computer or network",
+      "The process of backing up data to an offsite location",
+      "Automatically deleting data after its retention period expires"
+    ],
+    answer: 1,
+    explanation: "Data exfiltration is the unauthorized movement of data out of a system — typically the actual goal of an attacker who has breached a network, as opposed to simply causing disruption.",
+    course: 5
+  },
+  {
+    q: "A chain of custody document for digital evidence should answer all of the following EXCEPT:",
+    options: [
+      "Who collected the evidence and how?",
+      "Who possessed the evidence and how was it stored?",
+      "What is the market value of the compromised hardware?",
+      "Who took the evidence out of storage, and why?"
+    ],
+    answer: 2,
+    explanation: "Chain of custody tracks evidence through its collection, safeguarding, and analysis lifecycle — who collected it, how/where, who possessed and stored it, and who accessed it and why. Hardware market value is irrelevant to evidentiary integrity.",
+    course: 5
+  },
+  {
+    q: "Why is BYOD (Bring Your Own Device) attractive to companies, and what is its main tradeoff?",
+    options: [
+      "It improves security by standardizing all hardware, but increases IT support costs",
+      "It saves the company money on hardware, but introduces new threats like device loss, malware, and jailbreaking",
+      "It eliminates the need for MDM software entirely",
+      "It removes the need for an acceptable use policy"
+    ],
+    answer: 1,
+    explanation: "BYOD saves companies the cost of issuing hardware, but expands the threat surface: lost/stolen personal devices, data leakage, MITM attacks, malware, and jailbroken devices. Mitigations include MDM/EMM software, MFA, an AUP, and staff education.",
+    course: 5
+  },
+  {
+    q: "In a security design document for a company handling payment data, why should systems that touch cardholder data be placed on their own VLAN?",
+    options: [
+      "VLANs improve Wi-Fi signal strength for those systems",
+      "PCI-DSS requires isolating systems that process or store cardholder data from the rest of the network",
+      "VLANs eliminate the need for a firewall between segments",
+      "It allows those systems to bypass authentication requirements"
+    ],
+    answer: 1,
+    explanation: "PCI-DSS compliance requires isolating in-scope systems (those touching cardholder data) into their own network segment. A dedicated payment-processing VLAN limits which other systems could be affected in a breach and narrows the compliance audit scope.",
+    course: 5
+  },
+  {
+    q: "An engineer needs remote command-line access to their workstation. Beyond a VPN and MFA, what additional control provides a secure single point of entry to internal systems?",
+    options: [
+      "A bastion host",
+      "A rogue access point",
+      "A CRL (Certificate Revocation List)",
+      "An evil twin AP"
+    ],
+    answer: 0,
+    explanation: "A bastion host is a hardened, heavily monitored gateway that remote users connect to first, before hopping to internal systems. It avoids exposing internal workstations directly to the internet, even behind a VPN.",
+    course: 5
+  },
+
   /* ── Mixed · Additional Questions ───────────────────────── */
 
   {
